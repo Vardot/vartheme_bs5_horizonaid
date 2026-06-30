@@ -1,5 +1,5 @@
 name: Vartheme BS5 Horizon Aid
-description: Starterkit theme for Varbase standard websites. Based on Bootstrap 5 framework using SASS.
+description: "The Bootstrap 5 front-end theme for the Horizon Aid site template, with an NGO / humanitarian-focused design system. Based on Vartheme BS5 (SDC, Storybook, SASS)."
 core_version_requirement: ~11.3.0
 engine: twig
 type: theme
