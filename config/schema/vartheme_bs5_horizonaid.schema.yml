@@ -1,0 +1,16 @@
+# Schema for the configuration files of the Vartheme BS5 Horizon Aid.
+vartheme_bs5_horizonaid.settings:
+  type: theme_settings
+  label: "Vartheme BS5 Horizon Aid settings"
+  mapping:
+    # Containers for regions.
+    # ----------------------------
+    container_header:
+      type: string
+      label: "Container for Header region"
+    container_content:
+      type: string
+      label: "Container for Content region"
+    container_footer:
+      type: string
+      label: "Container for Footer region"

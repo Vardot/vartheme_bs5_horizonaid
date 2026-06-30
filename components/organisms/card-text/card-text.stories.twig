@@ -1,0 +1,317 @@
+{% stories CardText with {
+  title: 'Cards/Card Text',
+  parameters: {
+    componentSubtitle: 'Simple text-based card with flexible content slot and utility styling options.',
+    docs: {
+      description: {
+        component: 'A lightweight text-focused card component for titles, descriptions, and actions. Supports padding, background, borders, shadows, and full-card link behavior.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    icon_image: {
+      name: 'Icon image',
+      description: 'Upload an icon image (SVG, PNG, or WebP). Leave empty to show no icon.',
+      control: 'object',
+    },
+    icon_alignment: {
+      name: 'Icon alignment',
+      description: 'Horizontal alignment of the icon within the card.',
+      defaultValue: 'start',
+      control: 'select',
+      options: {
+        Left: 'start',
+        Center: 'center',
+        Right: 'end',
+      },
+    },
+    card_border: {
+      name: 'Card border',
+      description: 'Adds default Bootstrap border.',
+      defaultValue: true,
+      control: 'boolean',
+    },
+    background_color: {
+      name: 'Background',
+      description: 'Brand background color applied to the card.',
+      defaultValue: 'none',
+      control: 'select',
+      options: {
+        None: 'none',
+        "'Body tertiary'": 'bg-body-tertiary',
+        Tertiary: 'bg-tertiary',
+        Accent: 'bg-accent',
+        Primary: 'bg-primary',
+        "'Primary subtle'": 'bg-primary-subtle',
+        Secondary: 'bg-secondary',
+        "'Secondary subtle'": 'bg-secondary-subtle',
+        Dark: 'bg-dark',
+      },
+    },
+    padded: {
+      name: 'Padded',
+      description: 'Adds p-4 spacing to content.',
+      defaultValue: true,
+      control: 'boolean',
+    },
+    box_shadow: {
+      name: 'Shadow',
+      description: 'Bootstrap shadow utility.',
+      defaultValue: 'shadow-sm',
+      control: 'select',
+      options: {
+        None: 'shadow-none',
+        Small: 'shadow-sm',
+        Medium: 'shadow',
+        Large: 'shadow-lg',
+      },
+    },
+    corner_style: {
+      name: 'Border radius',
+      description: 'Rounded utility for the card.',
+      defaultValue: 'rounded-3',
+      control: 'select',
+      options: {
+        "'None (square)'": 'rounded-0',
+        Small: 'rounded-1',
+        Large: 'rounded-3',
+        Pill: 'rounded-pill',
+      },
+    },
+    equal_height: {
+      name: 'Equal height',
+      description: 'Apply h-100 for grid alignment.',
+      defaultValue: false,
+      control: 'boolean',
+    },
+    stretched_link: {
+      name: 'Stretched link',
+      description: 'Make entire card clickable.',
+      defaultValue: false,
+      control: 'boolean',
+    },
+    link_url: {
+      name: 'Link URL',
+      description: 'Optional card link.',
+      defaultValue: '',
+      control: 'text',
+    },
+    link_target: {
+      name: 'Link target',
+      description: 'Target attribute.',
+      defaultValue: 'default',
+      control: 'select',
+      options: {
+        "'Default (same tab)'": 'default',
+        "'Same tab'": '_self',
+        "'New tab'": '_blank',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    card_border: true,
+    background_color: 'none',
+    padded: true,
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2">Card text title</h3>
+    <p class="mb-3">This is a simple text card used for descriptions, highlights, or small content blocks.</p>
+    <a href="#" class="btn btn-primary">Action</a>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story DarkBackground with {
+  name: 'Dark background',
+  args: {
+    card_border: false,
+    background_color: 'bg-dark',
+    padded: true,
+    box_shadow: 'shadow',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2 text-white">Dark card</h3>
+    <p class="mb-0 text-white-50">Use text utility classes when working with dark backgrounds.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story NoPadding with {
+  name: 'No padding',
+  args: {
+    card_border: true,
+    background_color: 'none',
+    padded: false,
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-0',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 m-0">Compact layout</h3>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story LargeShadow with {
+  name: 'Large shadow',
+  args: {
+    card_border: true,
+    background_color: 'bg-body-tertiary',
+    padded: true,
+    box_shadow: 'shadow-lg',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2 text-white">Elevated card</h3>
+    <p class="mb-0 text-white">Use larger shadows for emphasis.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story LinkedCard with {
+  name: 'Linked card',
+  args: {
+    card_border: true,
+    background_color: 'none',
+    padded: true,
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: true,
+    link_url: 'https://example.com',
+    link_target: '_blank',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2">Clickable card</h3>
+    <p class="mb-0">Entire card acts as a link.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story EqualHeight with {
+  name: 'Equal height',
+  args: {
+    card_border: true,
+    background_color: 'none',
+    padded: true,
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-3',
+    equal_height: true,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2">Equal height</h3>
+    <p class="mb-0">Useful in grid layouts.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story PrimarySubtle with {
+  name: 'Primary subtle',
+  args: {
+    card_border: false,
+    background_color: 'bg-primary-subtle',
+    padded: true,
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2">Primary subtle</h3>
+    <p class="mb-0">Soft tinted background for gentle emphasis without full primary weight.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story SecondarySubtle with {
+  name: 'Secondary subtle',
+  args: {
+    card_border: false,
+    background_color: 'bg-secondary-subtle',
+    padded: true,
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2">Secondary subtle</h3>
+    <p class="mb-0">Warm neutral background for understated, content-forward cards.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story WithIcon with {
+  name: 'With icon (left)',
+  args: {
+    icon_image: { src: '/components/foundation/images/assets/lightbulb.svg', alt: '', width: 64, height: 64 },
+    icon_alignment: 'start',
+    card_border: true,
+    background_color: 'none',
+    padded: true,
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-text' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-2">Card with icon</h3>
+    <p class="mb-3">Upload an icon image to display it above the content area. Leave the icon field empty to use the card as a plain text card.</p>
+    <a href="#" class="btn btn-primary">Action</a>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% endstories %}

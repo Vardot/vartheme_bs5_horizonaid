@@ -1,0 +1,284 @@
+.webshare {
+  --webshare-button-size: 2.5rem;
+  --webshare-icon-size: 1.5rem;
+  --webshare-gap: 0.5rem;
+  --webshare-heading-gap: 1rem;
+  --webshare-button-bg: var(--bs-secondary-bg);
+  --webshare-button-bg-hover: var(--bs-primary-bg-subtle);
+  --webshare-button-bg-active: var(--bs-primary-border-subtle);
+  --webshare-button-color: var(--bs-body-color);
+  --webshare-button-radius: 0.25rem;
+  --webshare-button-shadow: none;
+  --webshare-heading-color: var(--bs-body-color);
+  --webshare-heading-font: var(--bs-body-font-family);
+  --webshare-heading-font-size: 1.125rem;
+  --webshare-heading-font-weight: 700;
+  --webshare-heading-line-height: 1.5;
+  --webshare-focus-ring: 0.25rem solid var(--bs-focus-ring-color);
+  --webshare-focus-offset: 0.125rem;
+  --webshare-transition: all 0.2s ease-in-out;
+  --webshare-rail-top: 6rem;
+  --webshare-rail-gap: var(--bs-gutter-x, 1.5rem);
+  --webshare-copied-bg: var(--bs-success);
+  --webshare-copied-color: var(--bs-white);
+  --webshare-icon-color: var(--bs-primary);
+
+  box-sizing: border-box;
+}
+
+.webshare *,
+.webshare *::before,
+.webshare *::after {
+  box-sizing: border-box;
+}
+
+.webshare__heading {
+  margin: 0 0 var(--webshare-heading-gap);
+  padding: 0;
+  color: var(--webshare-heading-color);
+  font-family: var(--webshare-heading-font);
+  font-size: var(--webshare-heading-font-size);
+  font-weight: var(--webshare-heading-font-weight);
+  line-height: var(--webshare-heading-line-height);
+}
+
+.webshare__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: var(--webshare-gap);
+}
+
+.webshare--horizontal .webshare__list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.webshare--vertical .webshare__list {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.webshare--align-start .webshare__list {
+  justify-content: flex-start;
+}
+
+.webshare--align-end .webshare__list {
+  justify-content: flex-end;
+}
+
+.webshare--align-end.webshare--vertical .webshare__list {
+  align-items: flex-end;
+}
+
+.webshare--align-end .webshare__heading {
+  text-align: end;
+}
+
+.webshare--align-start .webshare__heading {
+  text-align: start;
+}
+
+.webshare--vertical:not(.webshare--align-end, .webshare--align-start) .webshare__heading {
+  text-align: center;
+}
+
+.webshare__item {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 0;
+}
+
+.webshare__item::before,
+.webshare__item::marker {
+  content: none;
+}
+
+.webshare__item > a,
+.webshare__item > button,
+.webshare__item > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--webshare-button-size);
+  height: var(--webshare-button-size);
+  margin: 0;
+  padding: 0;
+  transition: var(--webshare-transition);
+  text-decoration: none;
+  color: var(--webshare-button-color);
+  border: 0;
+  border-radius: var(--webshare-button-radius);
+  background: var(--webshare-button-bg);
+  box-shadow: var(--webshare-button-shadow);
+}
+
+.webshare__item > a:hover,
+.webshare__item > a:focus,
+.webshare__item > button:hover,
+.webshare__item > button:focus,
+.webshare__item > span:hover,
+.webshare__item > span:focus {
+  text-decoration: none;
+  background: var(--webshare-button-bg-hover);
+}
+
+.webshare__item > a:active,
+.webshare__item > button:active,
+.webshare__item > span:active {
+  background: var(--webshare-button-bg-active);
+}
+
+.webshare__item > a:focus-visible,
+.webshare__item > button:focus-visible,
+.webshare__item > span:focus-visible {
+  outline: var(--webshare-focus-ring);
+  outline-offset: var(--webshare-focus-offset);
+}
+
+.webshare__item img,
+.webshare__item svg {
+  display: block;
+  width: var(--webshare-icon-size);
+  max-width: none;
+  height: var(--webshare-icon-size);
+  max-height: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.webshare__item .bi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--webshare-icon-size);
+  height: var(--webshare-icon-size);
+  color: var(--webshare-button-color);
+  font-size: var(--webshare-icon-size);
+  line-height: 1;
+}
+
+.webshare__item .bi {
+  color: var(--webshare-icon-color);
+}
+
+.webshare__item svg {
+  fill: var(--webshare-icon-color);
+}
+
+.webshare__item svg rect {
+  fill: transparent;
+}
+
+.webshare__item svg path {
+  fill: var(--webshare-icon-color);
+}
+
+.webshare__item--copy > a,
+.webshare__item--copy > button {
+  cursor: pointer;
+}
+
+.webshare__native-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--webshare-button-size);
+  height: var(--webshare-button-size);
+  margin: 0;
+  padding: 0;
+  transition: var(--webshare-transition);
+  text-decoration: none;
+  color: var(--webshare-button-color);
+  border: 0;
+  border-radius: var(--webshare-button-radius);
+  background: var(--webshare-button-bg);
+  box-shadow: var(--webshare-button-shadow);
+}
+
+.webshare__native-button:hover,
+.webshare__native-button:focus {
+  text-decoration: none;
+  background: var(--webshare-button-bg-hover);
+}
+
+.webshare__native-button:active {
+  background: var(--webshare-button-bg-active);
+}
+
+.webshare__native-button:focus-visible {
+  outline: var(--webshare-focus-ring);
+  outline-offset: var(--webshare-focus-offset);
+}
+
+.webshare__native-button {
+  cursor: pointer;
+  font: inherit;
+  line-height: 0;
+  appearance: none;
+}
+
+.webshare__native-button.webshare--copied {
+  color: var(--webshare-copied-color);
+  background: var(--webshare-copied-bg);
+}
+
+.webshare__native-button {
+  color: var(--webshare-icon-color);
+}
+
+.webshare__native-button .bi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--webshare-icon-size);
+  height: var(--webshare-icon-size);
+  color: var(--webshare-icon-color);
+  font-size: var(--webshare-icon-size);
+  line-height: 1;
+}
+
+.webshare__native-button svg {
+  fill: var(--webshare-icon-color);
+}
+
+.webshare__native-button svg rect {
+  fill: transparent;
+}
+
+.webshare__native-button svg path {
+  fill: var(--webshare-icon-color);
+}
+
+.webshare__native-icon {
+  display: block;
+  width: var(--webshare-icon-size);
+  height: var(--webshare-icon-size);
+  color: var(--webshare-icon-color);
+}
+
+@media (min-width: 992px) {
+  .webshare--rail-end {
+    position: sticky;
+    top: var(--webshare-rail-top);
+    float: inline-end;
+    margin-block-end: 1rem;
+    margin-inline-start: var(--webshare-rail-gap);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .webshare.webshare--hide-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .webshare.webshare--mobile-only {
+    display: none;
+  }
+}

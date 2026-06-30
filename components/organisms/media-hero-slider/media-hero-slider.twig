@@ -1,0 +1,65 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizon Aid Starter Kit implementation for the Media Hero Slider component.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ * - css_name: A css-safe version of the view name.
+ * - css_class: The user-specified classes names, if any.
+ * - rows: The results of the view query, if any.
+ * - title: Title of the view, only used when displaying in the admin preview.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the view title.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the view title.
+ * - dom_id: Unique id for every view being printed to give unique class for
+ *   Javascript.
+ *
+ * @see template_preprocess_views_view()
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Logic: merge root view classes as an array. #}
+{%
+  set classes = [
+    'view',
+    'view-' ~ id|clean_class,
+    'view-id-' ~ id,
+    'view-display-id-' ~ display_id,
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+    css_name ? 'view-' ~ css_name,
+  ]
+%}
+
+{# Logic: static structural class lists as arrays. #}
+{% set content_classes = ['view-content'] %}
+{% set empty_classes = ['view-empty'] %}
+
+{# Print the HTML. #}
+{% set attributes = attributes.addClass(classes) %}
+<div{{ attributes }}>
+  {{ title_prefix }}
+  {{ title }}
+  {{ title_suffix }}
+
+  {% if rows %}
+    <div class="{{ content_classes|join(' ') }}">
+      {{ rows }}
+    </div>
+  {% elseif empty %}
+    <div class="{{ empty_classes|join(' ') }}">
+      {{ empty }}
+    </div>
+  {% endif %}
+
+</div>

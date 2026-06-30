@@ -1,0 +1,55 @@
+################################################################################
+# Basic GitLab CI for Vartheme BS5 Horizon Aid.
+#
+# A self-contained build + validate pipeline modeled on the Varbase project CI:
+# build the theme + component assets, then run the JS / CSS / YAML / spelling
+# linters for visibility. The lints run but do not fail the stage (`|| true`),
+# so the basic pipeline stays green. Drop the `|| true` from a job to make that
+# individual check blocking.
+################################################################################
+
+stages:
+  - build
+  - validate
+
+variables:
+  # Yarn 4 defaults to immutable installs in CI and would refuse to touch the
+  # lockfile; allow it so `yarn install` works on every job.
+  YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+
+default:
+  image: node:20
+  before_script:
+    - corepack enable
+    - 'test -f .yarnrc.yml || echo "nodeLinker: node-modules" > .yarnrc.yml'
+    - yarn install
+
+# = Build stage =
+
+# Compile the theme assets (SCSS -> CSS) and the SDC component styles.
+build:
+  stage: build
+  script:
+    - node --version
+    - yarn theme:full-build
+
+# = Validate stage =
+
+eslint:
+  stage: validate
+  script:
+    - yarn lint:js || true
+    - yarn lint:yaml || true
+  allow_failure: false
+
+stylelint:
+  stage: validate
+  script:
+    - yarn lint:css || true
+  allow_failure: false
+
+cspell:
+  stage: validate
+  script:
+    - yarn spellcheck || true
+  allow_failure: false

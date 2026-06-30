@@ -1,0 +1,74 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as GroupStories from './group.stories.json';
+import templateSource from './group.twig?raw';
+
+<Meta of={GroupStories} name="Docs" />
+
+# Group
+
+A Bootstrap flex wrapper for stacking or arranging items horizontally or vertically. Controls gap, alignment, wrapping, background, spacing utilities, and optional Animate On Scroll (AOS) effects.
+
+- `direction: horizontal` renders items in a row using `flex-row`; `direction: vertical` stacks them with `flex-column`
+- `wrap` only applies in horizontal direction — vertical stacks always flow without wrapping
+- AOS animation, duration, and delay are only applied when `aos_animation` is set to a value other than `none`
+- Use `{% embed %}` to pass content into the `content` slot
+
+> ### Bootstrap documentation
+> - [Flexbox utilities](https://getbootstrap.com/docs/5.3/utilities/flex/)
+> - [Gap utilities](https://getbootstrap.com/docs/5.3/utilities/gap/)
+> - [Spacing](https://getbootstrap.com/docs/5.3/utilities/spacing/)
+
+## Properties
+
+<Canvas of={GroupStories.Default} />
+<Controls of={GroupStories.Default} />
+
+## Stories
+
+<Stories of={GroupStories} />
+
+## Example
+
+### Example #1 : Vertical stack (default)
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:group' with {
+  direction: 'vertical',
+  gap: 'gap-3',
+  align_items: 'align-items-stretch',
+  justify_content: 'justify-content-start',
+} %}
+  {% block content %}
+    <div class="p-3 border rounded">First item</div>
+    <div class="p-3 border rounded">Second item</div>
+    <div class="p-3 border rounded">Third item</div>
+  {% endblock %}
+{% endembed %}
+```
+
+### Example #2 : Horizontal action bar
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:group' with {
+  direction: 'horizontal',
+  gap: 'gap-2',
+  wrap: 'wrap',
+  align_items: 'align-items-center',
+  justify_content: 'justify-content-start',
+  background_color: 'bg-light',
+  padding_block_start: 'pt-3',
+  padding_block_end: 'pb-3',
+  padding_inline_start: 'ps-2',
+  padding_inline_end: 'pe-2',
+} %}
+  {% block content %}
+    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-outline-secondary">Preview</button>
+    <button class="btn btn-link">Cancel</button>
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Page user reset.
+ */
+#}
+
+{% include 'vartheme_bs5_horizonaid:page-user-reset' with {
+  logged_in_without_blocks: [
+    'vartheme_bs5_horizonaid_local_tasks',
+    'vartheme_bs5_horizonaid_breadcrumbs',
+    'vartheme_bs5_horizonaid_local_actions'
+  ],
+  not_logged_in_without_blocks: [
+    'vartheme_bs5_horizonaid_local_tasks',
+    'vartheme_bs5_horizonaid_breadcrumbs',
+    'vartheme_bs5_horizonaid_local_actions',
+    'vartheme_bs5_horizonaid_page_title'
+  ]
+} %}

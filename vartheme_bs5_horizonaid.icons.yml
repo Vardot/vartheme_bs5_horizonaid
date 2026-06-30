@@ -1,0 +1,77 @@
+bootstrap_icons:
+  enabled: true
+  label: "Bootstrap icons"
+  description: "General Bootstrap Icons available within the Vartheme BS5 Horizon Aid theme."
+  links:
+    - https://icons.getbootstrap.com/#usage
+  version: 1.13.1
+  license:
+    name: MIT
+    url: https://github.com/twbs/icons/tree/main?tab=MIT-1-ov-file
+    gpl-compatible: true
+  extractor: svg
+  config:
+    sources:
+      - images/icons/*.svg
+  # settings:
+  #   size:
+  #     title: "Size"
+  #     type: "integer"
+  #     default: 32
+  #   color:
+  #     title: "Color"
+  #     type: "string"
+  #     format: "color"
+  #   class:
+  #     title: "Class"
+  #     type: "string"
+  template: >-
+    {# Accessible SVG wrapper for extracted icons. #}
+    {% set svg_attributes = attributes
+      .setAttribute('viewBox', attributes.viewBox|default('0 0 16 16'))
+      .setAttribute('width', size|default('32'))
+      .setAttribute('height', size|default('32'))
+      .setAttribute('role', 'img')
+    %}
+    {% if alt|default('')|trim %}
+      {% set svg_attributes = svg_attributes
+        .setAttribute('aria-label', alt|trim)
+        .setAttribute('aria-hidden', 'false')
+      %}
+    {% else %}
+      {% set svg_attributes = svg_attributes.setAttribute('aria-hidden', 'true') %}
+    {% endif %}
+    <svg{{ svg_attributes }}>
+      {{ content }}
+    </svg>
+
+vartheme_social:
+  enabled: true
+  label: "Vartheme social"
+  description: "Brand-coloured social platform icons that ship with Vartheme BS5 Horizon Aid."
+  version: 1.0.0
+  license:
+    name: GPL-2.0-or-later
+    gpl-compatible: true
+  extractor: svg
+  config:
+    sources:
+      - images/icons/social/*.svg
+  template: >-
+    {% set svg_attributes = attributes
+      .setAttribute('viewBox', attributes.viewBox|default('0 0 16 16'))
+      .setAttribute('width', size|default('20'))
+      .setAttribute('height', size|default('20'))
+      .setAttribute('role', 'img')
+    %}
+    {% if alt|default('')|trim %}
+      {% set svg_attributes = svg_attributes
+        .setAttribute('aria-label', alt|trim)
+        .setAttribute('aria-hidden', 'false')
+      %}
+    {% else %}
+      {% set svg_attributes = svg_attributes.setAttribute('aria-hidden', 'true') %}
+    {% endif %}
+    <svg{{ svg_attributes }}>
+      {{ content }}
+    </svg>

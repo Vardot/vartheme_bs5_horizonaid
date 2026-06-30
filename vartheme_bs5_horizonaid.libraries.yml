@@ -1,0 +1,269 @@
+framework:
+  dependencies:
+    - core/components.vartheme_bs5_horizonaid--root
+    - vartheme_bs5_horizonaid/bootstrap-styles
+    - vartheme_bs5_horizonaid/bootstrap-scripts
+    - vartheme_bs5_horizonaid/global-styles
+    - vartheme_bs5_horizonaid/global-scripts
+    - vartheme_bs5_horizonaid/bootstrap-icons
+    # - vartheme_bs5_horizonaid/fontawesome  ## Uncomment to use the fontawesome library.
+
+# Bootstrap 5 global styles library.
+bootstrap-styles:
+  css:
+    base:
+      css/base/bootstrap.base.css: {}
+
+# Bootstrap 5 global scripts library.
+bootstrap-scripts:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+    # - vartheme_bs5_horizonaid/bs-alert-script
+    # - vartheme_bs5_horizonaid/bs-button-script
+    - vartheme_bs5_horizonaid/bs-carousel-script
+    # Needed for Bootstrap Accordion (Accordion is powered by Collapse).
+    - vartheme_bs5_horizonaid/bs-collapse-script
+    # - vartheme_bs5_horizonaid/bs-dropdown-script
+    - vartheme_bs5_horizonaid/bs-modal-script
+    - vartheme_bs5_horizonaid/bs-offcanvas-script
+    - vartheme_bs5_horizonaid/bs-popover-script
+    - vartheme_bs5_horizonaid/bs-scrollspy-script
+    - vartheme_bs5_horizonaid/bs-tab-script
+    - vartheme_bs5_horizonaid/bs-toast-script
+    - vartheme_bs5_horizonaid/bs-tooltip-script
+    - content_moderation/content_moderation
+
+# Popperjs core.
+popper-script:
+  js:
+    js/popperjs/popper.js: {}
+
+# Bootstrap Base component script.
+bs-base-component-script:
+  dependencies:
+    - core/drupalSettings
+    - core/drupal
+    - core/drupal.ajax
+    - core/jquery
+    - core/once
+    - vartheme_bs5_horizonaid/popper-script
+  js:
+    js/bootstrap/util/index.js: {}
+    js/bootstrap/dom/data.js: {}
+    js/bootstrap/dom/event-handler.js: {}
+    js/bootstrap/dom/manipulator.js: {}
+    js/bootstrap/dom/selector-engine.js: {}
+    js/bootstrap/util/config.js: {}
+    js/bootstrap/util/component-functions.js: {}
+    js/bootstrap/util/backdrop.js: {}
+    js/bootstrap/util/focustrap.js: {}
+    js/bootstrap/util/scrollbar.js: {}
+    js/bootstrap/util/swipe.js: {}
+    js/bootstrap/util/sanitizer.js: {}
+    js/bootstrap/util/template-factory.js: {}
+    js/bootstrap/base-component.js: {}
+
+# Bootstrap alert script.
+bs-alert-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/alert.js: {}
+
+# Bootstrap button script.
+bs-button-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/button.js: {}
+
+# Bootstrap carousel script.
+bs-carousel-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/carousel.js: {}
+
+# Bootstrap collapse script.
+bs-collapse-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/collapse.js: {}
+
+# Bootstrap dropdown script.
+bs-dropdown-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/dropdown.js: {}
+
+# Bootstrap modal script.
+bs-modal-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/modal.js: {}
+
+# Bootstrap offcanvas script.
+bs-offcanvas-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/offcanvas.js: {}
+
+# Bootstrap popover script.
+bs-popover-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-tooltip-script
+  js:
+    js/bootstrap/popover.js: {}
+
+# Bootstrap scrollspy script.
+bs-scrollspy-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/scrollspy.js: {}
+
+# Bootstrap tab script.
+bs-tab-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/tab.js: {}
+
+# Bootstrap toast script.
+bs-toast-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/toast.js: {}
+
+# Bootstrap tooltip script.
+bs-tooltip-script:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-base-component-script
+  js:
+    js/bootstrap/tooltip.js: {}
+
+# Vartheme BS5 Horizon Aid global styles library.
+global-styles:
+  css:
+    base:
+      css/base/vartheme.base.css: {}
+    layout:
+      css/layout/edge2edge.layout.css: {}
+      css/layout/equal-height.layout.css: {}
+      css/layout/print.layout.css: { media: print }
+    theme:
+      fonts/figtree/css/figtree.css: {}
+      fonts/dm-mono/css/dm-mono.css: {}
+
+# Vartheme BS5 Horizon Aid global scripts library.
+global-scripts:
+  js:
+    js/scripts.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/drupal
+    - core/drupal.ajax
+    - core/jquery
+    - core/once
+
+# Sticky header styles + behavior. Attached from vartheme_bs5_horizonaid.theme only when
+# the "Sticky header" theme setting is enabled, so it never loads otherwise.
+sticky-header:
+  css:
+    theme:
+      css/theme/sticky-header.theme.css: {}
+  js:
+    js/sticky-header.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+framework-rtl:
+  dependencies:
+    - vartheme_bs5_horizonaid/bootstrap-styles-rtl
+    - vartheme_bs5_horizonaid/bootstrap-scripts
+    - vartheme_bs5_horizonaid/global-styles-rtl
+    - vartheme_bs5_horizonaid/global-scripts
+    - vartheme_bs5_horizonaid/bootstrap-icons
+    # - vartheme_bs5_horizonaid/fontawesome ## Uncomment to use the fontawesome library.
+
+# Bootstrap 5 global RTL styles library.
+bootstrap-styles-rtl:
+  css:
+    base:
+      css/base/bootstrap-rtl.base.css: {}
+
+# Vartheme BS5 Horizon Aid global RTL styles library.
+global-styles-rtl:
+  css:
+    base:
+      css/base/vartheme-rtl.base.css: {}
+    theme:
+      fonts/droid/arabic/kufi/css/droidarabickufi.css: {}
+
+# Vartheme BS5 Horizon Aid content moderation status theme.
+content_moderation:
+  css:
+    theme:
+      css/theme/content-moderation.theme.css: {}
+
+# Font Awesome free icons.
+fontawesome:
+  css:
+    theme:
+      fonts/fontawesome-free/css/all.min.css: { minified: true }
+
+# Bootstrap free icons.
+bootstrap-icons:
+  css:
+    theme:
+      fonts/bootstrap-icons/font/bootstrap-icons.min.css: { minified: true }
+
+# Behaviors for local video scripts in the heroslider component.
+local-video-slider:
+  js:
+    components/organisms/heroslider/js/video.heroslider.local.js: {}
+
+# Behaviors for Youtube video scripts in the heroslider component.
+youtube-video-slider:
+  js:
+    components/organisms/heroslider/js/video.heroslider.youtube.js: { weight: -1 }
+
+# Behaviors for vimeo embeded videos scripts in the heroslider component.
+vimeo-video-slider:
+  js:
+    components/organisms/heroslider/js/video.heroslider.vimeo.js: { weight: -1 }
+
+# Oembed frame for Youtube video behaviors in the heroslider component.
+oembed-frame-video-youtube:
+  js:
+    components/organisms/heroslider/js/oembed-frame.heroslider.youtube.js: {}
+
+# Oembed frame for Vimeo video behaviors in the heroslider component.
+oembed-frame-video-vimeo:
+  js:
+    components/organisms/heroslider/js/oembed-frame.heroslider.vimeo.js: {}
+
+# Ckeditor 5 styles.
+ckeditor5-root:
+  dependencies:
+    - core/components.vartheme_bs5_horizonaid--root
+
+# Ckeditor 5 styles.
+ckeditor5-styles:
+  dependencies:
+    - core/components.vartheme_bs5_horizonaid--alert
+    - core/components.vartheme_bs5_horizonaid--callout
+
+# Accordion behavior script (ensures Bootstrap Collapse works inside Drupal Canvas/SDC renders).
+accordion-scripts:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-collapse-script
+  js:
+    js/components/accordion-init.js: {}
+

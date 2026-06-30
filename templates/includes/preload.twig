@@ -1,0 +1,70 @@
+{#
+/**
+ * @file
+ * Preload assets.
+ *
+ * Available variables:
+ * - vartheme_bs5_horizonaid_path: Returns the path to the Vartheme BS5 Horizon Aid theme.
+ * - html_dir: contains the language direction. It will either be 'ltr' or 'rtl'.
+ */
+#}
+
+{#
+* NOTE: Change the logic in this file to match the need of your website.
+
+* Example of logic: 
+    - Multilingual websites may use a language selection for preloaded assets.
+    - Sections of the website may have a custom prelead assets for CSS/JS.
+*  --------------------------------------------------------------------------
+*  Have a look at "Preload critical assets to improve loading speed"
+*  https://web.dev/preload-critical-assets/
+*  for more ideas on what/when/where to use preload.
+#}
+
+{# Preload assets for all languages and all sections in the website. #}
+
+{# Preload Bootstrap Icons #}
+<link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/bootstrap-icons/font/fonts/bootstrap-icons.woff" as="font" type="font/woff" crossorigin="anonymous">
+<link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/bootstrap-icons/font/fonts/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+{# Preload assets only for LTR languages. #}
+{% if html_dir == 'ltr' %}
+
+  {# Preload Figtree — primary sans-serif font (body + headings). Only woff2 is available. #}
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/figtree/webfonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/figtree/webfonts/figtree-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+  {# Preload DM Mono — monospace font. Only woff2 is available. #}
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/dm-mono/webfonts/dm-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/dm-mono/webfonts/dm-mono-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/dm-mono/webfonts/dm-mono-500-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/dm-mono/webfonts/dm-mono-500-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+{% endif %}
+
+
+{# Preload assets only for RTL languages. #}
+{% if html_dir == 'rtl' %}
+  {# Preload Font Droid Arabic Kufi Regular #}
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Bold.eot" as="font" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+  {# Preload Font Droid Arabic Kufi Bold #}
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Regular.eot" as="font" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Regular.woff" as="font" type="font/woff" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/droid/arabic/kufi/webfonts/v6/DroidKufi-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+{% endif %}
+
+{# Example: Preload assets only for LTR languages.
+* By adding more restraction or selection for what/when/where to use for preload.
+* Selected preload could work for a selected language. 
+*  --------------------------------------------------------------------------
+{% if html_dir == 'ltr' %}
+  <link rel="preload" href="/{{ vartheme_bs5_horizonaid_path }}/fonts/lora/lora-v14-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+{%- endif -%}
+*  --------------------------------------------------------------------------
+* Needs to add the font files in the right location for local fonts.
+#}

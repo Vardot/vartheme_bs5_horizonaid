@@ -1,0 +1,169 @@
+{% stories Alert with {
+  title: 'Molecules/Alert',
+  parameters: {
+    componentSubtitle: 'Bootstrap Alert Component',
+    docs: {
+      description: {
+        component: 'Alerts are available for any length of text, as well as an optional close button. For proper styling, use one of the eight required contextual classes (e.g., .alert-success).',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      name: 'Alert variant',
+      description: 'Bootstrap includes several predefined alert variant styles.',
+      defaultValue: '',
+      control: 'select',
+      options: {
+        "'- none -'": '',
+        Primary: 'primary',
+        Secondary: 'secondary',
+        Success: 'success',
+        Danger: 'danger',
+        Warning: 'warning',
+        Info: 'info',
+        Light: 'light',
+        Dark: 'dark',
+      },
+    },
+    dismissible: {
+      name: 'Dismissible',
+      description: 'It is possible to dismiss any alert inline, When an alert is dismissed, the element is completely removed from the page structure.',
+      defaultValue: true,
+      control: 'boolean',
+    },
+    content: {
+      name: 'Alert content',
+      description: 'The content of the alert.',
+      defaultValue: '',
+      control: 'text',
+    },
+    heading: {
+      name: 'Alert heading',
+      description: 'Alerts can also contain primary alert heading.',
+      defaultValue: '',
+      control: 'text',
+    },
+    alert_utility_classes: {
+      name: 'Utility Classes',
+      description: 'An array of utility classes that can be used to add extra Bootstrap utility classes or custom classes to this component.',
+      control: 'object',
+      defaultValue: [],
+    },
+    attributes: {
+      name: 'Attributes',
+      description: 'HTML attributes for the alert element.',
+      control: 'object',
+      defaultValue: {},
+    },
+  },
+} %}
+
+{% story Primary with {
+  name: 'Primary',
+  args: {
+    variant: 'primary',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert primary check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% story Secondary with {
+  name: 'Secondary',
+  args: {
+    variant: 'secondary',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert secondary check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% story Success with {
+  name: 'Success',
+  args: {
+    variant: 'success',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert success check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% story Danger with {
+  name: 'Danger',
+  args: {
+    variant: 'danger',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert danger check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% story Warning with {
+  name: 'Warning',
+  args: {
+    variant: 'warning',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert warning check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% story Info with {
+  name: 'Info',
+  args: {
+    variant: 'info',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert info check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% story Light with {
+  name: 'Light',
+  args: {
+    variant: 'light',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert light check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% story Dark with {
+  name: 'Dark',
+  args: {
+    variant: 'dark',
+    dismissible: true,
+    heading: '',
+    content: 'A simple alert dark check it out!',
+    alert_utility_classes: [],
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:alert') }}
+{% endstory %}
+
+{% endstories %}

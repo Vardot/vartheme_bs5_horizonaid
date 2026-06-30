@@ -1,0 +1,74 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as HeroBlogStories from './hero-blog.stories.json';
+import templateSource from './hero-blog.twig?raw';
+
+<Meta of={HeroBlogStories} name="Docs"/>
+
+# Hero Blog
+
+A content header for blog posts, articles, and editorial pages. Renders a formatted published date, title, optional author name (with or without a link), and an optional media slot — all in a centered layout.
+
+- Date renders via the `date` sub-component; omit the prop to hide it entirely
+- Title renders through `vartheme_bs5_horizonaid:heading` and supports both semantic level and independent visual size
+- Author renders as plain text or a linked name depending on whether `author_url` is provided
+- `blog_media` slot renders below the text content and accepts any HTML markup
+
+> ### Bootstrap documentation
+> - [Typography](https://getbootstrap.com/docs/5.3/content/typography/)
+> - [Images](https://getbootstrap.com/docs/5.3/content/images/)
+> - [Spacing](https://getbootstrap.com/docs/5.3/utilities/spacing/)
+
+## Properties
+
+<Canvas of={HeroBlogStories.Default} />
+<Controls of={HeroBlogStories.Default} />
+
+## Stories
+
+<Stories of={HeroBlogStories} />
+
+## Example
+
+### Example #1 : Default hero blog
+
+```twig
+{% include 'vartheme_bs5_horizonaid:hero-blog' with {
+  heading_text: 'How design systems scale content',
+  level: 2,
+  heading_size: 'default',
+  date: '2026-03-24',
+  author: 'John Smith',
+  author_url: ''
+} %}
+```
+
+### Example #2 : Hero blog with author link
+
+```twig
+{% include 'vartheme_bs5_horizonaid:hero-blog' with {
+  heading_text: 'Linked author profile',
+  level: 2,
+  heading_size: 'default',
+  date: '2026-03-24',
+  author: 'Jane Doe',
+  author_url: 'https://example.com/authors/jane-doe'
+} %}
+```
+
+### Example #3 : Hero blog with media
+
+```twig
+{% include 'vartheme_bs5_horizonaid:hero-blog' with {
+  heading_text: 'Hero blog with media',
+  level: 2,
+  heading_size: 'default',
+  date: '2026-03-24',
+  author: 'John Smith',
+  author_url: '',
+  blog_media: '<img src="/components/foundation/images/assets/hero-blog-placeholder.svg" alt="Hero blog media" class="img-fluid rounded">'
+} %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizon Aid Starter Kit implementation for the Views View List component.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Print the HTML. #}
+{% apply spaceless %}
+{% if rows is iterable %}
+  {% if title %}
+    {{
+      include('vartheme_bs5_horizonaid:heading', {
+        html_tag: 'h3',
+        content: title,
+      }, with_context: false)
+    }}
+  {% endif %}
+
+  {{
+    include('vartheme_bs5_horizonaid:list', {
+      type: type,
+      attributes: attributes,
+      items: rows,
+      list_utility_classes: list_utility_classes,
+      list_item_utility_classes: list_item_utility_classes,
+    }, with_context: false)
+  }}
+{% endif %}
+{% endapply %}

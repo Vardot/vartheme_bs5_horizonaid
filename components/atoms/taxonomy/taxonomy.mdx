@@ -1,0 +1,34 @@
+{/* taxonomy.mdx */}
+
+import { Title, Subtitle, Description, Primary, Stories, Controls, Meta, Source } from '@storybook/addon-docs/blocks';
+import * as comStories from './taxonomy.stories.json';
+import templateSource from './taxonomy.twig?raw';
+
+<Meta of={comStories} name="Docs" />
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap documentation
+> * [Badges](https://getbootstrap.com/docs/5.3/components/badge/)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Twig usage example
+```twig
+{% include "vartheme_bs5_horizonaid:taxonomy" with {
+  label: 'Taxonomy',
+  url: '',
+  target: '_self',
+  size: 'taxonomy-lg',
+} %}
+```
+
+## Source code
+<Source code={templateSource} />

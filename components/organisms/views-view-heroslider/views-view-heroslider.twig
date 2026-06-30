@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizon Aid Starter Kit implementation for the Views View Heroslider component.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ * - empty: The content to display if there are no rows.
+ *
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Print the HTML. #}
+{{
+  include('vartheme_bs5_horizonaid:heroslider',
+    {
+      id: id,
+      controls: (controls ?? false),
+      indicators: (indicators ?? false),
+      controls_indicators_position: (controls_indicators_position ?? 'overlay'),
+      interval: (interval ?? 6000),
+      keyboard: (keyboard ?? true),
+      pause: (pause ?? 'hover'),
+      ride: (ride ?? 'carousel'),
+      touch: (touch ?? true),
+      wrap: (wrap ?? true),
+      items: (rows ?? []),
+      empty: (empty ?? ''),
+    },
+    with_context: false,
+  )
+}}

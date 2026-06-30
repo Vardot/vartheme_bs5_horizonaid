@@ -1,0 +1,168 @@
+{% stories FoundationIcons with {
+  title: 'Foundation/Icons',
+  parameters: {
+    docs: {
+      description: {
+        component: 'Bootstrap Icons used in Vartheme BS5 Horizon Aid, grouped by category.',
+      },
+    },
+  },
+} %}
+
+{% story Icons with {
+  name: 'Icons',
+} %}
+
+<div class="px-5 py-5">
+  <h1 class="fw-bold mb-5">Icons</h1>
+
+  {# Slider icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Slider</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set slider_icons = ['arrow-left', 'arrow-right', 'play-fill', 'pause-fill', 'stop-fill', 'skip-backward-fill', 'skip-forward-fill', 'circle-fill', 'dash-circle', 'dash-circle-fill'] %}
+      {% for icon in slider_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Arrow icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Arrows</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set arrow_icons = ['arrow-up', 'arrow-down', 'arrow-left', 'arrow-right', 'arrow-up-right', 'arrow-up-left', 'arrow-down-right', 'arrow-down-left', 'arrow-return-left', 'arrow-return-right', 'arrow-clockwise', 'arrow-counterclockwise', 'arrow-bar-up', 'arrow-bar-down', 'arrow-bar-left', 'arrow-bar-right'] %}
+      {% for icon in arrow_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Chevron icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Chevrons</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set chevron_icons = ['chevron-up', 'chevron-down', 'chevron-left', 'chevron-right', 'chevron-double-up', 'chevron-double-down', 'chevron-double-left', 'chevron-double-right', 'chevron-bar-up', 'chevron-bar-down', 'chevron-bar-left', 'chevron-bar-right', 'chevron-compact-up', 'chevron-compact-down', 'chevron-compact-left', 'chevron-compact-right'] %}
+      {% for icon in chevron_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Common icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Other</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set common_icons = ['search', 'heart', 'heart-fill', 'star', 'star-fill', 'bell', 'bell-fill', 'calendar', 'calendar-fill', 'envelope', 'envelope-fill', 'gear', 'gear-fill', 'person', 'person-fill', 'house', 'house-fill', 'trash', 'trash-fill', 'pencil', 'pencil-fill', 'download', 'upload', 'share', 'share-fill', 'link', 'link-45deg', 'check-circle', 'check-circle-fill', 'x-circle', 'x-circle-fill', 'info-circle', 'info-circle-fill', 'exclamation-circle', 'exclamation-circle-fill', 'question-circle', 'question-circle-fill', 'plus-circle', 'plus-circle-fill', 'dash-circle', 'eye', 'eye-fill', 'eye-slash', 'lock', 'lock-fill', 'unlock', 'file', 'folder', 'image', 'camera', 'camera-fill', 'telephone', 'telephone-fill', 'map', 'map-fill', 'pin', 'pin-fill', 'tag', 'tag-fill', 'cart', 'cart-fill', 'bag', 'bag-fill', 'credit-card', 'credit-card-fill', 'cup', 'cup-fill', 'globe', 'globe2', 'wifi', 'bluetooth', 'battery', 'battery-full', 'play-circle', 'play-circle-fill', 'pause-circle', 'stop-circle'] %}
+      {% for icon in common_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Person icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Person</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set person_icons = ['person', 'person-fill', 'person-circle', 'person-badge', 'person-badge-fill', 'person-check', 'person-check-fill', 'person-dash', 'person-dash-fill', 'person-plus', 'person-plus-fill', 'person-x', 'person-x-fill', 'people', 'people-fill'] %}
+      {% for icon in person_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Social Media icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Social Media</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set social_icons = ['instagram', 'facebook', 'linkedin', 'twitter', 'twitter-x', 'youtube', 'github', 'whatsapp', 'telegram', 'discord', 'twitch', 'pinterest', 'reddit', 'snapchat', 'spotify', 'tiktok', 'vimeo', 'slack', 'skype', 'apple', 'google', 'google-play', 'windows', 'microsoft', 'dropbox', 'paypal', 'behance', 'dribbble', 'medium', 'wordpress'] %}
+      {% for icon in social_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Icon sizes #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Icon Sizes</h2>
+    <p class="mb-4">Use Bootstrap font-size utilities or custom rem values.</p>
+    <div class="d-flex align-items-end gap-5">
+      <div class="d-flex flex-column align-items-center gap-2">
+        {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: 'star-fill', icon_size: 'fs-1', color: 'text-primary' }) }}
+        <span class="small text-muted"><code>fs-1</code></span>
+      </div>
+      <div class="d-flex flex-column align-items-center gap-2">
+        {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: 'star-fill', icon_size: 'fs-2', color: 'text-primary' }) }}
+        <span class="small text-muted"><code>fs-2</code></span>
+      </div>
+      <div class="d-flex flex-column align-items-center gap-2">
+        {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: 'star-fill', icon_size: 'fs-3', color: 'text-primary' }) }}
+        <span class="small text-muted"><code>fs-3</code></span>
+      </div>
+      <div class="d-flex flex-column align-items-center gap-2">
+        {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: 'star-fill', icon_size: 'fs-4', color: 'text-primary' }) }}
+        <span class="small text-muted"><code>fs-4</code></span>
+      </div>
+      <div class="d-flex flex-column align-items-center gap-2">
+        {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: 'star-fill', icon_size: 'fs-5', color: 'text-primary' }) }}
+        <span class="small text-muted"><code>fs-5</code></span>
+      </div>
+      <div class="d-flex flex-column align-items-center gap-2">
+        {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: 'star-fill', icon_size: 'fs-6', color: 'text-primary' }) }}
+        <span class="small text-muted"><code>fs-6</code></span>
+      </div>
+    </div>
+  </div>
+
+  {# Icon colors #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Icon Colors</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set colors = ['text-primary', 'text-secondary', 'text-success', 'text-danger', 'text-warning', 'text-info', 'text-dark', 'text-muted'] %}
+      {% for color in colors %}
+        <div class="d-flex flex-column align-items-center gap-2">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: 'circle-fill', icon_size: 'fs-3', color: color }) }}
+          <span class="small text-muted"><code>{{ color }}</code></span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Backend icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Backend Icons</h2>
+    <div class="d-flex flex-wrap gap-4">
+      <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+        <img src="/components/foundation/images/assets/figma-logo.svg" width="32" alt="Figma icon" />
+        <span class="small text-muted text-center" style="font-size: 11px;">figma</span>
+      </div>
+      <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+        <img src="/components/foundation/images/assets/lightbulb.svg" width="32" alt="Lightbulb icon" />
+        <span class="small text-muted text-center" style="font-size: 11px;">lightbulb</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endstory %}
+
+{% endstories %}

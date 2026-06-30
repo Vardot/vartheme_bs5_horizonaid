@@ -1,0 +1,56 @@
+import { Title, Subtitle, Description, Source, Meta, Primary, Stories, Controls } from '@storybook/addon-docs/blocks';
+import * as comStories from './text.stories.json';
+import templateSource from './text.twig?raw';
+
+<Meta of={comStories} />
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap documentation
+> * [Typography](https://getbootstrap.com/docs/5.3/content/typography/)
+> * [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+> * [Font size utilities](https://getbootstrap.com/docs/5.3/utilities/text/#font-size)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Notes
+* `text` is rendered as trusted HTML — ensure content is already filtered/safe before passing.
+* `text_size` accepts Bootstrap font-size utilities (`fs-3` through `fs-6`). Use `none` to disable.
+* `text_color` accepts Bootstrap text color utilities (`text-primary`, `text-muted`, etc.).
+
+## Examples
+
+### Example #1: Default text
+```twig
+{% include 'vartheme_bs5_horizonaid:text' with {
+  text: '<p><strong>Hello</strong> from rich text.</p>',
+} only %}
+```
+
+### Example #2: Large primary text
+```twig
+{% include 'vartheme_bs5_horizonaid:text' with {
+  text: '<p>Featured announcement.</p>',
+  text_size: 'fs-3',
+  text_color: 'text-primary',
+} only %}
+```
+
+### Example #3: Muted small text
+```twig
+{% include 'vartheme_bs5_horizonaid:text' with {
+  text: '<p>Last updated: January 2025.</p>',
+  text_size: 'fs-6',
+  text_color: 'text-muted',
+} only %}
+```
+
+## Source code
+<Source code={templateSource} />

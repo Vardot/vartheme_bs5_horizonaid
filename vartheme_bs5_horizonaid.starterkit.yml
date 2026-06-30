@@ -1,0 +1,15 @@
+ignore:
+  - '/vartheme_bs5_horizonaid.starterkit.yml'
+  - '/composer.json'
+  - '/.git'
+  - '/.gitlab'
+  - '/scripts'
+  - '/tests'
+  - '/src/StarterKit.php'
+  - '/README.md'
+  - '/README.txt'
+no_edit:
+  - 'starterkit.md'
+no_rename: []
+info:
+  version: 1.0.0

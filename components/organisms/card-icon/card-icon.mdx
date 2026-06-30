@@ -1,0 +1,67 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CardIconStories from './card-icon.stories.json';
+import templateSource from './card-icon.twig?raw';
+
+<Meta of={CardIconStories} name="Docs" />
+
+# Card Icon
+
+A feature card with an optional Bootstrap Icon, heading, description, and optional CTA button or full-card link. Suitable for feature grids, service highlights, and navigation cards.
+
+- Icon is rendered via `vartheme_bs5_horizonaid:bootstrap-icon` — pass the icon name without the `bi-` prefix
+- Set `icon: 'none'` to hide the icon entirely
+- If `url` and `button_label` are both set, a CTA button is shown; if only `url` is set, the entire card becomes a stretched link
+- `text_align` controls alignment of the icon, heading, and description together
+
+> ### Bootstrap documentation
+> - [Cards](https://getbootstrap.com/docs/5.3/components/card/)
+> - [Bootstrap Icons](https://icons.getbootstrap.com/)
+> - [Stretched link](https://getbootstrap.com/docs/5.3/helpers/stretched-link/)
+
+## Properties
+
+<Canvas of={CardIconStories.Default} />
+<Controls of={CardIconStories.Default} />
+
+## Stories
+
+<Stories of={CardIconStories} />
+
+## Example
+
+### Example #1 : Default icon card
+
+```twig
+{{ include('vartheme_bs5_horizonaid:card-icon', {
+  text: 'Your heading here',
+  description: '<p>This is placeholder text for a default card.</p>',
+  icon: 'people',
+  icon_size: 'fs-4',
+  text_align: 'text-center',
+  background_color: 'bg-body',
+  shadow: 'shadow',
+  has_padding: true,
+}, with_context: false) }}
+```
+
+### Example #2 : Icon card with button
+
+```twig
+{{ include('vartheme_bs5_horizonaid:card-icon', {
+  text: 'Create account',
+  description: '<p>Start your registration process and continue with the next steps.</p>',
+  icon: 'person-check',
+  icon_size: 'fs-4',
+  text_align: 'text-center',
+  background_color: 'bg-body',
+  shadow: 'shadow',
+  has_padding: true,
+  url: 'https://example.com/register',
+  button_label: 'Get started',
+  button_variant: 'btn-primary',
+}, with_context: false) }}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

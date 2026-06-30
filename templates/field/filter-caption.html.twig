@@ -1,0 +1,11 @@
+{#
+/**
+ * @file
+ * Template for a Figure.
+ */
+#}
+{% include 'vartheme_bs5_horizonaid:figure' with {
+  image: node,
+  caption: caption,
+  figure_utility_classes: classes|split(' '),
+} %}
