@@ -1,0 +1,216 @@
+{% stories CardProfile with {
+  title: 'Cards/Profile Card',
+  parameters: {
+    componentSubtitle: 'Team member profile card with a photo, drag & drop content, and optional social links.',
+    docs: {
+      description: {
+        component: 'A profile card for team/employee grids. The photo zooms and social icons switch to an accent color on hover. Supports border, background, shadow, border radius, and equal height.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    image: {
+      name: 'Photo',
+      description: 'Upload the person\'s photo. Fills the card above the footer with a cover crop.',
+      control: 'object',
+    },
+    card_border: {
+      name: 'Card border',
+      description: 'Adds default Bootstrap border.',
+      defaultValue: false,
+      control: 'boolean',
+    },
+    background_color: {
+      name: 'Footer background',
+      description: 'Brand background color applied to the card footer.',
+      defaultValue: 'bg-dark',
+      control: 'select',
+      options: {
+        None: 'none',
+        "'Body tertiary'": 'bg-body-tertiary',
+        Tertiary: 'bg-tertiary',
+        Accent: 'bg-accent',
+        Primary: 'bg-primary',
+        "'Primary subtle'": 'bg-primary-subtle',
+        Secondary: 'bg-secondary',
+        "'Secondary subtle'": 'bg-secondary-subtle',
+        Dark: 'bg-dark',
+      },
+    },
+    box_shadow: {
+      name: 'Shadow',
+      description: 'Bootstrap shadow utility.',
+      defaultValue: 'shadow-sm',
+      control: 'select',
+      options: {
+        None: 'shadow-none',
+        Small: 'shadow-sm',
+        Medium: 'shadow',
+        Large: 'shadow-lg',
+      },
+    },
+    corner_style: {
+      name: 'Border radius',
+      description: 'Rounded utility for the card.',
+      defaultValue: 'rounded-4',
+      control: 'select',
+      options: {
+        "'None (square)'": 'rounded-0',
+        Small: 'rounded-1',
+        Large: 'rounded-3',
+        "'Extra large'": 'rounded-4',
+        Pill: 'rounded-pill',
+      },
+    },
+    equal_height: {
+      name: 'Equal height',
+      description: 'Apply h-100 for grid alignment.',
+      defaultValue: false,
+      control: 'boolean',
+    },
+    linkedin_url: {
+      name: 'LinkedIn URL',
+      description: 'Leave empty to hide the icon.',
+      defaultValue: '',
+      control: 'text',
+    },
+    twitter_url: {
+      name: 'X (Twitter) URL',
+      description: 'Leave empty to hide the icon.',
+      defaultValue: '',
+      control: 'text',
+    },
+    facebook_url: {
+      name: 'Facebook URL',
+      description: 'Leave empty to hide the icon.',
+      defaultValue: '',
+      control: 'text',
+    },
+    instagram_url: {
+      name: 'Instagram URL',
+      description: 'Leave empty to hide the icon.',
+      defaultValue: '',
+      control: 'text',
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    image: { src: '/components/foundation/images/assets/avatar-placeholder.png', alt: 'Jane Doe', width: 359, height: 359 },
+    card_border: false,
+    background_color: 'bg-dark',
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-4',
+    equal_height: false,
+    linkedin_url: 'https://linkedin.com/in/example',
+    twitter_url: 'https://x.com/example',
+    facebook_url: '',
+    instagram_url: '',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-profile' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">Jane Doe</h3>
+    <p class="mb-0 text-white-50">Product Designer</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story AllSocialLinks with {
+  name: 'All social links',
+  args: {
+    image: { src: '/components/foundation/images/assets/avatar-placeholder.png', alt: 'John Smith', width: 359, height: 359 },
+    card_border: false,
+    background_color: 'bg-primary',
+    box_shadow: 'shadow',
+    corner_style: 'rounded-4',
+    equal_height: false,
+    linkedin_url: 'https://linkedin.com/in/example',
+    twitter_url: 'https://x.com/example',
+    facebook_url: 'https://facebook.com/example',
+    instagram_url: 'https://instagram.com/example',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-profile' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">John Smith</h3>
+    <p class="mb-0 text-white-50">Engineering Lead</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story NoSocialLinks with {
+  name: 'No social links',
+  args: {
+    image: { src: '/components/foundation/images/assets/avatar-placeholder.png', alt: 'Amara Okafor', width: 359, height: 359 },
+    card_border: true,
+    background_color: 'bg-secondary',
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    linkedin_url: '',
+    twitter_url: '',
+    facebook_url: '',
+    instagram_url: '',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-profile' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">Amara Okafor</h3>
+    <p class="mb-0 text-white-50">Customer Success Manager</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story NoPhoto with {
+  name: 'No photo (empty state)',
+  args: {
+    image: {},
+    card_border: true,
+    background_color: 'bg-dark',
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-4',
+    equal_height: false,
+    linkedin_url: 'https://linkedin.com/in/example',
+    twitter_url: '',
+    facebook_url: '',
+    instagram_url: '',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-profile' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">Unassigned photo</h3>
+    <p class="mb-0 text-white-50">Upload a photo to fill the media area.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story EqualHeight with {
+  name: 'Equal height',
+  args: {
+    image: { src: '/components/foundation/images/assets/avatar-placeholder.png', alt: 'Priya Nair', width: 359, height: 359 },
+    card_border: false,
+    background_color: 'bg-dark',
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-4',
+    equal_height: true,
+    linkedin_url: 'https://linkedin.com/in/example',
+    twitter_url: '',
+    facebook_url: '',
+    instagram_url: '',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-profile' with _context %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">Priya Nair</h3>
+    <p class="mb-0 text-white-50">Marketing Director</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% endstories %}

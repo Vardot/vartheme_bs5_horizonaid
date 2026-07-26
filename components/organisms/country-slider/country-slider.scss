@@ -1,0 +1,87 @@
+// @file
+// Vartheme BS5 Horizonaid — Country Slider component styles.
+//
+// A horizontally-scrolling, multi-item-visible card row. Bootstrap has no
+// component for this (only the single-slide-at-a-time Carousel), so the
+// track uses CSS Scroll Snap — a genuine special case, not reachable with
+// Bootstrap utilities. Card widths and the control button size are derived
+// from the spacer scale / Bootstrap breakpoints rather than hard-coded
+// values. Scoped to the `.country-slider` block so nothing leaks to the
+// rest of the theme.
+
+@import "../../defaults";
+
+.country-slider {
+  &__track {
+    display: flex;
+    gap: $spacer * 1.5;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; // Firefox.
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none; // Chrome/Safari/Edge.
+    }
+
+    // Direct-child selector: `country-slider.js` moves any wrapped
+    // "Country Card" instance to be a direct child of the track, the same
+    // defensive step `hero-slider-container` takes for `.carousel-item`.
+    > .card-country {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      // 1 card + a peek of the next on mobile, up to 4 full cards on lg+.
+      width: 85%;
+
+      @include media-breakpoint-up(sm) {
+        width: calc((100% - #{$spacer * 1.5}) / 2);
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: calc((100% - #{$spacer * 1.5 * 3}) / 4);
+      }
+    }
+  }
+
+  &__control {
+    // Matches the control icon artwork's own native 56x38 proportions
+    // (the pill outline is part of the SVG, not a CSS border).
+    --country-slider-control-width: #{$spacer * 3.5};
+    --country-slider-control-height: #{$spacer * 2.375};
+    --country-slider-arrow-nudge: #{$spacer * 0.1875};
+
+    width: var(--country-slider-control-width);
+    height: var(--country-slider-control-height);
+
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+
+  // Nudges only the arrow (not the pill outline) a little further in the
+  // direction it points on hover/focus. Scoped to the `<g>` wrapping just
+  // the arrow paths so the outline stays put — no Bootstrap utility for a
+  // direction-aware icon micro-interaction like this. Unlike
+  // `impressed-card-slider` (which mirrors one icon with `scaleX(-1)`, so a
+  // single nudge rule reads correctly in both directions), prev/next here
+  // use distinct left-/right-pointing artwork, so each needs its own sign.
+  &__control-arrow {
+    transition: transform 0.15s ease;
+  }
+
+  &__control[data-country-slider-prev]:not(:disabled):hover &__control-arrow,
+  &__control[data-country-slider-prev]:not(:disabled):focus-visible &__control-arrow {
+    transform: translateX(calc(-1 * var(--country-slider-arrow-nudge)));
+  }
+
+  &__control[data-country-slider-next]:not(:disabled):hover &__control-arrow,
+  &__control[data-country-slider-next]:not(:disabled):focus-visible &__control-arrow {
+    transform: translateX(var(--country-slider-arrow-nudge));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__control-arrow {
+      transition: none;
+    }
+  }
+}

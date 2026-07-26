@@ -12,10 +12,11 @@ Use this component when you need a stacked media card that can:
 
 - place an uploaded image above or below the content
 - crop the image to a fixed ratio and control how it fits
-- drop a badge or inline element over the top-left corner of the image
+- drop a badge or inline element over the bottom-left corner of the image
 - hold arbitrary drag & drop content (text, buttons, other components)
 - apply Bootstrap background, border, rounded corners, shadow, and optional padding
 - optionally turn the whole card into a clickable stretched link
+- on hover: the media image zooms in slightly, and any heading dropped in the content slot switches color
 
 ## Files
 
@@ -54,7 +55,7 @@ Use this component when you need a stacked media card that can:
 
 ## Slots
 
-- `overlay` — badge overlay rendered in the top-left corner of the media image; drop a Badge component or any inline element
+- `overlay` — badge overlay rendered in the bottom-left corner of the media image; drop a Badge component or any inline element
 - `content` — drag & drop content area for text, buttons, or other components
 
 ## Example: basic card
@@ -119,3 +120,4 @@ Use this component when you need a stacked media card that can:
 - `media_position: bottom` reverses the stack order using `flex-column-reverse`.
 - The stretched link is only rendered when both `stretched_link` is enabled and `link_url` is set; `link_target: default` maps to `_self`.
 - Boolean props (`card_border`, `padded`, `equal_height`, `stretched_link`) are validated and defaulted by SDC, so they arrive as real booleans.
+- **Hover effect:** hovering the card zooms the media image in slightly (clipped by the card's own overflow) and switches the color of any heading dropped in the content slot — gold on dark backgrounds (`bg-primary`, `bg-secondary`, `bg-success`, `bg-danger`, `bg-dark`), accent blue on light ones. Leave the dropped heading's own text color empty so this can apply. Respects `prefers-reduced-motion`.

@@ -1,10 +1,10 @@
 {% stories AccordionBlock with {
   title: 'Layout/Accordion/Accordion block',
   parameters: {
-    componentSubtitle: 'Bootstrap accordion single item',
+    componentSubtitle: 'Single collapsible accordion item',
     docs: {
       description: {
-        component: 'A single collapsible accordion item. Default style: secondary-subtle background, dark text. Hover: secondary background with primary (#0D6EFD) text. An optional color class can override the header button appearance.',
+        component: 'A single collapsible accordion item with a plus/minus icon toggle and a smooth height animation. Default style: tertiary background, secondary title. Expanded: accent-subtle background. Hover: title switches to the accent color.',
       },
       story: {
         inline: true,
@@ -39,21 +39,6 @@
       control: 'boolean',
       defaultValue: false,
     },
-    color: {
-      name: 'Header color override',
-      control: 'select',
-      defaultValue: 'inherit',
-      options: {
-        "'Inherit from container'": 'inherit',
-        Primary: 'text-bg-primary',
-        Secondary: 'text-bg-secondary',
-        Success: 'text-bg-success',
-        Danger: 'text-bg-danger',
-        Warning: 'text-bg-warning',
-        Info: 'text-bg-info',
-        Dark: 'text-bg-dark',
-      },
-    },
     item_id: {
       name: 'Item ID',
       control: 'text',
@@ -69,20 +54,17 @@
     heading_level: 3,
     open_by_default: true,
     always_open: false,
-    color: 'inherit',
     item_id: '',
   },
 } %}
 {% set accordion_content %}
     <p class="mb-0">This section contains the accordion body content. You can place any content here including text, lists, images, buttons, or nested components.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
   title: title,
   heading_level: heading_level,
   open_by_default: open_by_default,
   always_open: always_open,
-  color: color,
   item_id: item_id,
   accordion_content: accordion_content,
 }, with_context: false) }}
@@ -95,20 +77,17 @@
     heading_level: 3,
     open_by_default: true,
     always_open: false,
-    color: 'inherit',
     item_id: 'open-default',
   },
 } %}
 {% set accordion_content %}
     <p class="mb-0">This accordion item is expanded when the page first loads. Use <code>open_by_default: true</code> to reveal content immediately.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
   title: title,
   heading_level: heading_level,
   open_by_default: open_by_default,
   always_open: always_open,
-  color: color,
   item_id: item_id,
   accordion_content: accordion_content,
 }, with_context: false) }}
@@ -121,46 +100,17 @@
     heading_level: 3,
     open_by_default: false,
     always_open: false,
-    color: 'inherit',
     item_id: 'closed-default',
   },
 } %}
 {% set accordion_content %}
     <p class="mb-0">This accordion item starts collapsed. The reader must click the header to reveal this content.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
   title: title,
   heading_level: heading_level,
   open_by_default: open_by_default,
   always_open: always_open,
-  color: color,
-  item_id: item_id,
-  accordion_content: accordion_content,
-}, with_context: false) }}
-{% endstory %}
-
-{% story PrimaryColor with {
-  name: 'Primary header color',
-  args: {
-    title: 'Primary styled header',
-    heading_level: 3,
-    open_by_default: true,
-    always_open: false,
-    color: 'text-bg-primary',
-    item_id: 'primary-item',
-  },
-} %}
-{% set accordion_content %}
-    <p class="mb-0">The header button uses the <strong>Primary</strong> Bootstrap color (<code>text-bg-primary</code>). Any Bootstrap <code>text-bg-*</code> color can be applied directly to the accordion button.</p>
-  {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
-{{ include('vartheme_bs5_horizonaid:accordion-block', {
-  title: title,
-  heading_level: heading_level,
-  open_by_default: open_by_default,
-  always_open: always_open,
-  color: color,
   item_id: item_id,
   accordion_content: accordion_content,
 }, with_context: false) }}
@@ -173,7 +123,6 @@
     heading_level: 3,
     open_by_default: true,
     always_open: false,
-    color: 'inherit',
     item_id: 'rich-content',
   },
 } %}
@@ -186,13 +135,11 @@
     </ul>
     <p class="mb-0">Returns are accepted within 30 days of purchase. <a href="#">View full returns policy.</a></p>
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
   title: title,
   heading_level: heading_level,
   open_by_default: open_by_default,
   always_open: always_open,
-  color: color,
   item_id: item_id,
   accordion_content: accordion_content,
 }, with_context: false) }}
@@ -205,20 +152,17 @@
     heading_level: 3,
     open_by_default: true,
     always_open: true,
-    color: 'text-bg-info',
     item_id: 'always-open-item',
   },
 } %}
 {% set accordion_content %}
     <p class="mb-0">This item uses <code>always_open: true</code> so it remains open independently, even when placed inside a grouped accordion container.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
   title: title,
   heading_level: heading_level,
   open_by_default: open_by_default,
   always_open: always_open,
-  color: color,
   item_id: item_id,
   accordion_content: accordion_content,
 }, with_context: false) }}

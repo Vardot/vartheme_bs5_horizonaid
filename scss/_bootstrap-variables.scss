@@ -20,8 +20,8 @@ $aspect-ratios: (
   "21x9": calc(9 / 21 * 100%),
 );
 
-// Override the default primary font family to Inter - Regular, Italic Bold for sans serif.
-$font-family-sans-serif: figtree, sans-serif;
+// Override the default primary font family to Plus Jakarta Sans - Regular, Bold for sans serif.
+$font-family-sans-serif: 'Plus Jakarta Sans', sans-serif;
 
 // Secondary monospace font family.
 $font-family-monospace: 'DM Mono', monospace;
@@ -29,7 +29,7 @@ $font-family-monospace: 'DM Mono', monospace;
 // Override the default font size.
 $font-size-root: null;
 $font-size-base: 1.125rem; // Assumes the browser default, typically `16px`
-$font-size-sm: 0.875rem;
+$font-size-sm: 1rem;
 $font-size-lg: 1.125rem;
 
 // Override the default quote font size.
@@ -64,74 +64,87 @@ $display-font-weight: 500;
 // Override the default lead styling.
 $lead-font-weight: 500;
 
-// Override the dark color to use navy-600.
-$navy: #001D38;
-$navy-600: shade-color($navy, 0%);
-$dark: $navy-600;
+// Horizon Aid brand colors — exact values confirmed against the Figma design system.
 
-// Override the light color to use sky-600.
-$sky: #F5F9FE;
-$sky-600: shade-color($sky, 0%);
+// Primary — gold.
+$primary:               #FFC72C;
+$primary-text-emphasis: #997404;
+$primary-bg-subtle:     #FFF8E7;
+$primary-border-subtle: #FFF8E7;
 
-// Lavender — accent base color.
-$lavender:     #E4DCFF;
-$lavender-600: shade-color($lavender, 0%);
-$accent:       $lavender-600;
+// Secondary — navy.
+$secondary:               #0D2C54;
+$secondary-text-emphasis: #031633;
+$secondary-bg-subtle:     #F7F9FA;
+// No Figma swatch for a secondary border; left to Bootstrap's auto-computed
+// tint of $secondary.
 
-// Linen — warm neutral used for secondary-subtle surfaces and borders.
-$linen:     #F3F1EF;
-$linen-600: shade-color($linen, 0%);
+// $headings-color defaults to `inherit` in Bootstrap (headings just take
+// whatever color their container has, same as body text) — point it at the
+// brand navy instead so headings always render in that color regardless of
+// where they're used.
+$headings-color: $secondary;
 
-// Sand — slightly deeper warm neutral used for secondary backgrounds.
-$sand:     #EBE8E5;
-$sand-600: shade-color($sand, 0%);
-$secondary: $sand-600;
+// Dark surfaces (bg-dark, navbar-dark, etc.) share the secondary navy.
+$navy: #0D2C54;
+$dark: $navy;
 
-// Stone — mid-tone warm gray for emphasis and light text.
-$stone:     #D7D2CB;
-$stone-600: shade-color($stone, 0%);
+// Tertiary (Figma "Tertiary") — blue. Modeled as the theme's custom "accent"
+// Bootstrap color (see $theme-colors map in _vartheme-variables.scss).
+$accent:               #0073E6;
+$accent-bg-subtle:     #EBF4FE;
+$accent-text-emphasis: #212529; // matches Figma "tertiary emphasis" (= gray-900 below).
+$accent-bg:            $accent;
+// No Figma swatch for a tertiary/accent border; left to Bootstrap's
+// auto-computed tint of $accent.
 
-// Powder — light blue for primary subtle background.
-$powder:     #BEDCFF;
-$powder-600: shade-color($powder, 0%);
-
-// Mist — very light lavender for accent subtle background.
-$mist:     #F6F3FF;
-$mist-600: shade-color($mist, 0%);
-
-// Lilac — medium lavender for accent emphasis, border, and background.
-$lilac:     #DBD0FF;
-$lilac-600: shade-color($lilac, 0%);
-
-// Tertiary background (Bootstrap $light default is #f8f9fa; Figma uses sky #F5F9FE).
-$tertiary: $sky-600;
-
-// Override subtle background variants (Bootstrap computes these from base colors).
-$primary-bg-subtle:   $powder-600;
-$secondary-bg-subtle: $linen-600;
-$accent-bg-subtle:    $mist-600;
-
-// Override text emphasis variants (Bootstrap computes these from base colors).
-$primary-text-emphasis:   $navy-600;
-$secondary-text-emphasis: $stone-600;
-$accent-text-emphasis:    $lilac-600;
-
-// Override border colors (Bootstrap defaults differ).
-$border-color:            $linen-600;
-$primary-border-subtle:   #0D6EFD;    // full primary blue (Figma primary-border)
-$secondary-border-subtle: $lilac-600;
-
-// Custom color variables with no Bootstrap equivalents.
-$border-white: #FFFFFF;
-$light-text:   $stone-600;
-$subtle-text:  rgba($navy, .7); // subtle-text at 70% opacity
-$accent-bg:    $lilac-600;
-
-// Override body-tertiary to use gray-900 (#212529) for both background and text.
+// Bootstrap's neutral tertiary-color/tertiary-bg tokens — gray-900 already
+// matches the Figma "tertiary emphasis" value above.
 $gray: #212529;
 $gray-900: shade-color($gray, 0%);
 $body-tertiary-bg:    $gray-900;
 $body-tertiary-color: $gray-900;
+
+// Light neutral background token, distinct from the $accent brand hue.
+$tertiary: $secondary-bg-subtle;
+
+// Success — matches Bootstrap 5.3 defaults exactly (confirmed against Figma).
+$success:               #198754;
+$success-text-emphasis: #146C43;
+$success-bg-subtle:     #D1E7DD;
+$success-border-subtle: #A3CFBB;
+
+// Error/Danger — matches Bootstrap 5.3 defaults exactly (confirmed against Figma).
+$danger:               #DC3545;
+$danger-text-emphasis: #B02A37;
+$danger-bg-subtle:     #F8D7DA;
+$danger-border-subtle: #F1AEB5;
+
+// Warning — reuses the primary gold (confirmed against Figma).
+$warning:               #FFC72C;
+$warning-text-emphasis: #CC9A06;
+$warning-bg-subtle:     #FFF8E7;
+$warning-border-subtle: #FFE69C;
+
+// Info — matches Bootstrap 5.3 defaults exactly (confirmed against Figma).
+$info:               #0DCAF0;
+$info-text-emphasis: #0AA2C0;
+$info-bg-subtle:     #CFF4FC;
+$info-border-subtle: #9EEAF9;
+
+// No Figma token for the generic border color; falls back to Bootstrap's own default.
+
+// Links — Figma's "primary" text sample is the tertiary blue, not the brand
+// gold, so point link color at $accent instead of the Bootstrap default ($primary).
+$link-color:       $accent;
+$link-hover-color: #084298;
+
+// Text variables (Figma "Text Variables" section).
+$border-white: #FFFFFF;
+$light-text:   $primary; // gold text on dark backgrounds (Figma "light").
+$subtle-text:  #6C757D; // muted gray body text (Figma "subtle").
+// "default" text (#212529) already equals $gray-900 above.
+// "secondary" text (navy, bold) already equals $secondary above.
 
 // Override border radius for all breakpoints.
 $border-radius-sm: 0.25rem;   // rounded-1

@@ -45,3 +45,18 @@ props:
       meta:enum:
         taxonomy-lg: Large
         taxonomy-sm: Small
+    color:
+      type: string
+      title: Color
+      description: Background/text color pairing for the taxonomy badge (taxonomy modifier class).
+      enum:
+        - taxonomy-primary
+        - taxonomy-secondary
+        - taxonomy-tertiary
+      default: taxonomy-primary
+      examples:
+        - taxonomy-primary
+      meta:enum:
+        taxonomy-primary: Primary
+        taxonomy-secondary: Secondary
+        taxonomy-tertiary: Tertiary

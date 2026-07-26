@@ -1,24 +1,109 @@
 @charset "UTF-8";
 
-.btn.btn-md {
-  --bs-btn-padding-y: 1rem;
-  --bs-btn-padding-x: 2rem;
-  --bs-btn-font-size: 1rem;
+.btn.btn-md{
+  --bs-btn-padding-y:1rem;
+  --bs-btn-padding-x:2rem;
+  --bs-btn-font-size:1rem;
 }
 
-.btn.btn-lg {
-  --bs-btn-padding-y: 1.25rem;
-  --bs-btn-padding-x: 1.875rem;
-  --bs-btn-font-size: 1.25rem;
+.btn.btn-lg{
+  --bs-btn-padding-y:1.25rem;
+  --bs-btn-padding-x:1.875rem;
+  --bs-btn-font-size:1.25rem;
 }
 
-.btn.btn-sm {
-  --bs-btn-padding-y: 0.625rem;
-  --bs-btn-padding-x: 0.9375rem;
-  --bs-btn-font-size: 0.875rem;
+.btn.btn-sm{
+  --bs-btn-padding-y:0.625rem;
+  --bs-btn-padding-x:0.9375rem;
+  --bs-btn-font-size:0.875rem;
 }
-@media (max-width: 767.98px) {
-  .btn.btn-md {
-    --bs-btn-font-size: 0.875rem;
+
+.btn.btn-primary{
+  --bs-btn-hover-bg:var(--bs-accent);
+  --bs-btn-hover-color:var(--bs-white);
+}
+
+.btn.btn-secondary{
+  --bs-btn-bg:var(--bs-accent);
+  --bs-btn-border-color:var(--bs-accent);
+  --bs-btn-hover-bg:var(--bs-white);
+  --bs-btn-hover-color:var(--bs-secondary);
+  --bs-btn-disabled-bg:var(--bs-accent);
+  --bs-btn-disabled-border-color:var(--bs-accent);
+}
+
+.btn.btn-link{
+  --bs-btn-color:var(--bs-dark);
+  --bs-btn-hover-color:var(--bs-dark);
+  --bs-btn-active-color:var(--bs-dark);
+  text-decoration:none;
+}
+
+.btn.btn-link:hover, .btn.btn-link:focus-visible{
+  text-decoration:none;
+}
+
+.btn:not(.btn-link):not([class*=btn-outline-]){
+  --bs-btn-border-width:0;
+}
+
+.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]){
+  --btn-fill-duration:0.35s;
+  --btn-fill-easing:cubic-bezier(0.22, 1, 0.36, 1);
+  position:relative;
+  overflow:hidden;
+}
+
+.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):hover, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):focus-visible{
+  color:var(--bs-btn-hover-color);
+  background-color:var(--bs-btn-bg);
+}
+
+.btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::before, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::after{
+  position:absolute;
+  width:50%;
+  content:"";
+  transition:transform var(--btn-fill-duration) var(--btn-fill-easing);
+  transform:scaleX(0);
+  background-color:var(--bs-btn-hover-bg);
+  inset-block:0;
+}
+
+.btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::before{
+  transform-origin:left center;
+  inset-inline-start:0;
+}
+
+[dir="rtl"] .btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::before{
+  transform-origin:right center;
+}
+
+.btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::after{
+  transform-origin:right center;
+  inset-inline-end:0;
+}
+
+[dir="rtl"] .btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::after{
+  transform-origin:left center;
+}
+
+.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):hover::before, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):hover::after, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):focus-visible::before, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):focus-visible::after{
+  transform:scaleX(1);
+}
+
+.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]) > *{
+  position:relative;
+  z-index:1;
+}
+@media (max-width: 767.98px){
+  .btn.btn-md{
+    --bs-btn-font-size:0.875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .btn::before,
+  .btn::after{
+    transition:none;
   }
 }

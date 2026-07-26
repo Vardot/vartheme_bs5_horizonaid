@@ -4,7 +4,7 @@
  * Preload assets.
  *
  * Available variables:
- * - vartheme_bs5_horizonaid_path: Returns the path to the Vartheme BS5 Horizon Aid theme.
+ * - vartheme_bs5_horizonaid_path: Returns the path to the Vartheme BS5 Horizonaid theme.
  * - html_dir: contains the language direction. It will either be 'ltr' or 'rtl'.
  */
 #}
@@ -30,9 +30,9 @@
 {# Preload assets only for LTR languages. #}
 {% if html_dir == 'ltr' %}
 
-  {# Preload Figtree — primary sans-serif font (body + headings). Only woff2 is available. #}
-  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/figtree/webfonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/figtree/webfonts/figtree-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  {# Preload Plus Jakarta Sans — primary sans-serif font (body + headings). Only woff2 is available. #}
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/plus-jakarta-sans/webfonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/plus-jakarta-sans/webfonts/plus-jakarta-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
   {# Preload DM Mono — monospace font. Only woff2 is available. #}
   <link rel="preload" href="{{ vartheme_bs5_horizonaid_path }}/fonts/dm-mono/webfonts/dm-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">

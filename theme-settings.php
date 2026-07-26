@@ -4,7 +4,7 @@
  * @file
  * theme-settings.php
  *
- * Provides theme settings for Vartheme BS5 Horizon Aid
+ * Provides theme settings for Vartheme BS5 Horizonaid
  */
 
 use Drupal\Core\Form\FormStateInterface;

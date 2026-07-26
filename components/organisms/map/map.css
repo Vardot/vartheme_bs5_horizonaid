@@ -1,0 +1,113 @@
+.map{
+  --map-height-sm:20rem;
+  --map-height-md:28rem;
+  --map-height-lg:36rem;
+  --map-control-bg:var(--bs-primary);
+  --map-control-icon:var(--bs-accent);
+  --map-control-hover-bg:var(--bs-accent);
+  --map-control-hover-icon:var(--bs-white);
+  --map-control-size:2.5rem;
+  --map-control-duration:0.2s;
+  --map-country-fill:#E0E0E0;
+  --map-country-stroke:var(--bs-white);
+  --map-country-highlighted-fill:var(--bs-accent);
+  --map-country-highlighted-hover-fill:var(--bs-secondary);
+}
+
+.map--height-sm{
+  height:var(--map-height-sm);
+}
+
+.map--height-md{
+  height:var(--map-height-md);
+}
+
+.map--height-lg{
+  height:var(--map-height-lg);
+}
+
+.map__canvas{
+  position:absolute;
+  width:100%;
+  height:100%;
+  cursor:grab;
+  inset:0;
+  touch-action:none;
+}
+
+.map__canvas--dragging{
+  cursor:grabbing;
+}
+
+.map__country{
+  fill:var(--map-country-fill);
+  stroke:var(--map-country-stroke);
+  stroke-width:0.5;
+}
+
+.map__country--highlighted{
+  cursor:pointer;
+  transition:fill var(--map-control-duration) ease;
+  fill:var(--map-country-highlighted-fill);
+}
+
+.map__country--highlighted:hover, .map__country--highlighted:focus-visible{
+  fill:var(--map-country-highlighted-hover-fill);
+}
+
+.map__country--highlighted:focus-visible{
+  outline:2px solid var(--bs-white);
+  outline-offset:-2px;
+}
+
+.map__controls{
+  position:absolute;
+  z-index:1;
+  bottom:1rem;
+  left:1rem;
+}
+
+[dir="rtl"] .map__controls{
+  right:1rem;
+  left:auto;
+}
+
+.map__control{
+  width:var(--map-control-size);
+  height:var(--map-control-size);
+  padding:0;
+  border:0;
+  background:transparent;
+  line-height:0;
+}
+
+.map__control svg{
+  width:100%;
+  height:100%;
+}
+
+.map__control-bg{
+  transition:fill var(--map-control-duration) ease;
+  fill:var(--map-control-bg);
+}
+
+.map__control-icon{
+  transition:fill var(--map-control-duration) ease;
+  fill:var(--map-control-icon);
+}
+
+.map__control:hover .map__control-bg, .map__control:focus-visible .map__control-bg{
+  fill:var(--map-control-hover-bg);
+}
+
+.map__control:hover .map__control-icon, .map__control:focus-visible .map__control-icon{
+  fill:var(--map-control-hover-icon);
+}
+
+.map__popup{
+  z-index:2;
+}
+
+.map__popup--positioned{
+  position:absolute;
+}

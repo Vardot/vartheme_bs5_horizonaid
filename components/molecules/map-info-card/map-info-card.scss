@@ -1,0 +1,20 @@
+@import "../../defaults"; // Global component defaults.
+
+.map-info-card {
+  --map-info-card-width: 17.5rem; // 280px — matches the reference popup width.
+
+  width: 100%;
+  max-width: var(--map-info-card-width);
+
+  &__heading {
+    color: var(--bs-emphasis-color);
+  }
+
+  &__stat {
+    color: var(--bs-emphasis-color);
+  }
+
+  &__stat-value {
+    flex-shrink: 0;
+  }
+}

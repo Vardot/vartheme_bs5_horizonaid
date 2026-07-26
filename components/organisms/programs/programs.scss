@@ -1,0 +1,29 @@
+// @file
+// Vartheme BS5 Horizonaid — Programs component styles.
+//
+// Floats the pill nav over the top of the active tab's image on lg+
+// screens. Below lg it stays in normal flow, stacked above the image —
+// an absolutely-positioned nav has no bounded height, so once enough pills
+// wrap to multiple lines on a narrow screen it would otherwise grow down
+// over the tab content underneath it. Bootstrap's `position` utility isn't
+// breakpoint-responsive, so this stacked-vs-overlay toggle is a genuine
+// special case. Scoped to the `.programs` block so nothing leaks to the
+// rest of the theme.
+
+@import "../../defaults";
+
+.programs {
+  &__nav {
+    position: static;
+    margin-block-end: $spacer;
+
+    @include media-breakpoint-up(lg) {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+      margin-block: $spacer 0;
+      z-index: 1;
+    }
+  }
+}

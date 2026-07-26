@@ -1,0 +1,120 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Programs component.
+ *
+ * A Bootstrap nav-pills tab list floats over the top of the active tab's
+ * image on lg+ screens (stacked above it on smaller screens, via
+ * `programs.scss` — an unbounded number of wrapped pills would otherwise
+ * grow the absolutely-positioned overlay down over the content below) while
+ * each tab pane swaps a full-width image for a content card inset at its
+ * bottom-right corner.
+ *
+ * Canvas / SDC notes:
+ * - Uses slot content for tabs (add unlimited "Program Tab" components) so
+ *   Canvas can manage drag/drop ordering. A single `items`-style array prop
+ *   can't be used here: Canvas has no field/widget mapping for an array of
+ *   freeform objects (only scalar arrays or $ref'd shapes like a single
+ *   image are supported), so such a prop is silently never listed in the
+ *   component picker. Mirrors `hero-slider-container`'s `slides` slot.
+ * - Each "Program Tab" instance renders its own pill nav `<button>` nested
+ *   inside its own `.tab-pane` (see `molecules/program-tab`); `programs.js`
+ *   relocates every button into the shared nav `<ul>` below and ensures
+ *   exactly one tab/pane is marked active, since Twig can't do that
+ *   cross-sibling rearrangement across independently-rendered slot children.
+ *
+ * Available properties:
+ * - tabs_id: Unique id for the tab list / tab-content pair. Defaults to
+ *            `programs-tabs`.
+ * - container_type: How the content is contained.
+ *                    (container | container-fluid | none) Defaults to `container`.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root element.
+ * - stage_attributes: HTML attributes for the positioning wrapper the nav
+ *   overlays on top of.
+ * - nav_attributes: HTML attributes for the pill nav (tab list) element.
+ * - tab_content_attributes: HTML attributes for the tab-content wrapper.
+ *
+ * Available slots:
+ * - tabs: One or more "Program Tab" components (unlimited).
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set tabs_id = tabs_id|default('programs-tabs') %}
+{% set container_type = container_type|default('container') %}
+
+{# Slot check: render only for emptiness test, keep actual slot output untouched below. #}
+{% set has_tabs = tabs is defined and tabs|render|trim is not empty %}
+
+{# Logic: merge root and structural classes as arrays. #}
+{% set attributes = attributes.addClass(['programs']) %}
+
+{% set container_classes = container_type != 'none' ? [container_type] : [] %}
+{% set stage_classes = ['position-relative'] %}
+{% set nav_classes = [
+  'nav',
+  'nav-pills',
+  'programs__nav',
+  'flex-wrap',
+  'justify-content-center',
+  'gap-2',
+  'bg-white',
+  'rounded-pill',
+  'mw-100',
+  'mx-auto',
+  'p-2',
+  'shadow-sm',
+] %}
+{% set tab_content_classes = ['tab-content'] %}
+
+{% if not stage_attributes %}
+  {% set stage_attributes = create_attribute() %}
+{% endif %}
+{% set stage_attributes = stage_attributes.addClass(stage_classes) %}
+
+{% if not nav_attributes %}
+  {% set nav_attributes = create_attribute() %}
+{% endif %}
+{% set nav_attributes = nav_attributes
+  .addClass(nav_classes)
+  .setAttribute('id', tabs_id)
+  .setAttribute('role', 'tablist')
+  .setAttribute('data-programs-nav', true)
+%}
+
+{% if not tab_content_attributes %}
+  {% set tab_content_attributes = create_attribute() %}
+{% endif %}
+{% set tab_content_attributes = tab_content_attributes
+  .addClass(tab_content_classes)
+  .setAttribute('id', tabs_id ~ '-content')
+  .setAttribute('data-programs-content', true)
+%}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <div class="{{ container_classes|join(' ') }}">
+    <div{{ stage_attributes }}>
+      <ul{{ nav_attributes }}></ul>
+
+      <div{{ tab_content_attributes }}>
+        {% if has_tabs %}
+          {{ tabs }}
+        {% else %}
+          <p class="text-secondary small mb-0">Add "Program Tab" components here.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

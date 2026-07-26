@@ -1,0 +1,72 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CountrySliderStories from './country-slider.stories.json';
+import templateSource from './country-slider.twig?raw';
+
+<Meta of={CountrySliderStories} name="Docs" />
+
+# Country Slider
+
+A heading + description above a horizontally-scrolling row of "Country Card" components, with a "View all" link and prev/next controls. Add one or more Country Card components into the slot — unlimited, drag & drop reorder.
+
+- **No Bootstrap component fits a multi-item-visible slider** — only the single-slide-at-a-time [Carousel](https://getbootstrap.com/docs/5.3/components/carousel/). The scrolling track instead uses [CSS Scroll Snap](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll_snap), this theme's first use of the technique
+- **`cards` is a Canvas slot, not an array prop** — Canvas has no field/widget mapping for an array of freeform objects, so an `items`-style array prop would silently never appear in the component picker
+- **Shows 4 cards at a time on desktop** (2 on small/medium screens, ~1 with a peek of the next on mobile), advanced with prev/next buttons that disable at each scroll boundary
+- **The prev/next icons are custom SVG artwork** (pill outline + arrow baked into one graphic, colored via `currentColor`) — on hover/focus, only the arrow nudges a little further in the direction it points, not the pill outline
+
+> ### Bootstrap / other references
+> - [Buttons](https://getbootstrap.com/docs/5.3/components/buttons/)
+> - [CSS Scroll Snap (MDN)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll_snap)
+
+## Properties
+
+<Canvas of={CountrySliderStories.Default} />
+<Controls of={CountrySliderStories.Default} />
+
+## Stories
+
+<Stories of={CountrySliderStories} />
+
+## Examples
+
+### Example 1 — Country Slider with 4 countries
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:country-slider' with {
+  heading_text: 'Where We Work',
+  description_text: '<p>A short paragraph about where the organization operates.</p>',
+  cta_label: 'View All Countries',
+  cta_url: '/countries'
+} %}
+  {% block cards %}
+    {% embed 'vartheme_bs5_horizonaid:card-country' with {
+      image: { src: '/path/to/photo.jpg', alt: 'Ecuador', width: 720, height: 940 }
+    } %}
+      {% block content %}
+        <h3 class="h5 mb-0 text-white">Ecuador</h3>
+      {% endblock %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:card-country' with {
+      image: { src: '/path/to/photo.jpg', alt: 'Kenya', width: 720, height: 940 }
+    } %}
+      {% block content %}
+        <h3 class="h5 mb-0 text-white">Kenya</h3>
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 2 — Empty state
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:country-slider' with {
+  heading_text: 'Where We Work'
+} %}
+{% endembed %}
+```
+
+Renders a small "Add "Country Card" components here." placeholder when the `cards` slot is empty.
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

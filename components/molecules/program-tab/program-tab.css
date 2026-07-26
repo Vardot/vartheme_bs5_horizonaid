@@ -1,0 +1,25 @@
+.program-tab__card{
+  --program-tab-card-width:22rem;
+  --program-tab-card-height-fraction:60%;
+  --program-tab-card-bottom-gap:2.5rem;
+  width:100%;
+  max-width:100%;
+  border-radius:var(--bs-border-radius-xl);
+}
+
+@media (min-width: 992px){
+  .program-tab__card{
+    position:absolute;
+    z-index:1;
+    width:min(var(--program-tab-card-width), 42%);
+    max-width:none;
+    border-radius:var(--bs-border-radius-xl) 0 0 var(--bs-border-radius-xl);
+    inset-inline-end:0;
+    inset-block-end:var(--program-tab-card-bottom-gap);
+    inset-block-start:calc(100% - var(--program-tab-card-height-fraction));
+  }
+
+  [dir="rtl"] .program-tab__card{
+    border-radius:0 var(--bs-border-radius-xl) var(--bs-border-radius-xl) 0;
+  }
+}

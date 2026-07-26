@@ -1,0 +1,17 @@
+.map-info-card{
+  --map-info-card-width:17.5rem;
+  width:100%;
+  max-width:var(--map-info-card-width);
+}
+
+.map-info-card__heading{
+  color:var(--bs-emphasis-color);
+}
+
+.map-info-card__stat{
+  color:var(--bs-emphasis-color);
+}
+
+.map-info-card__stat-value{
+  flex-shrink:0;
+}

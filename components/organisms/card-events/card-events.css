@@ -1,0 +1,41 @@
+.card-events{
+  --card-events-duration-color:0.3s;
+}
+
+.card-events__taxonomy{
+  padding-block:0.125rem;
+}
+
+.card-events__taxonomy span{
+  white-space:nowrap;
+  letter-spacing:0.06rem;
+  font-size:0.75rem;
+  line-height:1.35;
+}
+
+.card-events__content :is(h1, h2, h3, h4, h5, h6){
+  transition:color var(--card-events-duration-color) ease;
+  color:var(--bs-secondary);
+}
+
+.card-events:hover .card-events__content :is(h1, h2, h3, h4, h5, h6){
+  color:var(--bs-accent);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .card-events__content :is(h1, h2, h3, h4, h5, h6){
+    transition:none;
+  }
+}
+
+.card-events__content p{
+  display:-webkit-box;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+}
+
+.card-events .stretched-link{
+  z-index:99;
+}

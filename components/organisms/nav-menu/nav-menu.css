@@ -1,3 +1,22 @@
-.nav {
-  --bs-nav-link-font-size: 1rem;
+@charset "UTF-8";
+.nav{
+  --bs-nav-link-font-size:1rem;
+}
+
+.nav .nav-link--cta.nav-link--cta.nav-link--cta{
+  position:static;
+  color:var(--bs-dark);
+  border-radius:1.25rem;
+  background-color:var(--bs-primary);
+  padding-block:0.625rem;
+  padding-inline:1.5rem;
+}
+
+.nav .nav-link--cta.nav-link--cta.nav-link--cta::before{
+  display:none;
+}
+
+.nav .nav-link--cta.nav-link--cta.nav-link--cta:hover, .nav .nav-link--cta.nav-link--cta.nav-link--cta:focus-visible{
+  color:var(--bs-white);
+  background-color:var(--bs-accent);
 }

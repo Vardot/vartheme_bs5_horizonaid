@@ -1,4 +1,4 @@
-footer.footer {
-  color: var(--bs-white);
-  background-color: var(--bs-primary-text-emphasis);
+footer.footer{
+  color:var(--bs-white);
+  background-color:var(--bs-primary-text-emphasis);
 }

@@ -1,11 +1,13 @@
 {#
 /**
  * @file
- * Vartheme BS5 Horizon Aid Starter Kit implementation for the Card Impressed component.
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Card Impressed component.
  *
  * - Stacked layout (media top/bottom)
  * - Two drag & drop slots: overlay (image overlay), content
  * - Media uses the "media_image" prop
+ * - On hover: the media image zooms in and headings dropped in the content
+ *   slot switch color (gold on dark backgrounds, accent on light ones)
  *
  * Available attributes:
  * - content_placeholder_attributes: Attributes for the empty-slot placeholder.
@@ -70,9 +72,17 @@
 {% set use_stretched_link = stretched_link and (link_url is not empty) %}
 {% set media_position_classes = (media_position == 'bottom') ? ['flex-column-reverse'] : [] %}
 
+{# Logic: dark backgrounds get a gold heading-hover color on hover; light
+ # backgrounds get an accent heading-hover color (mirrors atoms/section's
+ # dark-background list) so hover stays legible against either pairing.
+ #}
+{% set dark_backgrounds = ['bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-dark'] %}
+{% set is_dark_background = background_color in dark_backgrounds %}
+
 {# Logic: class arrays merged into attributes. #}
 {% set attributes = attributes.addClass([
   'card',
+  'card-impressed',
   'd-flex',
   'flex-column',
   'overflow-hidden',
@@ -83,6 +93,7 @@
   box_shadow,
   (use_stretched_link ? 'position-relative' : ''),
   (equal_height ? 'h-100' : ''),
+  (is_dark_background ? 'card-impressed--on-dark-bg' : 'card-impressed--on-light-bg'),
 ]|merge(media_position_classes)|filter(v => v is not empty)) %}
 
 {% set media_attributes = create_attribute().addClass([
@@ -103,7 +114,7 @@
 
 {% set overlay_slot_attributes = create_attribute().addClass([
   'position-absolute',
-  'top-0',
+  'bottom-0',
   'start-0',
   'z-3',
   'm-3',

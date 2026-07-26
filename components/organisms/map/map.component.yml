@@ -1,0 +1,104 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Map
+group: Map
+status: stable
+description: 'Interactive world map (self-contained SVG, no external map API or key) with any number of highlighted countries. Custom zoom/reset controls; clicking a highlighted country opens its molecules/map-info-card popup (dropped into the "countries" slot) with a description, stats, and a link.'
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
+    - vartheme_bs5_horizonaid/d3-geo-vendor
+props:
+  type: object
+  properties:
+    map_height:
+      type: string
+      title: 'Map height'
+      description: Height of the map canvas.
+      enum:
+        - sm
+        - md
+        - lg
+      default: md
+      examples:
+        - md
+      meta:enum:
+        sm: Small (20rem)
+        md: Medium (28rem)
+        lg: Large (36rem)
+    corner_style:
+      type: string
+      title: Border radius
+      description: Bootstrap rounded utility applied to the map area.
+      default: rounded-4
+      examples:
+        - rounded-4
+      enum:
+        - rounded-0
+        - rounded-1
+        - rounded-2
+        - rounded-3
+        - rounded-4
+        - rounded-5
+        - rounded-pill
+      meta:enum:
+        rounded-0: None (square)
+        rounded-1: Small
+        rounded-2: Medium
+        rounded-3: Large
+        rounded-4: Extra Large
+        rounded-5: Extra Extra Large
+        rounded-pill: Pill
+    background_color:
+      type: string
+      title: Background color
+      description: Bootstrap background utility applied to the map area (shows while the country GeoJSON is loading, and behind the SVG canvas at every zoom level).
+      default: bg-body-tertiary
+      examples:
+        - bg-body-tertiary
+      enum:
+        - none
+        - bg-body-tertiary
+        - bg-tertiary
+        - bg-accent
+        - bg-accent-subtle
+        - bg-primary
+        - bg-primary-subtle
+        - bg-secondary
+        - bg-secondary-subtle
+        - bg-dark
+      meta:enum:
+        none: None
+        bg-body-tertiary: Body tertiary
+        bg-tertiary: Tertiary
+        bg-accent: Accent
+        bg-accent-subtle: Accent subtle
+        bg-primary: Primary
+        bg-primary-subtle: Primary subtle
+        bg-secondary: Secondary
+        bg-secondary-subtle: Secondary subtle
+        bg-dark: Dark
+    box_shadow:
+      type: string
+      title: Shadow
+      description: Bootstrap shadow utility applied to the map card.
+      default: shadow-none
+      examples:
+        - shadow-none
+      enum:
+        - shadow-none
+        - shadow-sm
+        - shadow
+        - shadow-lg
+      meta:enum:
+        shadow-none: None
+        shadow-sm: Small
+        shadow: Medium
+        shadow-lg: Large
+slots:
+  content:
+    title: Above-map content
+    description: Optional drag & drop content shown above the map (e.g. a heading and intro paragraph).
+  countries:
+    title: Countries
+    description: 'Add one or more molecules/map-info-card components here (unlimited, drag & drop reorder) — set each one''s "Country code" prop to the ISO 3166-1 alpha-2 code it represents (e.g. "SO" for Somalia). The map highlights every country with a matching code and opens that exact card when it''s clicked.'

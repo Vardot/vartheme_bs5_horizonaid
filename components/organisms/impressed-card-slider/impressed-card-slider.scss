@@ -1,0 +1,112 @@
+// @file
+// Vartheme BS5 Horizonaid — Impressed Card Slider component styles.
+//
+// A horizontally-scrolling, multi-item-visible card row (Bootstrap has no
+// component for this — only the single-slide-at-a-time Carousel — so the
+// track uses CSS Scroll Snap, a genuine special case) plus a 2-line clamp
+// on each card's dropped text, since the reused `card-impressed` component
+// has no truncation of its own. Card widths and the control button size are
+// derived from the spacer scale / Bootstrap breakpoints rather than
+// hard-coded values. Scoped to the `.impressed-card-slider` block so
+// nothing leaks to the rest of the theme.
+
+@import "../../defaults";
+
+.impressed-card-slider {
+  &__track {
+    display: flex;
+    gap: $spacer * 1.5;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; // Firefox.
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none; // Chrome/Safari/Edge.
+    }
+
+    // Direct-child selector: `impressed-card-slider.js` moves any wrapped
+    // "Impressed Card" instance to be a direct child of the track, the
+    // same defensive step `hero-slider-container` takes for
+    // `.carousel-item`.
+    > .card-impressed {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      // 1 card + a peek of the next on mobile, ~2 cards + a peek on lg+.
+      width: 85%;
+
+      @include media-breakpoint-up(sm) {
+        width: calc((100% - #{$spacer * 1.5}) / 2);
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: calc((100% - #{$spacer * 1.5 * 2}) / 2.3);
+      }
+
+      // Multi-line text truncation has no Bootstrap utility equivalent —
+      // clamps the dropped content slot's paragraph(s) so every card in
+      // the track stays a consistent height regardless of description
+      // length.
+      .card-body p {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+
+  &__control {
+    // Matches the control icon artwork's own native 56x38 proportions
+    // (the pill outline is part of the SVG, not a CSS border).
+    --impressed-card-slider-control-width: #{$spacer * 3.5};
+    --impressed-card-slider-control-height: #{$spacer * 2.375};
+    --impressed-card-slider-arrow-nudge: #{$spacer * 0.1875};
+
+    width: var(--impressed-card-slider-control-width);
+    height: var(--impressed-card-slider-control-height);
+
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+
+  // The arrow's own outline/fill color comes from the SVG's `currentColor`
+  // (inherits `.text-primary` on the button), not a CSS border/background —
+  // Bootstrap has no utility for a filled custom-artwork icon button.
+  &__control-icon--flip {
+    transform: scaleX(-1);
+  }
+
+  // Nudges only the arrow (not the pill outline) a little further in the
+  // direction it points on hover/focus. Scoped to the `<g>` wrapping just
+  // the arrow paths so the outline stays put — no Bootstrap utility for a
+  // direction-aware icon micro-interaction like this.
+  &__control-arrow {
+    transition: transform 0.15s ease;
+  }
+
+  &__control:not(:disabled):hover &__control-arrow,
+  &__control:not(:disabled):focus-visible &__control-arrow {
+    transform: translateX(calc(-1 * var(--impressed-card-slider-arrow-nudge)));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__control-arrow {
+      transition: none;
+    }
+  }
+
+  // `atoms/link`'s `underline_color` prop adds `.link-underline-primary`
+  // (gold underline) alongside the base `.link-underline` class (link-color
+  // underline) it also requires; both carry `!important` at equal
+  // specificity, and this theme's compiled Bootstrap utility CSS happens to
+  // emit `.link-underline` *after* `.link-underline-primary`, so the base
+  // class's color wins the tie instead of the intended gold. The two-class
+  // selector below outranks either single-class utility, forcing the
+  // intended color without touching the shared `atoms/link` component or
+  // Bootstrap's generated CSS.
+  &__links .link-underline-primary {
+    text-decoration-color: var(--bs-primary) !important;
+  }
+}

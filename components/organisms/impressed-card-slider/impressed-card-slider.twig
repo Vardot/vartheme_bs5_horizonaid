@@ -1,0 +1,229 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Impressed Card Slider component.
+ *
+ * A feature section: a heading, a short link list, and a CTA on the
+ * left; a horizontally-scrolling row of "Impressed Card" components on the
+ * right with prev/next controls below. There is no Bootstrap component for
+ * a multi-item-visible slider (only the single-slide-at-a-time Carousel),
+ * so the track uses CSS Scroll Snap driven by `impressed-card-slider.js` —
+ * the same pattern `organisms/country-slider` established for
+ * `organisms/card-country`.
+ *
+ * Canvas / SDC notes:
+ * - Uses slot content for cards (add unlimited "Impressed Card" components)
+ *   so Canvas can manage drag/drop ordering. A single `items`-style array
+ *   prop can't be used here: Canvas has no field/widget mapping for an
+ *   array of freeform objects, so such a prop is silently never listed in
+ *   the component picker.
+ * - The link list is small and bounded (not unlimited like the cards), so
+ *   it's a fixed set of link_1_*..link_4_* scalar props instead of a slot —
+ *   the same bounded-repeat pattern `organisms/programs` used for its tabs
+ *   before that needed to become unlimited; a link (label + url) still
+ *   isn't a Canvas "well-known" `$ref` shape, so even a *bounded* array of
+ *   link objects would hit the same picker-visibility problem.
+ * - `impressed-card-slider.js` reads the rendered "Impressed Card" instances
+ *   by their own `.card-impressed` class (no wrapper markup added around
+ *   them) to size the scroll step, and moves them to be direct children of
+ *   the track if Canvas ever wraps slot children in extra markup — mirrors
+ *   `hero-slider-container`'s `flattenCarouselItems()` defensive pattern.
+ * - The CTA renders via atoms/button (variant `btn-accent`) rather than
+ *   atoms/link styled with button utility classes, so it's a real button
+ *   component and stays in sync with any future changes to that atom.
+ *
+ * Available properties:
+ * - bg_edge2edge: Extend the background full width, beyond the container.
+ *                 Defaults to `true`.
+ * - background_color: Bootstrap background utility class (same enum as
+ *                     atoms/section). Backgrounds dark enough to need white
+ *                     text (bg-primary, bg-secondary, bg-success, bg-danger,
+ *                     bg-dark, bg-black, bg-accent) automatically flip the
+ *                     heading/links/placeholder text to white; every other
+ *                     option keeps dark text. Defaults to `bg-dark`.
+ * - container_type: How the content is contained.
+ *                    (container | container-fluid | none) Defaults to `container`.
+ * - padding_block_start: Padding top. (pt-0..pt-5) Defaults to `pt-5`.
+ * - padding_block_end: Padding bottom. (pb-0..pb-5) Defaults to `pb-5`.
+ * - heading_text: Heading text. Defaults to `Latest Updates`.
+ * - heading_level: HTML heading tag level. (1 | 2 | 3 | 4 | 5 | 6) Defaults
+ *                  to `2`.
+ * - link_{1..4}_label: Link N label. Leave empty to hide link N (and any
+ *                       links after it that are also empty).
+ * - link_{1..4}_url: Link N URL.
+ * - link_{1..4}_active: Whether link N shows the active underline.
+ * - cta_label: CTA label. Defaults to `Explore More`.
+ * - cta_url: CTA URL. Leave empty to hide the CTA.
+ * - cta_target: Link target. (default | _self | _blank)
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root element.
+ * - track_attributes: HTML attributes for the scrollable card track.
+ *
+ * Available slots:
+ * - cards: One or more "Impressed Card" components (unlimited).
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set background_color = background_color|default('bg-dark') %}
+{% set background_color_class = (background_color != 'none') ? background_color : '' %}
+{% set container_type = container_type|default('container') %}
+{% set padding_block_start = padding_block_start|default('pt-5') %}
+{% set padding_block_end = padding_block_end|default('pb-5') %}
+{% set heading_text = heading_text|default('Latest Updates') %}
+{% set heading_level = heading_level|default(2) %}
+{% set cta_label = cta_label|default('Explore More') %}
+{% set cta_url = cta_url|default('')|trim %}
+{% set cta_target_raw = cta_target|default('default') %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set bg_edge2edge = bg_edge2edge ?? true %}
+
+{# Logic: dark backgrounds get white text, everything else keeps dark text
+ # (mirrors atoms/section's dark-background list, plus bg-accent which this
+ # component already treated as needing white text) so the section stays
+ # legible against any of the available background colors.
+ #}
+{% set dark_backgrounds = ['bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-dark', 'bg-black', 'bg-accent'] %}
+{% set is_dark_background = background_color in dark_backgrounds %}
+{% set text_color_class = is_dark_background ? 'text-white' : '' %}
+{% set heading_text_color = is_dark_background ? 'text-white' : 'text-dark' %}
+{% set link_color = is_dark_background ? 'light' : 'dark' %}
+{% set placeholder_text_color = is_dark_background ? 'text-white-50' : 'text-muted' %}
+
+{# Logic: build the link list from the fixed link_1..link_4 prop groups. #}
+{% set link_candidates = [
+  { label: link_1_label|default(''), url: link_1_url|default(''), active: link_1_active ?? false },
+  { label: link_2_label|default(''), url: link_2_url|default(''), active: link_2_active ?? false },
+  { label: link_3_label|default(''), url: link_3_url|default(''), active: link_3_active ?? false },
+  { label: link_4_label|default(''), url: link_4_url|default(''), active: link_4_active ?? false },
+] %}
+{% set links = [] %}
+{% for link in link_candidates %}
+  {% if link.label|trim is not empty %}
+    {% set links = links|merge([link]) %}
+  {% endif %}
+{% endfor %}
+
+{% set cta_target = cta_target_raw == '_blank' ? 'blank' : 'self' %}
+{% set has_cta = cta_url is not empty %}
+
+{# Logic: slot check, only for emptiness test — keep actual slot output untouched below. #}
+{% set has_cards = cards is defined and cards|render|trim is not empty %}
+
+{# Logic: merge root and structural classes as arrays. #}
+{% set attributes = attributes.addClass([
+  'impressed-card-slider',
+  padding_block_start,
+  padding_block_end,
+  background_color_class,
+  text_color_class,
+  bg_edge2edge ? 'bg-edge2edge' : '',
+]|filter(v => v is not empty)) %}
+
+{% set container_classes = container_type != 'none' ? [container_type] : [] %}
+{% set track_classes = ['impressed-card-slider__track'] %}
+
+{% if not track_attributes %}
+  {% set track_attributes = create_attribute() %}
+{% endif %}
+{% set track_attributes = track_attributes
+  .addClass(track_classes)
+  .setAttribute('data-impressed-card-slider-track', true)
+  .setAttribute('tabindex', 0)
+%}
+
+{% set control_classes = ['impressed-card-slider__control', 'btn', 'bg-transparent', 'border-0', 'text-primary', 'd-inline-flex', 'align-items-center', 'justify-content-center', 'p-0'] %}
+
+{# Print the HTML. #}
+<section{{ attributes }}>
+  <div class="{{ container_classes|join(' ') }}">
+    <div class="row g-4 g-lg-5 align-items-start">
+      <div class="col-12 col-lg-4">
+        {% if heading_text %}
+          {{ include('vartheme_bs5_horizonaid:heading', {
+            heading_text: heading_text,
+            level: heading_level,
+            text_color: heading_text_color,
+            font_weight: 'fw-bold',
+          }, false) }}
+        {% endif %}
+
+        {% if links %}
+          <ul class="impressed-card-slider__links list-unstyled d-flex flex-column gap-2 my-4">
+            {% for link in links %}
+              <li>
+                {{ include('vartheme_bs5_horizonaid:link', {
+                  url: link.url,
+                  color: link_color,
+                  underline_color: link.active ? 'primary' : '',
+                  underline_opacity: link.active ? '100' : '',
+                  underline_offset: link.active ? '2' : '',
+                  link_utility_classes: ['fs-5']|merge(link.active ? [] : ['text-decoration-none']),
+                  content: link.label,
+                }, with_context = false) }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if has_cta %}
+          {{ include('vartheme_bs5_horizonaid:button', {
+            label: cta_label,
+            href: cta_url,
+            variant: 'btn-accent',
+            size: 'btn-md',
+            radius: 'rounded-pill',
+            target: cta_target,
+            alignment: 'inline',
+          }, with_context: false) }}
+        {% endif %}
+      </div>
+
+      <div class="col-12 col-lg-8">
+        <div{{ track_attributes }}>
+          {% if has_cards %}
+            {{ cards }}
+          {% else %}
+            <p class="{{ placeholder_text_color }} small mb-0">Add "Impressed Card" components here.</p>
+          {% endif %}
+        </div>
+
+        <div class="impressed-card-slider__controls d-flex gap-2 mt-4">
+          <button class="{{ control_classes|join(' ') }}" type="button" data-impressed-card-slider-prev aria-label="Previous">
+            <svg class="impressed-card-slider__control-icon" viewBox="0 0 56 38" fill="none" width="56" height="38" aria-hidden="true" focusable="false">
+              <rect x="0.5" y="0.5" width="55" height="37" rx="18.5" stroke="currentColor"/>
+              <g class="impressed-card-slider__control-arrow">
+                <path d="M17.6788 18.2632L36.6592 18.2632C37.0661 18.2632 37.396 18.5931 37.396 19C37.396 19.407 37.0661 19.7369 36.6592 19.7369H17.6788C17.2734 19.1628 17.2564 18.8377 17.6788 18.2632Z" fill="currentColor"/>
+                <path d="M16.0001 18.9966C16.0001 18.8261 16.1027 18.5999 16.2073 18.4901L22.1021 12.2269C22.3773 11.9424 22.8289 11.9151 23.1498 12.204C23.4366 12.4622 23.4381 12.9599 23.1726 13.2402L18.4407 18.26C18.0183 18.8345 18.0353 19.1596 18.4407 19.7337L23.1726 24.7534C23.4378 25.0337 23.4247 25.5306 23.1498 25.8011C22.8593 26.0867 22.3731 26.0555 22.1021 25.7665L16.2073 19.5033C16.0341 19.3335 16.003 19.1697 16.0001 18.9966Z" fill="currentColor"/>
+              </g>
+            </svg>
+          </button>
+          <button class="{{ control_classes|join(' ') }}" type="button" data-impressed-card-slider-next aria-label="Next">
+            <svg class="impressed-card-slider__control-icon impressed-card-slider__control-icon--flip" viewBox="0 0 56 38" fill="none" width="56" height="38" aria-hidden="true" focusable="false">
+              <rect x="0.5" y="0.5" width="55" height="37" rx="18.5" stroke="currentColor"/>
+              <g class="impressed-card-slider__control-arrow">
+                <path d="M17.6788 18.2632L36.6592 18.2632C37.0661 18.2632 37.396 18.5931 37.396 19C37.396 19.407 37.0661 19.7369 36.6592 19.7369H17.6788C17.2734 19.1628 17.2564 18.8377 17.6788 18.2632Z" fill="currentColor"/>
+                <path d="M16.0001 18.9966C16.0001 18.8261 16.1027 18.5999 16.2073 18.4901L22.1021 12.2269C22.3773 11.9424 22.8289 11.9151 23.1498 12.204C23.4366 12.4622 23.4381 12.9599 23.1726 13.2402L18.4407 18.26C18.0183 18.8345 18.0353 19.1596 18.4407 19.7337L23.1726 24.7534C23.4378 25.0337 23.4247 25.5306 23.1498 25.8011C22.8593 26.0867 22.3731 26.0555 22.1021 25.7665L16.2073 19.5033C16.0341 19.3335 16.003 19.1697 16.0001 18.9966Z" fill="currentColor"/>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

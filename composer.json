@@ -1,6 +1,6 @@
 {
   "name": "drupal/vartheme_bs5_horizonaid",
-  "description": "The Bootstrap 5 front-end theme for the Horizon Aid site template, cloned from Vartheme BS5 (SDC + Storybook).",
+  "description": "Starterkit theme for Varbase standard websites. Based on Bootstrap 5 framework using SASS.",
   "type": "drupal-theme",
   "homepage": "https://www.drupal.org/project/vartheme_bs5_horizonaid",
   "license": "GPL-2.0-or-later",
@@ -16,7 +16,7 @@
     "source": "http://cgit.drupalcode.org/vartheme_bs5_horizonaid"
   },
   "require": {
-    "drupal/core": "~11.3.0",
+    "drupal/core": "~11.4.0",
     "drupal/canvas": "~1",
     "drupal/cva": "^1"
   }

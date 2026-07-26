@@ -2,4 +2,37 @@
 
 .nav {
   --bs-nav-link-font-size: 1rem;
+
+  /*
+   * Last item as a CTA button (e.g. "Donate"), not a plain link: pill shape,
+   * brand-primary fill, dark navy label — opted into per instance via the
+   * `last_item_is_cta` prop (the main menu only), so it stays visually
+   * distinct at every breakpoint without affecting other menus that reuse
+   * this component (account, footer, social media).
+   *
+   * The class is repeated (raising specificity to 0,4,0 with the `.nav`
+   * ancestor) to win over the header's own
+   * `.page > header[role="banner"] .nav-link` styling (0,3,1 — position,
+   * color, padding) and its hover-underline `::before` (0,3,2), without
+   * resorting to !important or coupling this component to that global
+   * selector's structure.
+   */
+  .nav-link--cta.nav-link--cta.nav-link--cta {
+    position: static;
+    padding-block: #{$spacer * 0.625};
+    padding-inline: #{$spacer * 1.5};
+    border-radius: #{$spacer * 1.25};
+    background-color: var(--bs-primary);
+    color: var(--bs-dark);
+
+    &::before {
+      display: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--bs-accent);
+      color: var(--bs-white);
+    }
+  }
 }

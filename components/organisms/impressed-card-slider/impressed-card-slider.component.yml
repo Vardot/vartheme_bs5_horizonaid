@@ -1,0 +1,256 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Impressed Card Slider
+group: Card
+status: stable
+description: >
+  Feature section: a heading, a short list of links, and a "View all"
+  style CTA on the left; a horizontally-scrolling row of existing
+  "Impressed Card" components on the right, with prev/next controls below.
+  Add one or more "Impressed Card" components into the slot (unlimited,
+  drag & drop reorder).
+props:
+  type: object
+  properties:
+    bg_edge2edge:
+      type: boolean
+      title: Edge-to-edge background
+      description: Extend the background full width, beyond the container.
+      default: true
+      examples:
+        - true
+    background_color:
+      type: string
+      title: Background color
+      enum:
+        - none
+        - bg-body
+        - bg-body-secondary
+        - bg-body-tertiary
+        - bg-tertiary
+        - bg-accent
+        - bg-primary
+        - bg-primary-subtle
+        - bg-secondary
+        - bg-secondary-subtle
+        - bg-success
+        - bg-success-subtle
+        - bg-danger
+        - bg-danger-subtle
+        - bg-warning
+        - bg-warning-subtle
+        - bg-info
+        - bg-info-subtle
+        - bg-light
+        - bg-light-subtle
+        - bg-dark
+        - bg-dark-subtle
+        - bg-black
+        - bg-white
+        - bg-transparent
+      default: bg-dark
+      examples:
+        - bg-dark
+      meta:enum:
+        none: None
+        bg-body: Body
+        bg-body-secondary: Body secondary
+        bg-body-tertiary: Body tertiary
+        bg-tertiary: Tertiary
+        bg-accent: Accent
+        bg-primary: Primary
+        bg-primary-subtle: Primary subtle
+        bg-secondary: Secondary
+        bg-secondary-subtle: Secondary subtle
+        bg-success: Success
+        bg-success-subtle: Success subtle
+        bg-danger: Danger
+        bg-danger-subtle: Danger subtle
+        bg-warning: Warning
+        bg-warning-subtle: Warning subtle
+        bg-info: Info
+        bg-info-subtle: Info subtle
+        bg-light: Light
+        bg-light-subtle: Light subtle
+        bg-dark: Dark
+        bg-dark-subtle: Dark subtle
+        bg-black: Black
+        bg-white: White
+        bg-transparent: Transparent
+    container_type:
+      type: string
+      title: Container width
+      enum:
+        - container
+        - container-fluid
+        - none
+      default: container
+      examples:
+        - container
+      meta:enum:
+        container: Standard container
+        container-fluid: Full width container
+        none: No container wrapper
+    padding_block_start:
+      type: string
+      title: Padding top
+      description: Space inside the section at the top.
+      enum:
+        - pt-0
+        - pt-1
+        - pt-2
+        - pt-3
+        - pt-4
+        - pt-5
+      default: pt-5
+      examples:
+        - pt-5
+      meta:enum:
+        pt-0: None
+        pt-1: Small
+        pt-2: Medium
+        pt-3: Large
+        pt-4: Extra large
+        pt-5: XX-Large
+    padding_block_end:
+      type: string
+      title: Padding bottom
+      description: Space inside the section at the bottom.
+      enum:
+        - pb-0
+        - pb-1
+        - pb-2
+        - pb-3
+        - pb-4
+        - pb-5
+      default: pb-5
+      examples:
+        - pb-5
+      meta:enum:
+        pb-0: None
+        pb-1: Small
+        pb-2: Medium
+        pb-3: Large
+        pb-4: Extra large
+        pb-5: XX-Large
+    heading_text:
+      type: string
+      title: Heading text
+      default: Latest Updates
+      examples:
+        - Latest Updates
+    heading_level:
+      type: integer
+      title: Heading level
+      description: HTML heading tag.
+      enum: [1, 2, 3, 4, 5, 6]
+      default: 2
+      examples:
+        - 2
+    link_1_label:
+      type: string
+      title: 'Link 1: Label'
+      description: Leave empty to hide link 1 (and any links after it that are also empty).
+      default: Healthcare & Medicine
+      examples:
+        - Healthcare & Medicine
+    link_1_url:
+      type: string
+      title: 'Link 1: URL'
+      format: uri-reference
+      default: 'https://example.com/updates/healthcare'
+      examples:
+        - 'https://example.com/updates/healthcare'
+    link_1_active:
+      type: boolean
+      title: 'Link 1: Active (underlined)'
+      default: true
+      examples:
+        - true
+    link_2_label:
+      type: string
+      title: 'Link 2: Label'
+      default: Sustenance & Growth
+      examples:
+        - Sustenance & Growth
+    link_2_url:
+      type: string
+      title: 'Link 2: URL'
+      format: uri-reference
+      default: 'https://example.com/updates/sustenance'
+      examples:
+        - 'https://example.com/updates/sustenance'
+    link_2_active:
+      type: boolean
+      title: 'Link 2: Active (underlined)'
+      default: false
+      examples:
+        - false
+    link_3_label:
+      type: string
+      title: 'Link 3: Label'
+      default: Universal Education
+      examples:
+        - Universal Education
+    link_3_url:
+      type: string
+      title: 'Link 3: URL'
+      format: uri-reference
+      default: 'https://example.com/updates/education'
+      examples:
+        - 'https://example.com/updates/education'
+    link_3_active:
+      type: boolean
+      title: 'Link 3: Active (underlined)'
+      default: false
+      examples:
+        - false
+    link_4_label:
+      type: string
+      title: 'Link 4: Label'
+      default: ''
+    link_4_url:
+      type: string
+      title: 'Link 4: URL'
+      format: uri-reference
+      default: 'https://example.com/updates'
+      examples:
+        - 'https://example.com/updates'
+    link_4_active:
+      type: boolean
+      title: 'Link 4: Active (underlined)'
+      default: false
+      examples:
+        - false
+    cta_label:
+      type: string
+      title: CTA label
+      default: Explore More
+      examples:
+        - Explore More
+    cta_url:
+      type: string
+      title: CTA URL
+      format: uri-reference
+      description: Leave empty to hide the CTA.
+      default: ''
+    cta_target:
+      type: string
+      title: Link target
+      enum:
+        - default
+        - _self
+        - _blank
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (same tab)
+        _self: Same tab
+        _blank: New tab
+slots:
+  cards:
+    title: Impressed cards
+    description: Add one or more "Impressed Card" components here (unlimited, drag & drop reorder).
+libraryOverrides:
+  dependencies:
+    - core/once

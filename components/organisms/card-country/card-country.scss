@@ -1,0 +1,149 @@
+@import "../../defaults"; // Global component defaults.
+
+.card-country {
+  // Tokens — computed from Bootstrap variables/custom properties so the
+  // component inherits the active (sub-)theme automatically.
+  //
+  // Card height is fixed so the reveal never grows the card itself (which
+  // would push surrounding grid content down the page). The photo and
+  // footer (see .twig: flex-grow-1 / flex-shrink-0) are flex children of
+  // that fixed-height column, so as the footer's height animates from
+  // collapsed to expanded, the photo's box shrinks to make room within the
+  // fixed budget. Rather than cropping as it shrinks, the photo switches to
+  // `object-fit: contain` on hover/focus (see &__photo below) so it scales
+  // down and stays fully visible — a "zoom out" effect that tracks the
+  // footer's own height transition frame-by-frame with no separate
+  // animation of its own. Footer heights: collapsed hugs a one-line title;
+  // expanded fits the content + link. Fixed rem values (not derived from
+  // Bootstrap spacing) because they size a specific reveal animation, not a
+  // themeable gap.
+  --card-country-height: 26.25rem;
+  --card-country-footer-collapsed-h: 5rem;
+  // Sized to the component's actual typical content — title (already
+  // counted in the collapsed height) + a short 2-3 line description + the
+  // link — not a generous guess. p-4 top/bottom padding (1.5rem × 2) +
+  // description (mt-2 + ~3 lines) + link-wrap (mt-3 + one line + mb-4) fits
+  // comfortably within this budget, so the reveal only covers as much of
+  // the photo as the content actually needs, leaving most of the photo
+  // visible even at full expansion.
+  --card-country-footer-expanded-h: 15rem;
+  --card-country-duration-panel: 0.6s;
+  --card-country-duration-content: 0.5s;
+  --card-country-reveal-offset: 1.25rem;
+  --card-country-easing: cubic-bezier(0.22, 1, 0.36, 1);
+
+  // Bootstrap's .h-100 utility (added when `equal_height: true`) compiles
+  // with !important, so it overrides this without any extra rule here.
+  height: var(--card-country-height);
+
+  // --- Photo: fills the media area, zooms out to stay fully visible as ----
+  // --- the footer reveals (no cropping, ever) -----------------------------
+
+  // atoms/image renders with `ratio: ratio-auto` here (the media area's
+  // height is dynamic, not a fixed aspect ratio, so none of atoms/image's
+  // fixed ratio presets apply) — its <img> keeps Bootstrap's .img-fluid
+  // `height: auto`, sized only by its own intrinsic aspect ratio. That
+  // makes it ignore the shrinking flex box entirely instead of resizing
+  // with it. `.card-country__photo img` (class + element) is naturally
+  // more specific than the bare `.img-fluid` class, so this overrides it
+  // without needing !important.
+  &__media {
+    height: 100%;
+  }
+
+  // Default: object-fit: cover crops to fill the box edge-to-edge, anchored
+  // to the top (where a face/subject typically is) — the normal, un-hovered
+  // look. `object-fit` itself can't be transitioned, but it doesn't need to
+  // be: on hover/focus (below) it switches to `contain`, and because
+  // `contain` continuously recalculates against the box's current size, it
+  // tracks the footer's own animated height transition frame-by-frame with
+  // no separate animation of its own — the photo visibly "zooms out" to
+  // stay entirely visible (letterboxed, never cropped) as the box shrinks.
+  &__photo,
+  &__photo img,
+  &__photo picture,
+  &__photo picture img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  &:hover &__photo img,
+  &:hover &__photo picture img,
+  &:focus-within &__photo img,
+  &:focus-within &__photo picture img,
+  &--editor-reveal &__photo img,
+  &--editor-reveal &__photo picture img {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  // --- Footer: clipped by default, expands on hover/focus. Only `height` -
+  // --- transitions here — the sole animated property in the whole reveal -
+
+  &__footer {
+    height: var(--card-country-footer-collapsed-h);
+    transition: height var(--card-country-duration-panel) var(--card-country-easing);
+  }
+
+  // `&--editor-reveal` (added by card-country.js only inside the Drupal
+  // Canvas editor's own canvas) forces the same expanded/revealed state as
+  // `:hover`/`:focus-within` so every dropped component in the `content`
+  // slot stays visible while editing, instead of only ever showing on
+  // hover — see card-country.js for why.
+  &:hover &__footer,
+  &:focus-within &__footer,
+  &--editor-reveal &__footer {
+    height: var(--card-country-footer-expanded-h);
+  }
+
+  // The content slot's first child (typically the dropped Heading) is the
+  // always-visible title and stays put. Everything after it — and the link —
+  // is the "extra" that slides up into view on hover, same as the reference:
+  // hidden 1.25rem below its resting position, fades and rises into place.
+  &__content > :not(:first-child),
+  &__link-wrap {
+    opacity: 0;
+    transform: translateY(var(--card-country-reveal-offset));
+    transition: opacity var(--card-country-duration-content) var(--card-country-easing),
+      transform var(--card-country-duration-content) var(--card-country-easing);
+  }
+
+  &:hover &__content > :not(:first-child),
+  &:hover &__link-wrap,
+  &:focus-within &__content > :not(:first-child),
+  &:focus-within &__link-wrap,
+  &--editor-reveal &__content > :not(:first-child),
+  &--editor-reveal &__link-wrap {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.08s;
+  }
+
+  &__link {
+    width: fit-content;
+  }
+
+  // `atoms/link`'s `underline_color: 'warning'` adds `.link-underline-warning`
+  // (#FFC72C gold — this theme's $warning/$primary) alongside the base
+  // `.link-underline` class it also requires; both carry `!important` at
+  // equal specificity, and this theme's compiled Bootstrap utility CSS
+  // happens to emit `.link-underline` *after* `.link-underline-warning`, so
+  // the base class's link-color underline (blue $accent) wins the tie
+  // instead of the intended gold. The two-class selector below outranks
+  // either single-class utility, forcing the intended color without
+  // touching the shared atoms/link component or Bootstrap's generated CSS
+  // (same fix organisms/impressed-card-slider applies for its own link list).
+  &__link.link-underline-warning {
+    text-decoration-color: var(--bs-warning) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__footer,
+    &__content > :not(:first-child),
+    &__link-wrap {
+      transition: none;
+    }
+  }
+}

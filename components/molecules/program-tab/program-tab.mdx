@@ -1,0 +1,60 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ProgramTabStories from './program-tab.stories.json';
+import templateSource from './program-tab.twig?raw';
+
+<Meta of={ProgramTabStories} name="Docs" />
+
+# Program Tab
+
+A single program tab item: a full-width image with a content card inset flush at its bottom-right corner, plus its own pill nav label. Meant to be placed inside `organisms/programs`'s `tabs` slot — add as many as you want and reorder via drag & drop; there is no fixed limit.
+
+- **The component's root IS the Bootstrap `.tab-pane`** — the pill nav `<button>` renders as its first child, so it's still reachable (and hidden along with an inactive pane) without JS
+- **`organisms/programs`' `programs.js` moves each button** out into the shared pill nav on page load — Canvas renders each slot child independently, so this cross-sibling rearrangement can't be done in Twig
+- **The content card is inset flush** against the image's bottom-right corner and spans the bottom 60% of the image height on `lg`+ screens; below `lg` it renders as a plain full-width block
+- `active: true` opens this tab by default — if no Program Tab in the container is active, the container auto-activates the first one
+- `link_url` is optional — leave it empty to hide the "Learn More" link
+
+> ### Bootstrap documentation
+> - [Navs and tabs](https://getbootstrap.com/docs/5.3/components/navs-tabs/)
+> - [Colored links](https://getbootstrap.com/docs/5.3/helpers/colored-links/)
+
+## Properties
+
+<Canvas of={ProgramTabStories.Default} />
+<Controls of={ProgramTabStories.Default} />
+
+## Stories
+
+<Stories of={ProgramTabStories} />
+
+## Examples
+
+### Example 1 — Default program tab
+
+```twig
+{% include 'vartheme_bs5_horizonaid:program-tab' with {
+  active: true,
+  title: 'Education',
+  image: { src: '/path/to/photo.jpg', alt: 'Children smiling outside a rebuilt school', width: 1200, height: 675 },
+  card_title: 'Education',
+  card_text: 'Building safe schools and training local teachers to give children a clear path to a brighter future.',
+  link_url: '/programs/education'
+} only %}
+```
+
+### Example 2 — No link
+
+```twig
+{% include 'vartheme_bs5_horizonaid:program-tab' with {
+  title: 'Women',
+  image: { src: '/path/to/photo.jpg', alt: 'Two women standing together in a field', width: 1200, height: 675 },
+  card_title: 'Women',
+  card_text: 'Providing legal defense, grants, and leadership training to help women break poverty cycles.'
+} only %}
+```
+
+Placed standalone (outside `organisms/programs`), it still renders as a valid `.tab-pane`, but its pill button won't be visible in a nav bar — see `organisms/programs`'s docs for the full container + unlimited tabs pattern.
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

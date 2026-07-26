@@ -1,0 +1,143 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Icon Text Card component.
+ *
+ * - Stacked layout (no media)
+ * - Optional uploaded icon image above the content slot
+ * - One drag & drop content slot: drop a Heading and a Text component together
+ * - Headings dropped in the content slot switch to the accent color on hover
+ *
+ * Available attributes:
+ * - icon_wrap_attributes: Attributes for the optional icon image wrapper.
+ * - content_wrap_attributes: Attributes for the content slot wrapper.
+ * - content_placeholder_attributes: Attributes for the empty-slot placeholder.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set background_color = background_color|default('bg-primary-subtle') %}
+{% set background_color_class = (background_color != 'none') ? background_color : '' %}
+{% set box_shadow = box_shadow|default('shadow-none') %}
+{% set corner_style = corner_style|default('rounded-4') %}
+{% set link_url = link_url|default('')|trim %}
+{% set link_target_raw = link_target|default('default') %}
+{% set link_target = (link_target_raw == 'default') ? '_self' : link_target_raw %}
+{% set icon_alignment = icon_alignment|default('start') %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set card_border = card_border ?? false %}
+{% set padded = padded ?? true %}
+{% set equal_height = equal_height ?? false %}
+{% set stretched_link = stretched_link ?? false %}
+
+{# Logic: icon image (optional — only rendered when an image is uploaded). #}
+{% set icon_image = icon_image|default({}) %}
+{% set has_icon = (icon_image.src is defined) and (icon_image.src|trim is not empty) %}
+{% set icon_align_map = { 'start': 'me-auto', 'center': 'mx-auto', 'end': 'ms-auto' } %}
+{% set icon_align_class = icon_align_map[icon_alignment]|default('me-auto') %}
+
+{# Logic: fix relative assets/ paths injected by component.yml examples. #}
+{% if has_icon and icon_image.src starts with 'assets/' and component_metadata.path is defined %}
+  {% set icon_image = icon_image|merge({ src: component_metadata.path ~ '/' ~ icon_image.src }) %}
+{% endif %}
+
+{# Logic: single drag & drop content slot. #}
+{% set content_slot %}{% block content %}{% endblock %}{% endset %}
+{% set has_content_slot = content_slot|render|trim is not empty %}
+
+{% set use_stretched_link = stretched_link and (link_url is not empty) %}
+
+{# Logic: merge card classes as arrays. #}
+{% set attributes = attributes.addClass([
+  'card',
+  'card-icon-text',
+  'd-flex',
+  'flex-column',
+  'overflow-hidden',
+  'position-relative',
+  background_color_class,
+  corner_style,
+  (card_border ? 'border' : 'border-0'),
+  box_shadow,
+  (equal_height ? 'h-100' : ''),
+]|filter(v => v is not empty)) %}
+
+{% set card_body_attributes = create_attribute().addClass([
+  'card-icon-text__body',
+  'card-body',
+  'd-flex',
+  'flex-column',
+  (padded ? 'p-4' : 'p-0'),
+]) %}
+
+{% set icon_wrap_attributes = create_attribute().addClass([
+  'card-icon-text__icon',
+]) %}
+
+{% set content_wrap_attributes = create_attribute().addClass([
+  'card-icon-text__content',
+  'd-flex',
+  'flex-column',
+  'gap-2',
+]) %}
+
+{% set content_placeholder_attributes = create_attribute().addClass([
+  'text-muted',
+  'small',
+  'pe-none',
+]) %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <div{{ card_body_attributes }}>
+
+    {# Optional icon image — shown only when icon_image is uploaded #}
+    {% if has_icon %}
+      <div{{ icon_wrap_attributes }}>
+        {{ include('vartheme_bs5_horizonaid:image', {
+          media: icon_image,
+          ratio: 'ratio-auto',
+          fit: 'object-fit-contain',
+          align: icon_align_class,
+          width: 'w-auto',
+          loading: 'eager',
+        }, with_context = false) }}
+      </div>
+    {% endif %}
+
+    {# Drag & drop content slot #}
+    <div{{ content_wrap_attributes }}>
+      {% if has_content_slot %}
+        {{ content_slot }}
+      {% else %}
+        <p{{ content_placeholder_attributes }}>Drop content here</p>
+      {% endif %}
+    </div>
+
+  </div>
+
+  {% if use_stretched_link %}
+    {% set _link_accessible_label = content_slot|striptags|trim %}
+    {{ include('vartheme_bs5_horizonaid:link', {
+      url: link_url,
+      target: link_target,
+      attributes: create_attribute().setAttribute('aria-label', _link_accessible_label),
+      content: '',
+      link_utility_classes: ['stretched-link'],
+    }) }}
+  {% endif %}
+</div>

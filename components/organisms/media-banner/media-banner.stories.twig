@@ -1,479 +1,156 @@
 {% stories MediaBanner with {
-    title: 'Organisms/Media Banner',
-    parameters: {
-        componentSubtitle: 'Bootstrap media banner with background image, overlay, and flexible content positioning.',
-        docs: {
-            description: {
-                component: 'Media banner with configurable container, alignment, overlay, and a rich media_banner_slot content area.',
-            },
-            story: {
-                inline: true,
-            },
-        },
+  title: 'Hero/Media Banner',
+  parameters: {
+    componentSubtitle: 'Media banner with an uploaded image and a floating content box',
+    docs: {
+      description: {
+        component: 'Media banner with an uploaded image and a floating content box slot for a heading, text, buttons, or any other component. Bootstrap 5 utilities only.',
+      },
+      story: {
+        inline: true,
+      },
     },
-    argTypes: {
-        container_type: {
-            name: 'Container style',
-            description: 'Choose how the content is wrapped.',
-            defaultValue: 'container',
-            control: 'select',
-            options: {
-                "'Container (default)'": 'container',
-                "'Full width'": 'container-fluid',
-                "'Small container'": 'container-sm',
-                "'Medium container'": 'container-md',
-                "'Large container'": 'container-lg',
-                "'Extra large container'": 'container-xl',
-                "'Extra extra large container'": 'container-xxl',
-                "'No container'": 'none',
-            },
-        },
-        bg_edge2edge: {
-            name: 'Background edge-to-edge',
-            description: 'If enabled, adds the bg-edge2edge class to the outer section so the background image can extend full width.',
-            defaultValue: false,
-            control: 'boolean',
-        },
-        height: {
-            name: 'Banner height',
-            description: 'Choose the vertical size of the banner.',
-            defaultValue: 'ribbon',
-            control: 'select',
-            options: {
-                "'Ribbon (default)'": 'ribbon',
-                Large: 'large',
-            },
-        },
-        flex_position: {
-            name: 'Content position',
-            description: 'Controls vertical placement and horizontal alignment of the content.',
-            defaultValue: 'center-left',
-            control: 'select',
-            options: {
-                "'Top left'": 'top-left',
-                "'Center left'": 'center-left',
-                "'Bottom left'": 'bottom-left',
-                Center: 'hero-center',
-            },
-        },
-        overlay_bg: {
-            name: 'Overlay background',
-            description: 'Bootstrap background utility class.',
-            defaultValue: 'bg-transparent',
-            control: 'select',
-            options: {
-                Transparent: 'bg-transparent',
-                Dark: 'bg-dark',
-                Black: 'bg-black',
-                Primary: 'bg-primary',
-                Secondary: 'bg-secondary',
-                Success: 'bg-success',
-                Danger: 'bg-danger',
-                Warning: 'bg-warning',
-                Info: 'bg-info',
-                White: 'bg-white',
-            },
-        },
-        overlay_opacity: {
-            name: 'Overlay opacity',
-            description: 'Bootstrap opacity utility class.',
-            defaultValue: 'opacity-50',
-            control: 'select',
-            options: {
-                "'0% (none)'": 'opacity-0',
-                "'25%'": 'opacity-25',
-                "'50%'": 'opacity-50',
-                "'75%'": 'opacity-75',
-                "'100% (solid)'": 'opacity-100',
-            },
-        },
-        content_width: {
-            name: 'Content width',
-            description: 'Bootstrap width utility class.',
-            defaultValue: 'w-100',
-            control: 'select',
-            options: {
-                "'100% (full)'": 'w-100',
-                "'75%'": 'w-75',
-                "'50%'": 'w-50',
-                "'25%'": 'w-25',
-            },
-        },
-        object_position: {
-            name: 'Background image position',
-            description: 'Controls the background image position.',
-            defaultValue: 'center',
-            control: 'select',
-            options: {
-                Top: 'top',
-                Center: 'center',
-                Bottom: 'bottom',
-            },
-        },
-        media: {
-            name: 'Background image',
-            description: 'Background image object.',
-            control: 'object',
-        },
-        padding_inline_start: {
-            name: 'Padding start',
-            description: 'Space inside the banner at the start side.',
-            defaultValue: 'none',
-            control: 'select',
-            options: {
-                None: 'none',
-                Remove: 'ps-0',
-                Small: 'ps-1',
-                Medium: 'ps-2',
-                Large: 'ps-3',
-                "'Extra large'": 'ps-4',
-                "'XX-Large'": 'ps-5',
-            },
-        },
-        padding_inline_end: {
-            name: 'Padding end',
-            description: 'Space inside the banner at the end side.',
-            defaultValue: 'none',
-            control: 'select',
-            options: {
-                None: 'none',
-                Remove: 'pe-0',
-                Small: 'pe-1',
-                Medium: 'pe-2',
-                Large: 'pe-3',
-                "'Extra large'": 'pe-4',
-                "'XX-Large'": 'pe-5',
-            },
-        },
-        radius: {
-            name: 'Border radius',
-            description: 'Bootstrap border-radius utility class.',
-            defaultValue: 'none',
-            control: 'select',
-            options: {
-                None: 'none',
-                Default: 'rounded',
-                Square: 'rounded-0',
-                Small: 'rounded-1',
-                Medium: 'rounded-2',
-                Large: 'rounded-3',
-                "'Extra Large'": 'rounded-4',
-                Round: 'rounded-pill',
-            },
-        },
+  },
+  argTypes: {
+    image_radius: {
+      name: 'Image border radius',
+      defaultValue: 'rounded-hero',
+      control: 'select',
+      options: {
+        Square: 'none',
+        "'Small (0.5rem)'": 'rounded-2',
+        "'Medium (0.75rem)'": 'rounded-3',
+        "'Large (1rem)'": 'rounded-4',
+        "'Default (1.25rem)'": 'rounded-hero',
+        "'Extra large (1.5rem)'": 'rounded-5',
+        Pill: 'rounded-pill',
+      },
     },
+    content_bg: {
+      name: 'Content box background',
+      defaultValue: 'bg-light',
+      control: 'select',
+      options: {
+        Transparent: 'bg-transparent',
+        White: 'bg-white',
+        Light: 'bg-light',
+        Dark: 'bg-dark',
+        Black: 'bg-black',
+        Primary: 'bg-primary',
+        Secondary: 'bg-secondary',
+      },
+    },
+    content_color: {
+      name: 'Content box text color',
+      defaultValue: 'auto',
+      control: 'select',
+      options: {
+        "'Auto (based on background)'": 'auto',
+        "'Dark text'": 'text-dark',
+        "'White text'": 'text-white',
+      },
+    },
+  },
 } %}
 
 {% story Default with {
-    name: 'Default',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: false,
-        height: 'ribbon',
-        flex_position: 'center-left',
-        overlay_bg: 'bg-dark',
-        overlay_opacity: 'opacity-50',
-        content_width: 'w-100',
-        object_position: 'center',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Varbase media banner background',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
+  name: 'Default',
+  args: {
+    media: {
+      src: '/themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/banner-2.jpg',
+      alt: 'Children celebrating at a refugee camp event',
+      width: 1920,
+      height: 1075,
     },
+    image_radius: 'rounded-hero',
+    content_bg: 'bg-light',
+    content_color: 'auto',
+  },
 } %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Media Banner Title',
-            level: 2,
-            text_size: 'display-5',
-            text_color: 'text-white',
-        } only %}
-        <p class="lead mb-0 text-white">Add any rich content inside the media banner slot.</p>
-    {% endblock %}
+{% embed 'vartheme_bs5_horizonaid:media-banner' %}
+  {% block content %}
+    {{ include('vartheme_bs5_horizonaid:heading', {
+      heading_text: 'Title',
+      level: 2,
+      text_color: 'text-dark',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:text', {
+      text: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non sapien lacinia, pellent...</p>',
+      text_color: 'text-dark',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:button', {
+      label: 'Button',
+      variant: 'btn-primary',
+      size: 'btn-md',
+      radius: 'rounded-pill',
+      alignment: 'left',
+    }, false) }}
+  {% endblock %}
 {% endembed %}
 {% endstory %}
 
-{% story LargeHeight with {
-    name: 'Banner height',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: false,
-        height: 'large',
-        flex_position: 'center-left',
-        overlay_bg: 'bg-dark',
-        overlay_opacity: 'opacity-50',
-        content_width: 'w-100',
-        object_position: 'center',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Background image',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
+{% story DarkContentBox with {
+  name: 'Dark content box',
+  args: {
+    media: {
+      src: '/themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/banner-1.jpg',
+      alt: 'Placeholder banner image',
+      width: 1920,
+      height: 1075,
     },
+    image_radius: 'rounded-hero',
+    content_bg: 'bg-dark',
+    content_color: 'auto',
+  },
 } %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Large Banner',
-            level: 2,
-            text_size: 'display-4',
-            text_color: 'text-white',
-        } only %}
-        <p class="lead mb-0 text-white">Expanded vertical space for more prominent banner content.</p>
-    {% endblock %}
+{% embed 'vartheme_bs5_horizonaid:media-banner' %}
+  {% block content %}
+    {{ include('vartheme_bs5_horizonaid:heading', {
+      heading_text: 'Built for every story',
+      level: 2,
+      text_color: 'text-white',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:text', {
+      text: '<p>Swap the content box background to any Bootstrap color utility — text color follows automatically.</p>',
+      text_color: 'text-white',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:button', {
+      label: 'Learn more',
+      variant: 'btn-primary',
+      size: 'btn-md',
+      radius: 'rounded-pill',
+      alignment: 'left',
+    }, false) }}
+  {% endblock %}
 {% endembed %}
 {% endstory %}
 
-{% story CenteredContent with {
-    name: 'Content position',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: false,
-        height: 'large',
-        flex_position: 'hero-center',
-        overlay_bg: 'bg-dark',
-        overlay_opacity: 'opacity-50',
-        content_width: 'w-75',
-        object_position: 'center',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Background image',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
+{% story SquareImage with {
+  name: 'Square image corners',
+  args: {
+    media: {
+      src: '/themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/banner-2.jpg',
+      alt: 'Children celebrating at a refugee camp event',
+      width: 1920,
+      height: 1075,
     },
+    image_radius: 'none',
+    content_bg: 'bg-light',
+    content_color: 'auto',
+  },
 } %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Centered Content',
-            level: 2,
-            text_size: 'display-4',
-            text_color: 'text-white',
-            align: 'text-center',
-        } only %}
-        <p class="lead mb-0 text-white text-center">Most commonly used centered media banner content layout.</p>
-    {% endblock %}
-{% endembed %}
-{% endstory %}
-
-{% story BrandOverlay with {
-    name: 'Overlay background',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: false,
-        height: 'ribbon',
-        flex_position: 'center-left',
-        overlay_bg: 'bg-primary',
-        overlay_opacity: 'opacity-50',
-        content_width: 'w-100',
-        object_position: 'center',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Background image',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
-    },
-} %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Primary Overlay',
-            level: 2,
-            text_size: 'display-5',
-            text_color: 'text-white',
-        } only %}
-        <p class="lead mb-0 text-white">Useful to match branded banner backgrounds.</p>
-    {% endblock %}
-{% endembed %}
-{% endstory %}
-
-{% story StrongOverlay with {
-    name: 'Overlay opacity',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: false,
-        height: 'ribbon',
-        flex_position: 'center-left',
-        overlay_bg: 'bg-dark',
-        overlay_opacity: 'opacity-75',
-        content_width: 'w-100',
-        object_position: 'center',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Background image',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
-    },
-} %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Stronger Overlay',
-            level: 2,
-            text_size: 'display-5',
-            text_color: 'text-white',
-        } only %}
-        <p class="lead mb-0 text-white">Improves readability for text-heavy banner content.</p>
-    {% endblock %}
-{% endembed %}
-{% endstory %}
-
-{% story BottomImageFocus with {
-    name: 'Background image position',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: false,
-        height: 'large',
-        flex_position: 'bottom-left',
-        overlay_bg: 'bg-dark',
-        overlay_opacity: 'opacity-50',
-        content_width: 'w-75',
-        object_position: 'bottom',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Background image',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
-    },
-} %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Bottom Aligned Image',
-            level: 2,
-            text_size: 'display-5',
-            text_color: 'text-white',
-        } only %}
-        <p class="lead mb-0 text-white">Common when the focal point of the image is lower.</p>
-    {% endblock %}
-{% endembed %}
-{% endstory %}
-
-{% story RichHeroContent with {
-    name: 'Banner content',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: false,
-        height: 'large',
-        flex_position: 'center-left',
-        overlay_bg: 'bg-black',
-        overlay_opacity: 'opacity-75',
-        content_width: 'w-75',
-        object_position: 'center',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Background image',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
-    },
-} %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        <p class="text-uppercase small mb-2 text-white opacity-75">Featured campaign</p>
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Build Bold Banner Experiences',
-            level: 1,
-            text_size: 'display-3',
-            text_color: 'text-white',
-        } only %}
-        <p class="lead mb-4 text-white">Compose headings, descriptive text, and actions directly inside the media banner slot.</p>
-        <div class="d-flex flex-wrap gap-2">
-            {% include 'vartheme_bs5_horizonaid:button' with {
-                label: 'Primary action',
-                variant: 'btn-primary',
-                size: 'btn-md',
-                href: '',
-            } only %}
-            {% include 'vartheme_bs5_horizonaid:button' with {
-                label: 'Secondary action',
-                variant: 'btn-light',
-                size: 'btn-md',
-                outline: true,
-                href: '',
-            } only %}
-        </div>
-    {% endblock %}
-{% endembed %}
-{% endstory %}
-
-{% story WithPhoto with {
-    name: 'With photo',
-    args: {
-        container_type: 'container',
-        bg_edge2edge: true,
-        height: 'large',
-        flex_position: 'center-left',
-        overlay_bg: 'bg-dark',
-        overlay_opacity: 'opacity-50',
-        content_width: 'w-75',
-        object_position: 'center',
-        media: {
-            src: '/components/foundation/images/assets/banner-2.jpg',
-            alt: 'Media banner background photo',
-            width: 1920,
-            height: 1075,
-        },
-        padding_inline_start: 'none',
-        padding_inline_end: 'none',
-        radius: 'none',
-    },
-} %}
-{% embed 'vartheme_bs5_horizonaid:media-banner' with _context %}
-    {% block media_banner_slot %}
-        <p class="text-uppercase small mb-2 text-white opacity-75">Varbase Design System</p>
-        {% include 'vartheme_bs5_horizonaid:heading' with {
-            heading_text: 'Build Stunning Drupal Websites',
-            level: 1,
-            text_size: 'display-4',
-            text_color: 'text-white',
-        } only %}
-        <p class="lead mb-4 text-white">An enterprise-ready Drupal distribution with a powerful component library.</p>
-        <div class="d-flex flex-wrap gap-2">
-            {% include 'vartheme_bs5_horizonaid:button' with {
-                label: 'Get started',
-                variant: 'btn-primary',
-                size: 'btn-md',
-                href: '',
-            } only %}
-            {% include 'vartheme_bs5_horizonaid:button' with {
-                label: 'Learn more',
-                variant: 'btn-light',
-                size: 'btn-md',
-                outline: true,
-                href: '',
-            } only %}
-        </div>
-    {% endblock %}
+{% embed 'vartheme_bs5_horizonaid:media-banner' %}
+  {% block content %}
+    {{ include('vartheme_bs5_horizonaid:heading', {
+      heading_text: 'Square corners',
+      level: 2,
+      text_color: 'text-dark',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:text', {
+      text: '<p>The image_radius prop set to "none" removes rounding entirely.</p>',
+      text_color: 'text-dark',
+    }, false) }}
+  {% endblock %}
 {% endembed %}
 {% endstory %}
 

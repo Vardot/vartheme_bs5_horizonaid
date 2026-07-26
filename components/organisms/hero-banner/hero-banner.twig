@@ -1,0 +1,108 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Hero Banner component.
+ *
+ * An uploaded image with a floating content box anchored to its bottom
+ * edge. Bootstrap utility classes only; the content box's fixed padding,
+ * radius, and offset live in hero-banner.scss as component tokens.
+ *
+ * Available properties:
+ * - media: The hero banner image (src, alt, width, height).
+ * - image_radius: Bootstrap border-radius utility for the image. (none
+ *                  | rounded-2 | rounded-3 | rounded-4 | rounded-hero
+ *                  | rounded-5 | rounded-pill) Defaults to `rounded-hero`
+ *                  (this component's own 1.25rem preset).
+ * - content_bg: Bootstrap background utility for the content box. (bg-transparent
+ *               | bg-white | bg-light | bg-dark | bg-black | bg-primary
+ *               | bg-secondary | bg-success | bg-danger | bg-warning
+ *               | bg-info) Defaults to `bg-dark`.
+ * - content_color: Content box text color. `auto` switches to white text
+ *                   on dark backgrounds. (auto | text-dark | text-white)
+ *                   Defaults to `auto`.
+ *
+ * Available attributes:
+ * - attributes: The outermost root element.
+ * - media_attributes: The image wrapper element.
+ * - content_attributes: The floating content box element.
+ *
+ * Available slots:
+ * - content: Content box slot — heading, text, button, or any component.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set image_radius = image_radius|default('rounded-hero') %}
+{% set content_bg = content_bg|default('bg-dark') %}
+{% set content_color = content_color|default('auto') %}
+
+{# Logic: content box text color. `auto` switches to white text on dark
+ # backgrounds, same convention as atoms/section.
+ #}
+{% set dark_backgrounds = ['bg-dark', 'bg-black', 'bg-primary', 'bg-secondary'] %}
+{% if content_color == 'auto' %}
+  {% set content_color = content_bg in dark_backgrounds ? 'text-white' : 'text-dark' %}
+{% endif %}
+
+{# Logic: image radius. `rounded-hero` is this component's own 1.25rem
+ # preset (see hero-banner.scss) applied via a BEM modifier; every other
+ # value is a stock Bootstrap utility passed straight to atoms/image.
+ #}
+{% set is_custom_radius = image_radius == 'rounded-hero' %}
+{% set atom_image_rounded = is_custom_radius ? 'none' : image_radius %}
+
+{# Logic: slot content. #}
+{% set content_slot %}{% block content %}{% endblock %}{% endset %}
+{% set content_slot = content_slot|trim %}
+
+{# Logic: root / media / content classes. #}
+{% set media_classes = ['hero-banner__media', 'position-relative', 'overflow-hidden']|merge(is_custom_radius ? ['hero-banner__media--radius-hero'] : []) %}
+{% set content_classes = ['hero-banner__content', content_bg, content_color] %}
+
+{% set attributes = attributes.addClass(['hero-banner', 'position-relative']) %}
+
+{% if not media_attributes %}
+  {% set media_attributes = create_attribute() %}
+{% endif %}
+{% set media_attributes = media_attributes.addClass(media_classes) %}
+
+{% if not content_attributes %}
+  {% set content_attributes = create_attribute() %}
+{% endif %}
+{% set content_attributes = content_attributes.addClass(content_classes) %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <div{{ media_attributes }}>
+    {{ include('vartheme_bs5_horizonaid:image', {
+      media: {
+        src: media.src|default(''),
+        alt: media.alt|default(''),
+        width: media.width|default(''),
+        height: media.height|default(''),
+      },
+      fit: 'object-fit-cover',
+      width: 'w-100',
+      align: 'me-auto',
+      rounded: atom_image_rounded,
+      ratio: 'ratio-auto',
+      loading: 'eager',
+      cover_fill: true,
+    }, false, true) }}
+  </div>
+
+  {% if content_slot %}
+    <div{{ content_attributes }}>
+      {{ content_slot|raw }}
+    </div>
+  {% endif %}
+</div>

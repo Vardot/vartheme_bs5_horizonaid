@@ -1,0 +1,142 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Country Slider component.
+ *
+ * A heading + description sits above a horizontally-scrolling row of
+ * Country Card components, with a "View all" link and prev/next controls.
+ * There is no Bootstrap component for a multi-item-visible slider (only the
+ * single-slide-at-a-time Carousel), so the track uses CSS Scroll Snap
+ * driven by `country-slider.js`, the theme's first use of this pattern.
+ *
+ * Canvas / SDC notes:
+ * - Uses slot content for cards (add unlimited "Country Card" components) so
+ *   Canvas can manage drag/drop ordering. A single `items`-style array prop
+ *   can't be used here: Canvas has no field/widget mapping for an array of
+ *   freeform objects, so such a prop is silently never listed in the
+ *   component picker. Mirrors `organisms/programs`' `tabs` slot.
+ * - `country-slider.js` reads the rendered "Country Card" instances by their
+ *   own `.card-country` class (no wrapper markup added around them) to size
+ *   the scroll step and to move them to be direct children of the track if
+ *   Canvas ever wraps slot children in extra markup — mirrors
+ *   `hero-slider-container`'s `flattenCarouselItems()` defensive pattern.
+ *
+ * Available properties:
+ * - heading_text: Heading text. Defaults to `Where We Work`.
+ * - heading_level: HTML heading tag level. (1 | 2 | 3 | 4 | 5 | 6) Defaults
+ *                  to `2`.
+ * - description_text: Rich text (HTML) shown under the heading.
+ * - container_type: How the content is contained.
+ *                    (container | container-fluid | none) Defaults to `container`.
+ * - cta_label: "View all" link label. Defaults to `View All Countries`.
+ * - cta_url: "View all" link URL. Leave empty to hide the link.
+ * - cta_target: Link target. (default | _self | _blank)
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root element.
+ * - track_attributes: HTML attributes for the scrollable card track.
+ *
+ * Available slots:
+ * - cards: One or more "Country Card" components (unlimited).
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set heading_text = heading_text|default('Where We Work') %}
+{% set heading_level = heading_level|default(2) %}
+{% set description_text = description_text|default('') %}
+{% set container_type = container_type|default('container') %}
+{% set cta_label = cta_label|default('View All Countries') %}
+{% set cta_url = cta_url|default('')|trim %}
+{% set cta_target_raw = cta_target|default('default') %}
+
+{# Logic: slot check, only for emptiness test — keep actual slot output untouched below. #}
+{% set has_cards = cards is defined and cards|render|trim is not empty %}
+{% set has_cta = cta_url is not empty %}
+{% set cta_target = cta_target_raw == '_blank' ? 'blank' : 'self' %}
+
+{# Logic: merge root and structural classes as arrays. #}
+{% set attributes = attributes.addClass(['country-slider']) %}
+{% set container_classes = container_type != 'none' ? [container_type] : [] %}
+{% set track_classes = ['country-slider__track'] %}
+
+{% if not track_attributes %}
+  {% set track_attributes = create_attribute() %}
+{% endif %}
+{% set track_attributes = track_attributes
+  .addClass(track_classes)
+  .setAttribute('data-country-slider-track', true)
+  .setAttribute('tabindex', 0)
+%}
+
+{% set control_classes = ['country-slider__control', 'btn', 'bg-transparent', 'border-0', 'text-dark', 'd-inline-flex', 'align-items-center', 'justify-content-center', 'p-0'] %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <div class="{{ container_classes|join(' ') }}">
+    <div class="country-slider__header mb-4 mb-lg-5">
+      {% if heading_text %}
+        {{ include('vartheme_bs5_horizonaid:heading', {
+          heading_text: heading_text,
+          level: heading_level,
+          font_weight: 'fw-bold',
+        }, false) }}
+      {% endif %}
+      {% if description_text %}
+        <div class="country-slider__description text-body-secondary mt-3">{{ description_text|raw }}</div>
+      {% endif %}
+    </div>
+
+    <div{{ track_attributes }}>
+      {% if has_cards %}
+        {{ cards }}
+      {% else %}
+        <p class="text-secondary small mb-0">Add "Country Card" components here.</p>
+      {% endif %}
+    </div>
+
+    <div class="country-slider__footer d-flex flex-wrap align-items-center gap-3 mt-4">
+      {% if has_cta %}
+        {{ include('vartheme_bs5_horizonaid:button', {
+          label: cta_label,
+          href: cta_url,
+          variant: 'btn-primary',
+          size: 'btn-md',
+          radius: 'rounded-pill',
+          target: cta_target,
+          alignment: 'inline',
+        }, false) }}
+      {% endif %}
+
+      <div class="country-slider__controls d-flex gap-2 ms-auto">
+        <button class="{{ control_classes|join(' ') }}" type="button" data-country-slider-prev aria-label="Previous">
+          <svg class="country-slider__control-icon" viewBox="0 0 56 38" fill="none" width="56" height="38" aria-hidden="true" focusable="false">
+            <rect x="0.5" y="0.5" width="55" height="37" rx="18.5" stroke="currentColor"/>
+            <g class="country-slider__control-arrow">
+              <path d="M17.6788 18.2632L36.6592 18.2632C37.0661 18.2632 37.396 18.5931 37.396 19C37.396 19.407 37.0661 19.7369 36.6592 19.7369H17.6788C17.2734 19.1628 17.2564 18.8377 17.6788 18.2632Z" fill="currentColor"/>
+              <path d="M16.0001 18.9966C16.0001 18.8261 16.1027 18.5999 16.2073 18.4901L22.1021 12.2269C22.3773 11.9424 22.8289 11.9151 23.1498 12.204C23.4366 12.4622 23.4381 12.9599 23.1726 13.2402L18.4407 18.26C18.0183 18.8345 18.0353 19.1596 18.4407 19.7337L23.1726 24.7534C23.4378 25.0337 23.4247 25.5306 23.1498 25.8011C22.8593 26.0867 22.3731 26.0555 22.1021 25.7665L16.2073 19.5033C16.0341 19.3335 16.003 19.1697 16.0001 18.9966Z" fill="currentColor"/>
+            </g>
+          </svg>
+        </button>
+        <button class="{{ control_classes|join(' ') }}" type="button" data-country-slider-next aria-label="Next">
+          <svg class="country-slider__control-icon" viewBox="0 0 56 38" fill="none" width="56" height="38" aria-hidden="true" focusable="false">
+            <rect x="0.5" y="0.5" width="55" height="37" rx="18.5" stroke="currentColor"/>
+            <g class="country-slider__control-arrow">
+              <path d="M38.7171 18.2632L19.7368 18.2632C19.3299 18.2632 19 18.5931 19 19C19 19.407 19.3299 19.7369 19.7368 19.7369H38.7171C39.1226 19.1628 39.1396 18.8377 38.7171 18.2632Z" fill="currentColor"/>
+              <path d="M40.3959 18.9966C40.3959 18.8261 40.2933 18.5999 40.1887 18.4901L34.2939 12.2269C34.0187 11.9424 33.5671 11.9151 33.2462 12.204C32.9594 12.4622 32.9579 12.9599 33.2234 13.2402L37.9553 18.26C38.3777 18.8345 38.3607 19.1596 37.9553 19.7337L33.2234 24.7534C32.9582 25.0337 32.9713 25.5306 33.2462 25.8011C33.5367 26.0867 34.0229 26.0555 34.2939 25.7665L40.1887 19.5033C40.3619 19.3335 40.393 19.1697 40.3959 18.9966Z" fill="currentColor"/>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

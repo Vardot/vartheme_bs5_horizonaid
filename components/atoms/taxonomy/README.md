@@ -10,6 +10,7 @@ Use this component when you need to:
 - optionally turn the badge into a link to the term page
 - open that link in the same or a new tab
 - choose between a large and small typography size
+- choose between a primary, secondary or tertiary color pairing
 
 ## Files
 
@@ -34,6 +35,7 @@ Use this component when you need to:
 ### Appearance
 
 - `size`: typography size (taxonomy modifier class) — `taxonomy-lg` or `taxonomy-sm`; defaults to `taxonomy-lg`
+- `color`: background/text color pairing (taxonomy modifier class) — `taxonomy-primary`, `taxonomy-secondary` or `taxonomy-tertiary`; defaults to `taxonomy-primary`
 
 ## Target values
 
@@ -49,6 +51,14 @@ Use this component when you need to:
 | `taxonomy-lg` | Large |
 | `taxonomy-sm` | Small |
 
+## Color values
+
+| Value | Label | Background | Text |
+|---|---|---|---|
+| `taxonomy-primary` | Primary | `bg-dark` (navy) | `text-white` |
+| `taxonomy-secondary` | Secondary | `bg-accent` (blue) | `text-white` |
+| `taxonomy-tertiary` | Tertiary | `bg-primary` (gold) | `text-secondary` (navy) |
+
 ## Available attributes
 
 - `attributes`: attributes array available to the component
@@ -61,21 +71,24 @@ Use this component when you need to:
   label: 'Announcements',
   url: '/taxonomy/term/12',
   target: '_blank',
-  size: 'taxonomy-lg'
+  size: 'taxonomy-lg',
+  color: 'taxonomy-secondary'
 } only %}
 ```
 
 ```twig
 {% include 'vartheme_bs5_horizonaid:taxonomy' with {
   label: 'Draft',
-  size: 'taxonomy-sm'
+  size: 'taxonomy-sm',
+  color: 'taxonomy-tertiary'
 } only %}
 ```
 
 ## Notes
 
 - With a non-empty `url` the badge renders as `<a>`; otherwise it renders as `<span>`.
-- The badge is built entirely from Bootstrap utilities (`badge`, `bg-dark`, `text-accent`, `border`, `border-accent`, and more) plus the `taxonomy` class — no custom CSS.
+- The badge is built entirely from Bootstrap utilities (`badge`, `rounded-pill`, the `color`-mapped `bg-*`/`text-*` pair, and more) plus the `taxonomy` class — no custom CSS.
 - The `taxonomy-lg` size adds the `fs-6` utility; `taxonomy-sm` omits it.
+- `color` picks a `bg-*` + `text-*` pair rather than a single `text-bg-*` utility, so `taxonomy-tertiary` can pair `bg-primary` with the exact navy of `text-secondary` (Bootstrap's `text-bg-primary` contrast color is plain black instead).
 - When `target` is `_blank`, the link also gets `rel="noopener noreferrer"`.
 - The link variant adds `text-decoration-none`; both `label` and `url` are escaped on output.

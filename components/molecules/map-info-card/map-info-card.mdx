@@ -1,0 +1,59 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as MapInfoCardStories from './map-info-card.stories.json';
+import templateSource from './map-info-card.twig?raw';
+
+<Meta of={MapInfoCardStories} name="Docs" />
+
+# Map Info Card
+
+A small dismissible card — heading, description, up to two stat rows, and a "Learn More" link. Used standalone, or dropped into `organisms/map`'s `countries` slot (with `country_code` set) to become that country's click popup.
+
+- **This card is always fully self-rendered** — set `country_code` and drop it into `organisms/map`'s `countries` slot; the map discovers it by its `data-country-code` attribute and shows/hides it on click. Nothing else to wire up.
+- Stat rows (`stat_1_*` / `stat_2_*`) are independently optional — each row only renders when its `_value` is set
+- The close button is progressive enhancement — the card renders fine without JS, it just won't dismiss
+
+> ### Bootstrap documentation
+> - [Card](https://getbootstrap.com/docs/5.3/components/card/)
+> - [Close button](https://getbootstrap.com/docs/5.3/components/close-button/)
+
+## Properties
+
+<Canvas of={MapInfoCardStories.Default} />
+<Controls of={MapInfoCardStories.Default} />
+
+## Stories
+
+<Stories of={MapInfoCardStories} />
+
+## Examples
+
+### Example 1 — Default (two stats + link)
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+  heading: 'Somalia',
+  description: 'Supporting displaced communities and refugee populations across southern and central regions with emergency shelter, clean water access, and legal protection services.',
+  stat_1_value: '2.9M',
+  stat_1_label: 'Internally displaced people reached',
+  stat_2_value: '14K',
+  stat_2_label: 'Legal aid cases supported in 2025',
+  link_url: 'https://example.com/somalia',
+} %}
+{% endembed %}
+```
+
+### Example 2 — One stat, no link
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+  heading: 'Guatemala',
+  description: 'Community-based nutrition programs for children under five.',
+  stat_1_value: '46K',
+  stat_1_label: 'Children screened',
+} %}
+{% endembed %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

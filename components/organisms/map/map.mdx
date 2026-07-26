@@ -1,0 +1,93 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as MapStories from './map.stories.json';
+import templateSource from './map.twig?raw';
+
+<Meta of={MapStories} name="Docs" />
+
+# Map
+
+A self-contained interactive SVG world map — no external map API or key. Clicking a highlighted country opens a popup (`molecules/map-info-card`) with a description, up to two stats, and a link.
+
+- **No setup required.** The map used to wrap the Google Maps JavaScript API and needed a site-wide API key; it's now a plain SVG, projected from the vendored GeoJSON with [d3-geo](https://d3js.org/d3-geo) (vendored, see the README).
+- **Countries are an unlimited `countries` slot, not numbered props.** Drop as many `molecules/map-info-card` components in as you want, each with its own **Country code** prop set — the map highlights every matching country and reads each popup's content straight from that card. No field limit, nothing to keep in sync (unlike this component's old `country_1_code`..`country_10_code` Google Maps version).
+- **Country display names come from the vendored GeoJSON**, matched by ISO 3166-1 alpha-2 code at click time.
+- **Custom zoom in/out/reset controls** (bottom-left), styled from the theme's `$primary`/`$accent` tokens with a hover swap; reset returns to scale `1`, clears any pan, and closes any open popup.
+- **Drag-to-pan** — click and drag the map to pan around, at any zoom level; a real drag (not just a stationary click) never accidentally opens a country's popup.
+- **Keyboard-accessible** — highlighted countries are focusable and Enter/Space-activatable, with an `aria-label` from the country's name.
+- `content` is an optional drag & drop slot shown above the map.
+
+## Properties
+
+<Canvas of={MapStories.Default_3_countries_} />
+<Controls of={MapStories.Default_3_countries_} />
+
+## Stories
+
+<Stories of={MapStories} />
+
+## Examples
+
+### Example 1 — Three highlighted countries
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:map' with {
+  map_height: 'md',
+  box_shadow: 'shadow-sm',
+} %}
+  {% block countries %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'SO',
+      heading: 'Somalia',
+      description: 'Supporting displaced communities and refugee populations.',
+      stat_1_value: '2.9M',
+      stat_1_label: 'Internally displaced people reached',
+      link_url: 'https://example.com/somalia',
+    } %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'UA',
+      heading: 'Ukraine',
+      description: 'Emergency response for conflict-affected communities.',
+      stat_1_value: '1.2M',
+      stat_1_label: 'People assisted',
+      link_url: 'https://example.com/ukraine',
+    } %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'GT',
+      heading: 'Guatemala',
+      description: 'Community-based nutrition programs for children under five.',
+      stat_1_value: '46K',
+      stat_1_label: 'Children screened',
+      link_url: 'https://example.com/guatemala',
+    } %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 2 — With intro content above the map
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:map' with {
+  map_height: 'lg',
+} %}
+  {% block content %}
+    <h2 class="h3 mb-2">Where we work</h2>
+    <p class="mb-0">Click a highlighted country to see our impact there.</p>
+  {% endblock %}
+  {% block countries %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'SO',
+      heading: 'Somalia',
+      description: 'Supporting displaced communities and refugee populations.',
+      link_url: 'https://example.com/somalia',
+    } %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

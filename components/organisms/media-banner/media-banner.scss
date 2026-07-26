@@ -1,95 +1,130 @@
 // @file
-// Vartheme BS5 Horizon Aid — Media banner component styles.
+// Vartheme BS5 Horizonaid — Media banner component styles.
 //
-// Responsive layout for the media banner: a wider-than-content band on desktop,
-// a tall portrait band on phones, a cover image that fills the banner at any
-// aspect ratio, and light breadcrumb colors on the dark overlay. Scoped to the
-// `.media-banner` block so nothing leaks to the rest of the theme.
+// The image sits in normal flow with a Bootstrap (or this component's own
+// 1.25rem preset) radius; the content box floats above its bottom edge.
+// On small screens the box stays in flow, pulled up slightly over the
+// image; from `lg` up the image and content box become a two-row CSS
+// grid (gap row + content row) offset from the image's start edge, with a
+// fixed gap of image visible above the box, matching the reference design.
+// The content row uses `minmax(min-height, auto)` rather than a fixed
+// height so the box (and the image behind it, which spans both rows) grow
+// together when the slot content is taller than the reference min-height —
+// otherwise long content would overflow a height fixed by
+// `inset-block-end: 0`. Scoped to `.media-banner` so nothing leaks to the
+// rest of the theme.
 
 @import "../../defaults"; // Global component defaults.
 
 .media-banner {
-  // Responsive height so the cover image always has a good area to fill at every
-  // screen size. Mobile gets a tall portrait band (capped to the viewport so it
-  // never overflows the screen); md+ uses a 25rem landing-banner height.
-  min-height: min(37.5rem, 78vh);
-
-  @include media-breakpoint-up(md) {
-    min-height: 25rem;
-  }
-
-  // The banner image is a drimage figure (figure → picture → img) sized to the
-  // image's own aspect ratio, which leaves the lower part of the tall banner
-  // empty. Force every wrapper to fill the banner height and cover it, so the
-  // image looks good at any screen size / aspect ratio (focal area centered).
-  figure,
-  figure > div,
-  figure picture {
-    height: 100%;
-  }
-
-  figure picture {
-    display: block;
-  }
-
-  figure img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  // Break out symmetrically beyond the content container so the banner reads as
-  // a wider band. Negative inline margins (not 100vw) keep it centered under the
-  // admin toolbar and avoid horizontal overflow; the inner container is
-  // unchanged, so the heading/breadcrumb still line up with the page content.
-  @include media-breakpoint-up(xl) {
-    margin-inline: -#{$spacer * 2.5};
-  }
-
-  // Lay the banner out as a column so the content can be positioned within the
-  // fixed-height band (the image/overlay layers are absolute, so only the
-  // content container participates in flow).
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  > .container {
-    width: 100%;
-  }
-
-  // Phones: content drops to the bottom over the gradient overlay.
-  @include media-breakpoint-down(md) {
-    justify-content: flex-end;
-  }
-
-  // Breadcrumb sits on the dark banner overlay, so use light, legible colors.
-  // The extra `.breadcrumb` qualifier outranks the breadcrumb component's
-  // default `--bs-dark` item/divider color. Breadcrumbs rendered outside the
-  // media banner keep their default styling.
+  // Fixed design tokens (not derived from the Bootstrap spacing/radius
+  // scale) matching the reference media banner design exactly. Shared
+  // between `&__media` and `&__content` (custom properties inherit down
+  // from this common ancestor), since the image needs enough height to
+  // fit the gap plus the box that hangs off it.
   //
-  // Size/weight follow the approved design (Desktop/Components/Breadcrumb):
-  // 12px, bold, line-height 1.35.
-  .breadcrumb .breadcrumb-item,
-  .breadcrumb .breadcrumb-item.active {
-    color: rgba($white, 0.8);
-    font-size: 0.75rem;
-    font-weight: 700;
-    line-height: 1.35;
+  // --desktop-columns-4col: the box's desktop width — a hook so a future
+  // grid/design-token system can set this globally; it falls back to the
+  // reference design's own fixed value (22.4375rem) until one exists.
+  --media-banner-content-padding: #{$spacer * 2.5}; // 2.5rem
+  --media-banner-content-radius: 1.25rem;
+  --media-banner-content-offset-start: 3rem;
+  --media-banner-content-top-gap: 11.56rem; // image visible above the box, lg+
+  --media-banner-content-min-height: 18rem; // comfortable room for heading/text/button
+
+  // `&__media` and `&__content` are grid siblings from `lg` up: row 1 is the
+  // fixed top gap, row 2 holds the content box and grows past `min-height`
+  // when the slot content needs more room (`minmax(…, auto)`), taking the
+  // overall banner height — and the media block spanning both rows — with
+  // it, instead of clipping the box at a fixed height.
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--media-banner-content-top-gap) minmax(var(--media-banner-content-min-height), auto);
   }
 
-  .breadcrumb .breadcrumb-item a {
-    color: var(--bs-white);
-    text-decoration: none;
+  &__media {
+    width: 100%;
 
-    &:hover,
-    &:focus {
-      color: var(--bs-white);
-      text-decoration: none;
+    img,
+    picture img {
+      object-fit: cover;
+      object-position: center;
+    }
+
+    // This component's own radius preset (1.25rem) — the theme's Bootstrap
+    // radius scale stops at rounded-4 (1rem) / rounded-5 (1.5rem) and has
+    // no utility for the reference design's exact value, so it's exposed
+    // here as a fixed, non-themeable token rather than a Bootstrap one.
+    &--radius-hero {
+      --media-banner-image-radius: 1.25rem;
+
+      img,
+      picture img {
+        border-radius: var(--media-banner-image-radius);
+      }
+    }
+
+    // From `lg` up the media block spans both grid rows (the top gap and
+    // the content row) so its rendered height always matches the content
+    // box's — including when the box has grown past `min-height` — not by
+    // the image's own intrinsic aspect ratio. The figure/picture/img chain
+    // from atoms/image must be pinned to fill it — otherwise the image
+    // renders at its own shorter aspect-ratio height, leaving a gap below
+    // it. Below `lg` the image stays in normal flow, sized by its own
+    // aspect ratio, same as before.
+    //
+    // `grid-column: 1` is explicit (not left to auto-placement) because
+    // `&__content` below also spans row 2: two auto-placed items that
+    // overlap a row are never assigned the same column by the grid
+    // auto-placement algorithm — it opens a second implicit column for
+    // whichever item is placed second instead, splitting the `1fr` track
+    // and leaving the image only part-width with the content box beside it
+    // rather than floating on top of it. Pinning both to column 1 makes the
+    // overlap (arbitrated by z-index) explicit and intentional.
+    @include media-breakpoint-up(lg) {
+      position: relative;
+      grid-column: 1;
+      grid-row: 1 / -1;
+
+      figure {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      figure picture {
+        display: block;
+        height: 100%;
+      }
+
+      img,
+      picture img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
-  .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-    color: rgba($white, 0.6);
+  &__content {
+    position: relative;
+    z-index: 1;
+    width: calc(100% - #{$spacer * 2});
+    margin-inline: auto;
+    margin-block-start: -#{$spacer * 2};
+    padding: var(--media-banner-content-padding);
+    border-radius: var(--media-banner-content-radius) var(--media-banner-content-radius) 0 0;
+
+    @include media-breakpoint-up(lg) {
+      z-index: 2;
+      grid-column: 1;
+      grid-row: 2;
+      justify-self: start;
+      width: var(--desktop-columns-4col, 22.4375rem);
+      margin: 0;
+      margin-inline-start: var(--media-banner-content-offset-start);
+    }
   }
 }

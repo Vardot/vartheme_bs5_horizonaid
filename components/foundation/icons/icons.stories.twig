@@ -3,7 +3,7 @@
   parameters: {
     docs: {
       description: {
-        component: 'Bootstrap Icons used in Vartheme BS5 Horizon Aid, grouped by category.',
+        component: 'Bootstrap Icons used in Vartheme BS5 Horizonaid, grouped by category.',
       },
     },
   },
@@ -58,12 +58,12 @@
     </div>
   </div>
 
-  {# Common icons #}
+  {# Care & Health icons #}
   <div class="border-top pt-4 mb-5">
-    <h2 class="fw-bold mb-4">Other</h2>
+    <h2 class="fw-bold mb-4">Care &amp; Health</h2>
     <div class="d-flex flex-wrap gap-4">
-      {% set common_icons = ['search', 'heart', 'heart-fill', 'star', 'star-fill', 'bell', 'bell-fill', 'calendar', 'calendar-fill', 'envelope', 'envelope-fill', 'gear', 'gear-fill', 'person', 'person-fill', 'house', 'house-fill', 'trash', 'trash-fill', 'pencil', 'pencil-fill', 'download', 'upload', 'share', 'share-fill', 'link', 'link-45deg', 'check-circle', 'check-circle-fill', 'x-circle', 'x-circle-fill', 'info-circle', 'info-circle-fill', 'exclamation-circle', 'exclamation-circle-fill', 'question-circle', 'question-circle-fill', 'plus-circle', 'plus-circle-fill', 'dash-circle', 'eye', 'eye-fill', 'eye-slash', 'lock', 'lock-fill', 'unlock', 'file', 'folder', 'image', 'camera', 'camera-fill', 'telephone', 'telephone-fill', 'map', 'map-fill', 'pin', 'pin-fill', 'tag', 'tag-fill', 'cart', 'cart-fill', 'bag', 'bag-fill', 'credit-card', 'credit-card-fill', 'cup', 'cup-fill', 'globe', 'globe2', 'wifi', 'bluetooth', 'battery', 'battery-full', 'play-circle', 'play-circle-fill', 'pause-circle', 'stop-circle'] %}
-      {% for icon in common_icons %}
+      {% set care_icons = ['heart', 'heart-fill', 'heart-pulse', 'hospital', 'bandaid', 'bandaid-fill', 'capsule', 'prescription2', 'clipboard2-pulse', 'clipboard2-pulse-fill', 'clipboard2-heart', 'clipboard2-heart-fill', 'shield-check', 'shield-plus', 'droplet', 'droplet-fill', 'droplet-half', 'water', 'life-preserver'] %}
+      {% for icon in care_icons %}
         <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
           {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
           <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
@@ -72,12 +72,82 @@
     </div>
   </div>
 
-  {# Person icons #}
+  {# People & Community icons #}
   <div class="border-top pt-4 mb-5">
-    <h2 class="fw-bold mb-4">Person</h2>
+    <h2 class="fw-bold mb-4">People &amp; Community</h2>
     <div class="d-flex flex-wrap gap-4">
-      {% set person_icons = ['person', 'person-fill', 'person-circle', 'person-badge', 'person-badge-fill', 'person-check', 'person-check-fill', 'person-dash', 'person-dash-fill', 'person-plus', 'person-plus-fill', 'person-x', 'person-x-fill', 'people', 'people-fill'] %}
-      {% for icon in person_icons %}
+      {% set people_icons = ['people', 'people-fill', 'person', 'person-fill', 'person-heart', 'person-hearts', 'person-check', 'person-check-fill', 'person-plus', 'person-plus-fill', 'person-badge', 'person-badge-fill', 'hand-thumbs-up', 'hand-thumbs-up-fill', 'hand-index-thumb'] %}
+      {% for icon in people_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Education icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Education</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set education_icons = ['mortarboard', 'mortarboard-fill', 'book', 'book-fill', 'book-half', 'backpack', 'backpack-fill', 'backpack2', 'backpack2-fill', 'pencil', 'pencil-fill', 'journal-medical'] %}
+      {% for icon in education_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Shelter & Basic Needs icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Shelter &amp; Basic Needs</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set shelter_icons = ['house', 'house-fill', 'house-heart', 'house-heart-fill', 'basket', 'basket-fill', 'basket3', 'basket3-fill', 'cup-hot', 'cup-hot-fill', 'umbrella', 'gift', 'gift-fill', 'sun', 'sun-fill', 'cloud-rain', 'cloud-rain-fill', 'tree-fill', 'leaf', 'recycle'] %}
+      {% for icon in shelter_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Donations & Funding icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Donations &amp; Funding</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set donation_icons = ['cash', 'cash-coin', 'currency-dollar', 'currency-exchange', 'wallet2', 'piggy-bank', 'piggy-bank-fill', 'credit-card', 'credit-card-fill', 'envelope-heart', 'envelope-heart-fill'] %}
+      {% for icon in donation_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Global Reach icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Global Reach</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set global_icons = ['globe', 'globe2', 'globe-americas', 'geo-alt', 'geo-alt-fill', 'geo-fill', 'pin-map', 'pin-map-fill', 'compass', 'compass-fill', 'signpost', 'signpost-fill', 'truck', 'airplane', 'airplane-fill', 'suitcase', 'suitcase-fill'] %}
+      {% for icon in global_icons %}
+        <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
+          {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
+          <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Advocacy & Impact icons #}
+  <div class="border-top pt-4 mb-5">
+    <h2 class="fw-bold mb-4">Advocacy &amp; Impact</h2>
+    <div class="d-flex flex-wrap gap-4">
+      {% set advocacy_icons = ['megaphone', 'megaphone-fill', 'flag', 'flag-fill', 'chat-heart', 'chat-heart-fill', 'award', 'award-fill', 'trophy', 'trophy-fill', 'lightbulb', 'lightbulb-fill', 'emoji-smile'] %}
+      {% for icon in advocacy_icons %}
         <div class="d-flex flex-column align-items-center gap-2" style="width: 80px;">
           {{ include('vartheme_bs5_horizonaid:bootstrap-icon', { icon: icon, icon_size: 'fs-3' }) }}
           <span class="small text-muted text-center" style="font-size: 11px; word-break: break-all;">{{ icon }}</span>

@@ -1,0 +1,81 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Country Slider
+group: Card
+status: stable
+description: >
+  Heading + description above a horizontally-scrolling row of Country Card
+  components, with a "View all" link and prev/next controls. Add one or more
+  "Country Card" components into the slot (unlimited, drag & drop reorder).
+props:
+  type: object
+  properties:
+    heading_text:
+      type: string
+      title: Heading text
+      default: Where We Work
+      examples:
+        - Where We Work
+    heading_level:
+      type: integer
+      title: Heading level
+      description: HTML heading tag.
+      enum: [1, 2, 3, 4, 5, 6]
+      default: 2
+      examples:
+        - 2
+    description_text:
+      type: string
+      title: Description (rich text)
+      description: 'HTML content (e.g. Text). Make sure this content is filtered/safe before rendering.'
+      contentMediaType: text/html
+      x-formatting-context: block
+      default: "<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id. Pretium tellus duis convallis tempus leo eu aenean. Urna tempor pulvinar vivamus fringilla lacus nec metus.</p>"
+      examples:
+        - "<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id. Pretium tellus duis convallis tempus leo eu aenean. Urna tempor pulvinar vivamus fringilla lacus nec metus.</p>"
+    container_type:
+      type: string
+      title: Container width
+      enum:
+        - container
+        - container-fluid
+        - none
+      default: container
+      examples:
+        - container
+      meta:enum:
+        container: Standard container
+        container-fluid: Full width container
+        none: No container wrapper
+    cta_label:
+      type: string
+      title: '"View all" link label'
+      default: View All Countries
+      examples:
+        - View All Countries
+    cta_url:
+      type: string
+      title: '"View all" link URL'
+      format: uri-reference
+      description: Leave empty to hide the link.
+      default: ''
+    cta_target:
+      type: string
+      title: Link target
+      enum:
+        - default
+        - _self
+        - _blank
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (same tab)
+        _self: Same tab
+        _blank: New tab
+slots:
+  cards:
+    title: Country cards
+    description: Add one or more "Country Card" components here (unlimited, drag & drop reorder).
+libraryOverrides:
+  dependencies:
+    - core/once

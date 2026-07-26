@@ -1,0 +1,69 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ProgramsStories from './programs.stories.json';
+import templateSource from './programs.twig?raw';
+
+<Meta of={ProgramsStories} name="Docs" />
+
+# Programs
+
+A pill-tabbed programs showcase container. A nav-pills tab list floats over the top of the active tab's image on `lg`+ screens (stacked above it on smaller screens) while each tab pane swaps a full-width image for a content card inset at its bottom-right corner. Add one or more "Program Tab" components into the slot — unlimited, drag & drop reorder.
+
+- **`tabs` is a Canvas slot, not an array prop** — Drupal Canvas has no field/widget mapping for an array of freeform objects (title + image + text + link per tab), so an `items`-style array prop would silently never appear in the component picker. Dropping unlimited `molecules/program-tab` instances into the slot sidesteps that limitation entirely — the same pattern `organisms/hero-slider-container` uses with `molecules/hero-slide`
+- **The nav is built at runtime, not in Twig** — each Program Tab renders its own pill button nested inside its own pane; `programs.js` moves every button into the shared nav `<ul>` on page load, since Canvas renders each slot child independently and Twig can't reach across siblings
+- **The nav only overlays the image on `lg`+** — below that it stays in normal flow, stacked above the image. An absolutely-positioned nav has no bounded height, so once enough pills wrap to multiple lines on a narrow screen it would otherwise grow down over the tab content underneath it
+- **The first tab with a non-empty title becomes active by default** if no Program Tab is explicitly marked active
+
+> ### Bootstrap documentation
+> - [Navs and tabs](https://getbootstrap.com/docs/5.3/components/navs-tabs/)
+
+## Properties
+
+<Canvas of={ProgramsStories.Default} />
+<Controls of={ProgramsStories.Default} />
+
+## Stories
+
+<Stories of={ProgramsStories} />
+
+## Examples
+
+### Example 1 — Programs with 5 tabs
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:programs' with {
+  tabs_id: 'programs-tabs'
+} %}
+  {% block tabs %}
+    {% include 'vartheme_bs5_horizonaid:program-tab' with {
+      active: true,
+      title: 'Education',
+      image: { src: '/path/to/photo.jpg', alt: 'Children smiling outside a rebuilt school', width: 1200, height: 675 },
+      card_title: 'Education',
+      card_text: 'Building safe schools and training local teachers to give children a clear path to a brighter future.',
+      link_url: '/programs/education'
+    } only %}
+    {% include 'vartheme_bs5_horizonaid:program-tab' with {
+      title: 'Women',
+      image: { src: '/path/to/photo.jpg', alt: 'Two women standing together in a field', width: 1200, height: 675 },
+      card_title: 'Women',
+      card_text: 'Providing legal defense, grants, and leadership training to help women break poverty cycles.',
+      link_url: '/programs/women'
+    } only %}
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 2 — Empty state
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:programs' with {
+  tabs_id: 'programs-tabs-empty'
+} %}
+{% endembed %}
+```
+
+Renders a small "Add "Program Tab" components here." placeholder when the `tabs` slot is empty.
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

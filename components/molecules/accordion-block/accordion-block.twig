@@ -1,20 +1,17 @@
 {#
 /**
  * @file
- * Vartheme BS5 Horizon Aid Starter Kit implementation for the Accordion Block component.
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Accordion component.
  *
  * Available config:
  * - title: Text shown in the accordion header button.
  * - heading_level: Heading tag level (2 | 3 | 4 | 5 | 6). Defaults to `3`.
  * - open_by_default: (true|false) Open this item on load. Defaults to `true`.
- * - parent_id: Optional accordion container ID for data-bs-parent binding.
+ * - parent_id: Optional accordion container ID used to group items so only
+ *              one stays open at a time.
  * - item_id: Optional stable ID suffix for this accordion item.
  * - always_open: (true|false) Keep this item independent of the parent.
  *                Defaults to `false`.
- * - color: Optional Bootstrap text-bg-* override.
- *          (inherit | text-bg-primary | text-bg-secondary | text-bg-success
- *           | text-bg-danger | text-bg-warning | text-bg-info | text-bg-dark)
- *          Defaults to `inherit`.
  *
  * Available attributes:
  * - body_content_attributes: HTML attributes for the accordion body content
@@ -33,7 +30,6 @@
 
 {# Variables: scalar props with schema defaults. #}
 {% set heading_level = heading_level|default(3) %}
-{% set color = color|default('inherit') %}
 
 {# Variables: boolean props.
  # SDC validates `type: boolean` props and applies their schema defaults,
@@ -54,15 +50,9 @@
   {% set unique_id = random(1000000) ~ '-' ~ 'now'|date('U') %}
 {% endif %}
 
-{% set heading_id  = 'heading-'  ~ unique_id %}
-{% set collapse_id = 'collapse-' ~ unique_id %}
-{% set title_text  = title|default('Accordion item') %}
-
-{# Logic: resolve color. `inherit` receives the container-provided color. #}
-{% set resolved_color = color %}
-{% if resolved_color == 'inherit' %}
-  {% set resolved_color = accordion_color|default('') %}
-{% endif %}
+{% set heading_id = 'heading-' ~ unique_id %}
+{% set body_id    = 'body-'    ~ unique_id %}
+{% set title_text = title|default('Accordion item') %}
 
 {# Logic: resolve state flags. #}
 {% set allow_multiple    = always_open or (accordion_always_open|default(false)) %}
@@ -72,75 +62,69 @@
 {% set has_slot_content  = accordion_content is defined and accordion_content|render|trim is not empty %}
 
 {# Logic: build class lists as arrays. #}
-{% set button_classes = ['accordion-button', 'fw-bold'] %}
-{% if resolved_color %}
-  {% set button_classes = button_classes|merge([resolved_color]) %}
-{% endif %}
-{% if not expanded %}
-  {% set button_classes = button_classes|merge(['collapsed']) %}
-{% endif %}
-
-{% set collapse_classes = ['accordion-collapse', 'collapse'] %}
-{% if expanded %}
-  {% set collapse_classes = collapse_classes|merge(['show']) %}
-{% endif %}
-
-{% set body_classes = ['accordion-body'] %}
+{% set body_classes = ['accordion-block__body'] %}
 {% if is_canvas_preview %}
-  {% set body_classes = body_classes|merge(['accordion-body--canvas']) %}
+  {% set body_classes = body_classes|merge(['accordion-block__body--canvas']) %}
 {% endif %}
 {% if is_canvas_preview and not has_slot_content %}
-  {% set body_classes = body_classes|merge(['accordion-body--canvas-empty']) %}
+  {% set body_classes = body_classes|merge(['accordion-block__body--canvas-empty']) %}
 {% endif %}
 
 {# Logic: build attributes. #}
-{% set attributes = attributes.addClass(['accordion-item']) %}
+{% set attributes = attributes.addClass(['accordion-block']|merge(expanded ? ['is-expanded'] : [])) %}
 
 {% set heading_attributes = create_attribute({
-  'class': ['accordion-header'],
-  'id': heading_id,
+  'class': ['accordion-block__heading'],
 }) %}
 
-{% set button_attributes = create_attribute({
-  'class': button_classes,
+{% set header_attributes = create_attribute({
+  'class': ['accordion-block__header'],
   'type': 'button',
-  'data-bs-toggle': 'collapse',
-  'data-bs-target': '#' ~ collapse_id,
+  'id': heading_id,
   'aria-expanded': expanded ? 'true' : 'false',
-  'aria-controls': collapse_id,
+  'aria-controls': body_id,
+  'data-accordion-parent': bound_parent,
+  'data-accordion-allow-multiple': allow_multiple ? 'true' : 'false',
 }) %}
 
-{% set collapse_attributes = create_attribute({
-  'id': collapse_id,
-  'class': collapse_classes,
+{% set body_wrapper_attributes = create_attribute({
+  'id': body_id,
+  'class': ['accordion-block__body-wrapper'],
+  'role': 'region',
   'aria-labelledby': heading_id,
+  'aria-hidden': expanded ? 'false' : 'true',
 }) %}
-{% if bound_parent and not allow_multiple %}
-  {% set collapse_attributes = collapse_attributes.setAttribute('data-bs-parent', '#' ~ bound_parent) %}
-{% endif %}
 
 {% set body_attributes = create_attribute({
   'class': body_classes,
 }) %}
 
 {% set body_content_attributes = create_attribute({
-  'class': ['accordion-body__content'],
+  'class': ['accordion-block__body-content'],
 }) %}
 
 {# Print the HTML. #}
 <div{{ attributes }}>
   <h{{ heading_level }}{{ heading_attributes }}>
-    <button{{ button_attributes }}>{{ title_text }}</button>
+    <button{{ header_attributes }}>
+      <p class="accordion-block__title">{{ title_text }}</p>
+      <svg class="accordion-block__icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="accordion-block__icon-h" d="M2.4 8C2.4 7.6134 2.7134 7.3 3.1 7.3H12.9C13.2866 7.3 13.6 7.6134 13.6 8C13.6 8.3866 13.2866 8.7 12.9 8.7H3.1C2.7134 8.7 2.4 8.3866 2.4 8Z" fill="currentColor"/>
+        <path class="accordion-block__icon-v" d="M8 2.4C8.3866 2.4 8.7 2.7134 8.7 3.1V12.9C8.7 13.2866 8.3866 13.6 8 13.6C7.6134 13.6 7.3 13.2866 7.3 12.9V3.1C7.3 2.7134 7.6134 2.4 8 2.4Z" fill="currentColor"/>
+      </svg>
+    </button>
   </h{{ heading_level }}>
 
-  <div{{ collapse_attributes }}>
-    <div{{ body_attributes }}>
-      <div{{ body_content_attributes }}>
-        {% if has_slot_content %}
-          {{ accordion_content }}
-        {% else %}
-          {{ include('vartheme_bs5_horizonaid:text', {text: '<p class="mb-0">Accordion body content…</p>', element: 'div'}, with_context: false) }}
-        {% endif %}
+  <div{{ body_wrapper_attributes }}>
+    <div class="accordion-block__body-inner">
+      <div{{ body_attributes }}>
+        <div{{ body_content_attributes }}>
+          {% if has_slot_content %}
+            {{ accordion_content }}
+          {% else %}
+            {{ include('vartheme_bs5_horizonaid:text', {text: '<p class="mb-0">Accordion body content…</p>', element: 'div'}, with_context: false) }}
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>

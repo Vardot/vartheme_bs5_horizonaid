@@ -1,22 +1,43 @@
 {#
 /**
  * @file
- * Vartheme BS5 Horizon Aid Starter Kit implementation for the Figure component.
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Figure component.
  *
- * Renders a figure with an image and an optional caption.
+ * Stat figure card with a large number and description text. Background
+ * and font sizes/colors are all configurable via Bootstrap utilities — no
+ * custom CSS.
+ *
+ * - The number counts up from 0 when it scrolls into view (progressive
+ *   enhancement: renders as the final number and is fully usable without
+ *   JS; respects prefers-reduced-motion). See figure.js.
  *
  * Available properties:
- * - figure_utility_classes: An array of utility classes.
- * - align: Figure alignment. (left | right | center)
- * - responsive: Whether the figure is responsive. (true | false)
+ * - number: The main statistic number displayed prominently. (required)
+ * - description: Short descriptive label below the number. (required)
+ * - background_color: Brand background color applied to the card.
+ *                     (none | bg-body-tertiary | bg-tertiary | bg-accent
+ *                      | bg-accent-subtle | bg-primary | bg-primary-subtle
+ *                      | bg-secondary | bg-secondary-subtle | bg-dark)
+ *                     Defaults to `bg-accent-subtle`.
+ * - align: Bootstrap text-* utility for the horizontal alignment of both
+ *          the number and the description. (text-start | text-center
+ *          | text-end) Defaults to `text-start`.
+ * - number_size: Bootstrap display-* utility for the number.
+ *                (display-1 | display-2 | display-3 | display-4
+ *                 | display-5 | display-6) Defaults to `display-1`.
+ * - number_color: Bootstrap text color for the number.
+ *                 (text-body | text-primary | text-secondary | text-success
+ *                  | text-danger | text-warning | text-info | text-light
+ *                  | text-dark | text-muted | text-white | text-white-50
+ *                  | text-black | text-black-50) Defaults to `text-black`.
+ * - description_size: Bootstrap fs-* utility for the description.
+ *                     (fs-1 | fs-2 | fs-3 | fs-4 | fs-5 | fs-6)
+ *                     Defaults to `fs-6`.
+ * - description_color: Bootstrap text color for the description label.
+ *                      Same enum as number_color. Defaults to `text-black`.
  *
  * Available attributes:
- * - attributes: Attributes array.
- * - caption_attributes: HTML attributes for the figcaption element.
- *
- * Available slots:
- * - image: The image content.
- * - caption: The figure caption content.
+ * - attributes: HTML attributes for the root element.
  */
 #}
 
@@ -29,19 +50,39 @@
  #   concatenation) to avoid duplicate classes and data type conflicts.
  #}
 
-{# Logic: merge figure classes as arrays. #}
-{% set classes = ['figure']|merge(figure_utility_classes ? figure_utility_classes : []) %}
+{# Variables: scalar props with schema defaults. #}
+{% set background_color = background_color|default('bg-accent-subtle') %}
+{% set background_color_class = (background_color != 'none') ? background_color : '' %}
+{% set align            = align|default('text-start') %}
+{% set number_size      = number_size|default('display-1') %}
+{% set number_color     = number_color|default('text-black') %}
+{% set description_size = description_size|default('fs-6') %}
+{% set description_color = description_color|default('text-black') %}
 
-{# Logic: per-region attributes object for the caption. #}
-{% set caption_attributes = caption_attributes|default(create_attribute()) %}
-{% set caption_attributes = caption_attributes.addClass('figure-caption') %}
+{# Logic: root classes — Bootstrap utilities only, no custom CSS.
+ # `align` lives on the root, not on the number/description elements: it's
+ # one shared setting for both, and text-align is inherited, so setting it
+ # once here aligns both children without duplicating the class. #}
+{% set classes = [
+  'figure',
+  'd-flex',
+  'flex-column',
+  align,
+  background_color_class,
+  'p-4',
+  'p-lg-5',
+]|filter(v => v is not empty) %}
+
+{# Logic: number and description class lists. #}
+{% set number_classes = [number_size, number_color, 'lh-1'] %}
+{% set description_classes = [description_size, description_color, 'mb-0', 'mt-2'] %}
 
 {# Print the HTML. #}
 {% set attributes = attributes.addClass(classes) %}
-<figure{{ attributes }}>
-  {{ image }}
+<div{{ attributes }}>
 
-  {% if caption %}
-    <figcaption{{ caption_attributes }}>{{ caption }}</figcaption>
-  {% endif %}
-</figure>
+  <span class="{{ number_classes|join(' ') }}" data-count-target="{{ number|e }}">{{ number|e }}</span>
+
+  <p class="{{ description_classes|join(' ') }}">{{ description|e }}</p>
+
+</div>

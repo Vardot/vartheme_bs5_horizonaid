@@ -1,0 +1,247 @@
+{% stories ImpressedCardSlider with {
+  title: 'Cards/Impressed Card Slider',
+  parameters: {
+    componentSubtitle: 'Feature section: heading, links, and a CTA next to a horizontally-scrolling row of Impressed Card components.',
+    docs: {
+      description: {
+        component: 'A feature section: a heading, a short list of links, and a CTA on the left; a horizontally-scrolling row of existing "Impressed Card" components on the right, with prev/next controls below. Add one or more "Impressed Card" components into the slot — unlimited, drag & drop reorder.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    bg_edge2edge: {
+      name: 'Edge-to-edge background',
+      defaultValue: true,
+      control: 'boolean',
+    },
+    background_color: {
+      name: 'Background color',
+      defaultValue: 'bg-dark',
+      control: 'select',
+      options: {
+        None: 'none',
+        Body: 'bg-body',
+        "'Body secondary'": 'bg-body-secondary',
+        "'Body tertiary'": 'bg-body-tertiary',
+        Tertiary: 'bg-tertiary',
+        Accent: 'bg-accent',
+        Primary: 'bg-primary',
+        "'Primary subtle'": 'bg-primary-subtle',
+        Secondary: 'bg-secondary',
+        "'Secondary subtle'": 'bg-secondary-subtle',
+        Success: 'bg-success',
+        "'Success subtle'": 'bg-success-subtle',
+        Danger: 'bg-danger',
+        "'Danger subtle'": 'bg-danger-subtle',
+        Warning: 'bg-warning',
+        "'Warning subtle'": 'bg-warning-subtle',
+        Info: 'bg-info',
+        "'Info subtle'": 'bg-info-subtle',
+        Light: 'bg-light',
+        "'Light subtle'": 'bg-light-subtle',
+        Dark: 'bg-dark',
+        "'Dark subtle'": 'bg-dark-subtle',
+        Black: 'bg-black',
+        White: 'bg-white',
+        Transparent: 'bg-transparent',
+      },
+    },
+    container_type: {
+      name: 'Container width',
+      defaultValue: 'container',
+      control: 'select',
+      options: {
+        "'Standard container'": 'container',
+        "'Full width container'": 'container-fluid',
+        "'No container'": 'none',
+      },
+    },
+    padding_block_start: {
+      name: 'Padding top',
+      control: 'select',
+      defaultValue: 'pt-5',
+      options: {
+        None: 'pt-0',
+        Small: 'pt-1',
+        Medium: 'pt-2',
+        Large: 'pt-3',
+        "'Extra large'": 'pt-4',
+        "'XX-Large'": 'pt-5',
+      },
+    },
+    padding_block_end: {
+      name: 'Padding bottom',
+      control: 'select',
+      defaultValue: 'pb-5',
+      options: {
+        None: 'pb-0',
+        Small: 'pb-1',
+        Medium: 'pb-2',
+        Large: 'pb-3',
+        "'Extra large'": 'pb-4',
+        "'XX-Large'": 'pb-5',
+      },
+    },
+    heading_text: {
+      name: 'Heading text',
+      defaultValue: 'Latest Updates',
+      control: 'text',
+    },
+    heading_level: {
+      name: 'Heading level',
+      defaultValue: 2,
+      control: 'number',
+    },
+    link_1_label: {
+      name: 'Link 1 label',
+      defaultValue: 'Healthcare & Medicine',
+      control: 'text',
+    },
+    link_1_url: {
+      name: 'Link 1 URL',
+      defaultValue: 'https://example.com/updates/healthcare',
+      control: 'text',
+    },
+    link_1_active: {
+      name: 'Link 1 active',
+      defaultValue: true,
+      control: 'boolean',
+    },
+    link_2_label: {
+      name: 'Link 2 label',
+      defaultValue: 'Sustenance & Growth',
+      control: 'text',
+    },
+    link_2_url: {
+      name: 'Link 2 URL',
+      defaultValue: 'https://example.com/updates/sustenance',
+      control: 'text',
+    },
+    link_3_label: {
+      name: 'Link 3 label',
+      defaultValue: 'Universal Education',
+      control: 'text',
+    },
+    link_3_url: {
+      name: 'Link 3 URL',
+      defaultValue: 'https://example.com/updates/education',
+      control: 'text',
+    },
+    cta_label: {
+      name: 'CTA label',
+      defaultValue: 'Explore More',
+      control: 'text',
+    },
+    cta_url: {
+      name: 'CTA URL',
+      description: 'Leave empty to hide the CTA.',
+      defaultValue: '',
+      control: 'text',
+    },
+    cta_target: {
+      name: 'Link target',
+      defaultValue: 'default',
+      control: 'select',
+      options: {
+        "'Default (same tab)'": 'default',
+        "'Same tab'": '_self',
+        "'New tab'": '_blank',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    bg_edge2edge: true,
+    background_color: 'bg-dark',
+    container_type: 'container',
+    padding_block_start: 'pt-5',
+    padding_block_end: 'pb-5',
+    heading_text: 'Latest Updates',
+    heading_level: 2,
+    link_1_label: 'Healthcare & Medicine',
+    link_1_url: 'https://example.com/updates/healthcare',
+    link_1_active: true,
+    link_2_label: 'Sustenance & Growth',
+    link_2_url: 'https://example.com/updates/sustenance',
+    link_3_label: 'Universal Education',
+    link_3_url: 'https://example.com/updates/education',
+    cta_label: 'Explore More',
+    cta_url: 'https://example.com/updates',
+    cta_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:impressed-card-slider' with _context only %}
+  {% block cards %}
+    {% embed 'vartheme_bs5_horizonaid:card-impressed' with {
+      media_image: { src: '/components/foundation/images/assets/teaser-1.png', alt: 'Volunteer handing supplies to a person in need', width: 750, height: 440 },
+      background_color: 'bg-transparent',
+    } only %}
+      {% block overlay %}
+        {{ include('vartheme_bs5_horizonaid:badge', { label: 'News', variant: 'text-bg-dark' }, with_context: false) }}
+      {% endblock %}
+      {% block content %}
+        <h3 class="h5 text-white fw-bold">Bridging Medical Gaps in Border Corridors</h3>
+        <p class="text-white-50">Our mobile health units successfully delivered emergency pediatric medicine and preventative care.</p>
+      {% endblock %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:card-impressed' with {
+      media_image: { src: '/components/foundation/images/assets/teaser-2.jpg', alt: 'A farmer walking through a green field at sunrise', width: 750, height: 440 },
+      background_color: 'bg-transparent',
+    } only %}
+      {% block overlay %}
+        {{ include('vartheme_bs5_horizonaid:badge', { label: 'Report', variant: 'text-bg-info' }, with_context: false) }}
+      {% endblock %}
+      {% block content %}
+        <h3 class="h5 text-white fw-bold">Cultivating Independence in Rural Farms</h3>
+        <p class="text-white-50">Discover how local agricultural co-ops are utilizing newly deployed climate-resilient tools.</p>
+      {% endblock %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:card-impressed' with {
+      media_image: { src: '/components/foundation/images/assets/teaser-3.jpg', alt: 'A volunteer wearing a cap, arms crossed', width: 750, height: 440 },
+      background_color: 'bg-transparent',
+    } only %}
+      {% block overlay %}
+        {{ include('vartheme_bs5_horizonaid:badge', { label: 'Policy Brief', variant: 'text-bg-warning' }, with_context: false) }}
+      {% endblock %}
+      {% block content %}
+        <h3 class="h5 text-white fw-bold">2026 Regional Index</h3>
+        <p class="text-white-50">Access our latest report auditing educational access across five conflict-affected regions.</p>
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story Empty with {
+  name: 'Empty (no cards)',
+  args: {
+    bg_edge2edge: true,
+    background_color: 'bg-dark',
+    container_type: 'container',
+    padding_block_start: 'pt-5',
+    padding_block_end: 'pb-5',
+    heading_text: 'Latest Updates',
+    heading_level: 2,
+    link_1_label: '',
+    link_1_url: '',
+    link_1_active: false,
+    link_2_label: '',
+    link_2_url: '',
+    link_3_label: '',
+    link_3_url: '',
+    cta_label: 'Explore More',
+    cta_url: '',
+    cta_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:impressed-card-slider' with _context only %}
+{% endembed %}
+{% endstory %}
+
+{% endstories %}

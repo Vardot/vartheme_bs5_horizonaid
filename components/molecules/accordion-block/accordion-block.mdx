@@ -6,18 +6,17 @@ import templateSource from './accordion-block.twig?raw';
 
 # Accordion block
 
-A single Bootstrap 5 accordion item with a clickable header and a collapsible body slot. Use this component inside an **Accordion container** for grouped behavior, or standalone with `always_open: true` for an independent toggle.
+A single accordion item with a clickable header, a plus/minus icon toggle, and a collapsible body slot. Use this component inside an **Accordion container** for grouped behavior, or standalone with `always_open: true` for an independent toggle.
 
 - `open_by_default: true` expands the item when the page first loads
-- `color` applies a Bootstrap `text-bg-*` class directly to the header button; use `inherit` to pick up the container's default color
+- The header title switches to the accent color on hover; the plus icon fades its vertical stroke into a minus on expand
 - `heading_level` controls the semantic heading tag wrapping the button — choose the correct level for your document outline
 - `item_id` produces stable, predictable IDs for deep-linking and automated testing
 - `always_open: true` lets this item stay open independently even when nested in a grouped accordion
+- Expand/collapse is a plain class toggle handled by `accordion-block.js` — no Bootstrap Collapse plugin is used, so the body height animates via CSS `grid-template-rows` instead of a measured pixel height
 
 > ### Bootstrap documentation
 > - [Accordion component](https://getbootstrap.com/docs/5.3/components/accordion/)
-> - [Collapse plugin](https://getbootstrap.com/docs/5.3/components/collapse/)
-> - [Background & color helpers](https://getbootstrap.com/docs/5.3/helpers/color-background/)
 
 ## Properties
 
@@ -37,7 +36,6 @@ A single Bootstrap 5 accordion item with a clickable header and a collapsible bo
   title: 'What is included?',
   heading_level: 3,
   open_by_default: false,
-  color: 'inherit',
 } %}
   {% block accordion_content %}
     <p class="mb-0">This section contains the accordion body content.</p>
@@ -45,7 +43,7 @@ A single Bootstrap 5 accordion item with a clickable header and a collapsible bo
 {% endembed %}
 ```
 
-### Example #2: Item with a custom color and stable ID
+### Example #2: Item with a stable ID
 
 ```twig
 {% embed 'vartheme_bs5_horizonaid:accordion-block' with {
@@ -53,7 +51,6 @@ A single Bootstrap 5 accordion item with a clickable header and a collapsible bo
   heading_level: 3,
   item_id: 'billing-details',
   open_by_default: true,
-  color: 'text-bg-primary',
 } %}
   {% block accordion_content %}
     <ul class="mb-0">
@@ -72,7 +69,6 @@ A single Bootstrap 5 accordion item with a clickable header and a collapsible bo
   title: 'Shipping & returns',
   heading_level: 3,
   open_by_default: true,
-  color: 'inherit',
 } %}
   {% block accordion_content %}
     <p>Free standard shipping on orders over $50.</p>

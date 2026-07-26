@@ -45,7 +45,7 @@ Use this component when you need a reusable button that can:
 
 ### Appearance
 
-- `variant` (required): Bootstrap button style — `btn-primary`, `btn-secondary`, `btn-success`, `btn-danger`, `btn-warning`, `btn-info`, `btn-light`, `btn-dark`, `btn-link`; defaults to `btn-primary`
+- `variant` (required): Bootstrap button style — `btn-primary`, `btn-secondary`, `btn-success`, `btn-danger`, `btn-warning`, `btn-info`, `btn-light`, `btn-dark`, `btn-accent`, `btn-link`; defaults to `btn-primary`
 - `outline`: use the outline variant (`btn-outline-*`); not applied to `btn-link` — `true` / `false`; defaults to `false`
 - `size` (required): button size — `btn-md`, `btn-sm`, `btn-lg`; defaults to `btn`
 - `radius`: border-radius utility — `rounded`, `rounded-0`, `rounded-1`, `rounded-2`, `rounded-3`, `rounded-4`, `rounded-pill`; defaults to `rounded`
@@ -81,6 +81,7 @@ Use this component when you need a reusable button that can:
 | `btn-info` | Info |
 | `btn-light` | Light |
 | `btn-dark` | Dark |
+| `btn-accent` | Accent |
 | `btn-link` | Link |
 
 ## Radius values

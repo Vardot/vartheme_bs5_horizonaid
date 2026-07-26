@@ -1,0 +1,94 @@
+{% stories Programs with {
+  title: 'Cards/Programs',
+  parameters: {
+    componentSubtitle: 'Pill-tabbed programs showcase container — drop unlimited Program Tab components into the slot.',
+    docs: {
+      description: {
+        component: 'A nav-pills tab list floats over the top of the active tab\'s image on lg+ screens (stacked above it on smaller screens) while each tab pane swaps a full-width image for a content card inset at its bottom-right corner. Add one or more "Program Tab" components into the slot — unlimited, drag & drop reorder.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    tabs_id: {
+      name: 'Tabs ID',
+      description: 'Change this if more than one Programs component is placed on the same page.',
+      defaultValue: 'programs-tabs',
+      control: 'text',
+    },
+    container_type: {
+      name: 'Container width',
+      defaultValue: 'container',
+      control: 'select',
+      options: {
+        "'Standard container'": 'container',
+        "'Full width container'": 'container-fluid',
+        "'No container'": 'none',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    tabs_id: 'programs-tabs-demo',
+    container_type: 'container',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:programs' with _context only %}
+  {% block tabs %}
+    {{ include('vartheme_bs5_horizonaid:program-tab', {
+      active: true,
+      title: 'Education',
+      image: { src: '/components/foundation/images/assets/teaser-1.png', alt: 'Children smiling outside a rebuilt school', width: 750, height: 440 },
+      card_title: 'Education',
+      card_text: 'Building safe schools and training local teachers to give children a clear path to a brighter future.',
+      link_url: 'https://example.com/programs/education',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_horizonaid:program-tab', {
+      title: 'Women',
+      image: { src: '/components/foundation/images/assets/teaser-2.jpg', alt: 'Two women standing together in a field', width: 750, height: 440 },
+      card_title: 'Women',
+      card_text: 'Providing legal defense, grants, and leadership training to help women break poverty cycles.',
+      link_url: 'https://example.com/programs/women',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_horizonaid:program-tab', {
+      title: 'Agriculture',
+      image: { src: '/components/foundation/images/assets/teaser-3.jpg', alt: 'Farmers carrying supplies through a field', width: 750, height: 440 },
+      card_title: 'Agriculture',
+      card_text: 'Equipping rural farmers with climate-resilient tools and seeds to secure long-term food independence.',
+      link_url: 'https://example.com/programs/agriculture',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_horizonaid:program-tab', {
+      title: 'Medicine',
+      image: { src: '/components/foundation/images/assets/teaser-8.jpg', alt: 'Volunteer packing a medical supply box', width: 652, height: 365 },
+      card_title: 'Medicine',
+      card_text: 'Delivering emergency surgical supplies, medicines, and doctors directly to active global crisis zones.',
+      link_url: 'https://example.com/programs/medicine',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_horizonaid:program-tab', {
+      title: 'Health',
+      image: { src: '/components/foundation/images/assets/teaser-9.jpg', alt: 'A child being bathed in a basin outdoors', width: 652, height: 365 },
+      card_title: 'Health',
+      card_text: 'Constructing clean water networks and neighborhood clinics to provide vital, everyday preventative care.',
+      link_url: 'https://example.com/programs/health',
+    }, with_context: false) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story Empty with {
+  name: 'Empty (no tabs)',
+  args: {
+    tabs_id: 'programs-tabs-empty',
+    container_type: 'container',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:programs' with _context only %}
+{% endembed %}
+{% endstory %}
+
+{% endstories %}

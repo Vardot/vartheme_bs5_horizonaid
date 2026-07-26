@@ -1,10 +1,10 @@
 {% stories AccordionContainer with {
   title: 'Layout/Accordion/Accordion container',
   parameters: {
-    componentSubtitle: 'Bootstrap accordion wrapper',
+    componentSubtitle: 'Accordion wrapper',
     docs: {
       description: {
-        component: 'A Bootstrap 5 accordion wrapper that groups multiple accordion items. Default style: secondary-subtle background, dark text, secondary hover background, primary (#0D6EFD) hover text. Controls flush style, multi-open behavior, and an optional color override inherited by nested items.',
+        component: 'A wrapper that groups multiple accordion items in a flex column with a fixed gap. Controls whether multiple nested items can stay open at the same time.',
       },
       story: {
         inline: true,
@@ -17,30 +17,10 @@
       control: 'text',
       defaultValue: '',
     },
-    flush: {
-      name: 'Flush style',
-      control: 'boolean',
-      defaultValue: false,
-    },
     always_open: {
       name: 'Keep multiple items open',
       control: 'boolean',
       defaultValue: false,
-    },
-    color: {
-      name: 'Header color override',
-      control: 'select',
-      defaultValue: '',
-      options: {
-        "'Default (secondary subtle)'": '',
-        Primary: 'text-bg-primary',
-        Secondary: 'text-bg-secondary',
-        Success: 'text-bg-success',
-        Danger: 'text-bg-danger',
-        Warning: 'text-bg-warning',
-        Info: 'text-bg-info',
-        Dark: 'text-bg-dark',
-      },
     },
   },
 } %}
@@ -48,10 +28,8 @@
 {% story Default with {
   name: 'Default',
   args: {
-    id: '',
-    flush: false,
+    id: 'default-accordion',
     always_open: false,
-    color: '',
   },
 } %}
 {% set accordion_content %}
@@ -62,7 +40,7 @@
       title: 'What is this component?',
       heading_level: 3,
       open_by_default: true,
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
@@ -73,69 +51,24 @@
       title: 'When should I use it?',
       heading_level: 3,
       open_by_default: false,
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
     {% set accordion_content %}
-        <p class="mb-0">Wrap one or more Accordion block components inside this container. The container manages shared IDs and Bootstrap parent binding automatically.</p>
+        <p class="mb-0">Wrap one or more Accordion block components inside this container. The container manages shared IDs and grouping automatically.</p>
       {% endset %}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
       title: 'How does it work?',
       heading_level: 3,
       open_by_default: false,
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-container', {
   id: id,
-  flush: flush,
   always_open: always_open,
-  color: color,
-  accordion_content: accordion_content,
-}, with_context: false) }}
-{% endstory %}
-
-{% story FlushStyle with {
-  name: 'Flush style',
-  args: {
-    id: 'flush-demo',
-    flush: true,
-    always_open: false,
-    color: '',
-  },
-} %}
-{% set accordion_content %}
-    {% set accordion_content %}
-        <p class="mb-0">The <code>flush</code> style removes the default outer accordion border and border-radius, producing an edge-to-edge appearance suited to sidebars and tightly constrained layouts.</p>
-      {% endset %}
-{{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'No outer border or rounding',
-      heading_level: 3,
-      open_by_default: true,
-      color: 'inherit',
-      accordion_content: accordion_content,
-    }, with_context: false) }}
-
-    {% set accordion_content %}
-        <p class="mb-0">Flush mode keeps the horizontal dividers between items while stripping the outer frame.</p>
-      {% endset %}
-{{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'Clean divider lines only',
-      heading_level: 3,
-      open_by_default: false,
-      color: 'inherit',
-      accordion_content: accordion_content,
-    }, with_context: false) }}
-  {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
-{{ include('vartheme_bs5_horizonaid:accordion-container', {
-  id: id,
-  flush: flush,
-  always_open: always_open,
-  color: color,
   accordion_content: accordion_content,
 }, with_context: false) }}
 {% endstory %}
@@ -144,9 +77,7 @@
   name: 'Always open (multiple expanded)',
   args: {
     id: 'always-open-demo',
-    flush: false,
     always_open: true,
-    color: '',
   },
 } %}
 {% set accordion_content %}
@@ -157,7 +88,7 @@
       title: 'First topic',
       heading_level: 3,
       open_by_default: true,
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
@@ -168,7 +99,7 @@
       title: 'Second topic',
       heading_level: 3,
       open_by_default: true,
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
@@ -179,126 +110,51 @@
       title: 'Third topic',
       heading_level: 3,
       open_by_default: false,
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-container', {
   id: id,
-  flush: flush,
   always_open: always_open,
-  color: color,
   accordion_content: accordion_content,
 }, with_context: false) }}
 {% endstory %}
 
-{% story PrimaryColor with {
-  name: 'Primary header color',
+{% story IndependentItem with {
+  name: 'One independent item',
   args: {
-    id: 'primary-color-demo',
-    flush: false,
+    id: 'independent-item-demo',
     always_open: false,
-    color: 'text-bg-primary',
   },
 } %}
 {% set accordion_content %}
     {% set accordion_content %}
-        <ul class="mb-0">
-          <li>Unlimited projects</li>
-          <li>Priority support</li>
-          <li>Advanced analytics</li>
-        </ul>
+        <p class="mb-0">This item is grouped normally — opening it closes its siblings.</p>
       {% endset %}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'Plan features',
+      title: 'Grouped item',
       heading_level: 3,
       open_by_default: true,
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
     {% set accordion_content %}
-        <p class="mb-0">Billed monthly. Cancel any time without a cancellation fee.</p>
+        <p class="mb-0">This item uses <code>always_open: true</code> directly, so it stays open regardless of what happens to its siblings.</p>
       {% endset %}
 {{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'Billing cycle',
+      title: 'Independent item',
       heading_level: 3,
-      open_by_default: false,
-      color: 'inherit',
-      accordion_content: accordion_content,
-    }, with_context: false) }}
-
-    {% set accordion_content %}
-        <p class="mb-0">You can change your plan at any time. Changes take effect at the start of your next billing period.</p>
-      {% endset %}
-{{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'Upgrade or downgrade',
-      heading_level: 3,
-      open_by_default: false,
-      color: 'inherit',
+      open_by_default: true,
+      always_open: true,
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-container', {
   id: id,
-  flush: flush,
   always_open: always_open,
-  color: color,
-  accordion_content: accordion_content,
-}, with_context: false) }}
-{% endstory %}
-
-{% story MixedColors with {
-  name: 'Mixed item colors',
-  args: {
-    id: 'mixed-colors-demo',
-    flush: false,
-    always_open: false,
-    color: '',
-  },
-} %}
-{% set accordion_content %}
-    {% set accordion_content %}
-        <p class="mb-0">This item inherits the container's default design (secondary-subtle background, dark text).</p>
-      {% endset %}
-{{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'Inherited color (light)',
-      heading_level: 3,
-      open_by_default: true,
-      color: 'inherit',
-      accordion_content: accordion_content,
-    }, with_context: false) }}
-
-    {% set accordion_content %}
-        <p class="mb-0">This item overrides the container color with <code>text-bg-primary</code> directly on the block.</p>
-      {% endset %}
-{{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'Override: Primary',
-      heading_level: 3,
-      open_by_default: false,
-      color: 'text-bg-primary',
-      accordion_content: accordion_content,
-    }, with_context: false) }}
-
-    {% set accordion_content %}
-        <p class="mb-0">This item overrides the container color with <code>text-bg-success</code>.</p>
-      {% endset %}
-{{ include('vartheme_bs5_horizonaid:accordion-block', {
-      title: 'Override: Success',
-      heading_level: 3,
-      open_by_default: false,
-      color: 'text-bg-success',
-      accordion_content: accordion_content,
-    }, with_context: false) }}
-  {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
-{{ include('vartheme_bs5_horizonaid:accordion-container', {
-  id: id,
-  flush: flush,
-  always_open: always_open,
-  color: color,
   accordion_content: accordion_content,
 }, with_context: false) }}
 {% endstory %}
@@ -307,9 +163,7 @@
   name: 'FAQ example',
   args: {
     id: 'faq-accordion',
-    flush: false,
     always_open: false,
-    color: '',
   },
 } %}
 {% set accordion_content %}
@@ -321,7 +175,7 @@
       heading_level: 3,
       open_by_default: true,
       item_id: 'faq-password',
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
@@ -333,7 +187,7 @@
       heading_level: 3,
       open_by_default: false,
       item_id: 'faq-email',
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
@@ -345,7 +199,7 @@
       heading_level: 3,
       open_by_default: false,
       item_id: 'faq-cancel',
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
 
@@ -357,16 +211,13 @@
       heading_level: 3,
       open_by_default: false,
       item_id: 'faq-data',
-      color: 'inherit',
+      parent_id: id,
       accordion_content: accordion_content,
     }, with_context: false) }}
   {% endset %}
-{{ attach_library('vartheme_bs5_horizonaid/accordion-scripts') }}
 {{ include('vartheme_bs5_horizonaid:accordion-container', {
   id: id,
-  flush: flush,
   always_open: always_open,
-  color: color,
   accordion_content: accordion_content,
 }, with_context: false) }}
 {% endstory %}

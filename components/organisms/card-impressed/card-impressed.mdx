@@ -9,10 +9,11 @@ import templateSource from './card-impressed.twig?raw';
 A stacked Bootstrap card with an optional media image at the top or bottom, a tag overlay slot, and a drag-and-drop content slot. Supports border, padding, background color, shadow, corner style, equal height, and full-card stretched link.
 
 - `media_position: bottom` reverses the flex column order so the image renders below the content
-- The `tag` slot renders as an overlay in the top-left corner of the media image
+- The `overlay` slot renders as a badge in the bottom-left corner of the media image
 - `stretched_link` requires `link_url` to be set — makes the entire card clickable
 - `padded: true` adds `p-4` to the content area; when `padded: false` and no content is slotted, a `py-4` fallback is applied
 - `equal_height: true` adds `h-100` to the card wrapper for consistent grid row heights
+- **Hover:** the media image zooms in slightly and any heading dropped in the content slot changes color — gold on dark backgrounds, accent blue on light ones. Leave the heading's own text color empty so this can apply.
 
 > ### Bootstrap documentation
 > - [Cards](https://getbootstrap.com/docs/5.3/components/card/)
@@ -49,7 +50,7 @@ A stacked Bootstrap card with an optional media image at the top or bottom, a ta
   box_shadow: 'shadow-sm',
   corner_style: 'rounded-3',
 } %}
-  {% block tag %}
+  {% block overlay %}
     <span class="badge text-bg-dark">Feature</span>
   {% endblock %}
   {% block content %}

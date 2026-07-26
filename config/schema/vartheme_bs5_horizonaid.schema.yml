@@ -1,7 +1,7 @@
-# Schema for the configuration files of the Vartheme BS5 Horizon Aid.
+# Schema for the configuration files of the Vartheme BS5 Horizonaid.
 vartheme_bs5_horizonaid.settings:
   type: theme_settings
-  label: "Vartheme BS5 Horizon Aid settings"
+  label: "Vartheme BS5 Horizonaid settings"
   mapping:
     # Containers for regions.
     # ----------------------------

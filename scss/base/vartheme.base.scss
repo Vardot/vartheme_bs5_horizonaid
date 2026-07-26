@@ -1,6 +1,6 @@
 @import "../defaults";   // Global defaults.
 
-// Vartheme BS5 Horizon Aid Base Global styling.
+// Vartheme BS5 Horizonaid Base Global styling.
 // -----------------------------------------------------------------------------
 
 /* Temp fix for:
@@ -464,7 +464,6 @@ footer.footer {
     a.nav-link.dropdown-toggle {
       margin-bottom: 1.5rem;
       padding: 0;
-      color: var(--bs-body-color);
       font-weight: 700;
       font-size: 1.25rem;
       line-height: 1.5;
@@ -495,7 +494,6 @@ footer.footer {
       position: relative;
       width: auto;
       padding: 0;
-      color: var(--bs-body-color);
       font-weight: 400;
       font-size: 1.125rem;
       line-height: 1.5;
@@ -627,8 +625,8 @@ footer.footer {
 
   .form-item-search input[type="text"] {
     padding-left: 2.25rem;
-    /* stroke %23001D38 = $navy = --bs-dark; can't use CSS vars inside SVG data URIs */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M6.125 11.375a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5ZM13.125 13.125 9.84 9.84%27 stroke=%27%23001D38%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+    /* stroke %230D2C54 = $navy = --bs-dark; can't use CSS vars inside SVG data URIs */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M6.125 11.375a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5ZM13.125 13.125 9.84 9.84%27 stroke=%27%230D2C54%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: 1rem center;
     background-size: 0.875rem;

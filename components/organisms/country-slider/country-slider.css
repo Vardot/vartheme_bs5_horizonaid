@@ -1,0 +1,64 @@
+.country-slider__track{
+  display:flex;
+  overflow-x:auto;
+  gap:1.5rem;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+
+.country-slider__track::-webkit-scrollbar{
+  display:none;
+}
+
+.country-slider__track > .card-country{
+  flex:0 0 auto;
+  width:85%;
+  scroll-snap-align:start;
+}
+
+@media (min-width: 576px){
+  .country-slider__track > .card-country{
+    width:calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (min-width: 992px){
+  .country-slider__track > .card-country{
+    width:calc((100% - 4.5rem) / 4);
+  }
+}
+
+.country-slider__control{
+  --country-slider-control-width:3.5rem;
+  --country-slider-control-height:2.375rem;
+  --country-slider-arrow-nudge:0.1875rem;
+  width:var(--country-slider-control-width);
+  height:var(--country-slider-control-height);
+}
+
+.country-slider__control:disabled{
+  opacity:0.4;
+}
+
+.country-slider__control-arrow{
+  transition:transform 0.15s ease;
+}
+
+.country-slider__control[data-country-slider-prev]:not(:disabled):hover .country-slider__control-arrow, .country-slider__control[data-country-slider-prev]:not(:disabled):focus-visible .country-slider__control-arrow{
+  transform:translateX(calc(-1 * var(--country-slider-arrow-nudge)));
+}
+
+[dir="rtl"] .country-slider__control[data-country-slider-prev]:not(:disabled):hover .country-slider__control-arrow, [dir="rtl"] .country-slider__control[data-country-slider-prev]:not(:disabled):focus-visible .country-slider__control-arrow{
+  transform:translateX(calc(-1*(-1 * var(--country-slider-arrow-nudge))));
+}
+
+.country-slider__control[data-country-slider-next]:not(:disabled):hover .country-slider__control-arrow, .country-slider__control[data-country-slider-next]:not(:disabled):focus-visible .country-slider__control-arrow{
+  transform:translateX(var(--country-slider-arrow-nudge));
+}
+
+@media (prefers-reduced-motion: reduce){
+  .country-slider__control-arrow{
+    transition:none;
+  }
+}

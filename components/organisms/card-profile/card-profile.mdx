@@ -1,0 +1,109 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CardProfileStories from './card-profile.stories.json';
+import templateSource from './card-profile.twig?raw';
+
+<Meta of={CardProfileStories} name="Docs" />
+
+# Profile Card
+
+A Bootstrap card for a team member profile: an uploaded photo that fills the card and zooms slightly on hover, a dark footer with a single drag-and-drop content slot, and optional social links whose icons switch to an accent color on hover. Controls border, footer background, shadow, border radius, and equal height.
+
+- **Photo is uploaded** — set `image` to fill the card above the footer with a cover crop; drimage sizes the derivative to the media area so it stays sharp at every breakpoint
+- **`content` is a single drag & drop slot** — drop a Heading + Text component for the person's name and description
+- **Social links are optional and individual** — `linkedin_url`, `twitter_url`, `facebook_url`, `instagram_url`; each icon only renders when its URL is set
+- `equal_height: true` adds `h-100` for consistent heights in grid row layouts
+- Hovering or focusing the card zooms the photo and switches the social icons to an accent color; both respect `prefers-reduced-motion: reduce`
+
+> ### Bootstrap documentation
+> - [Cards](https://getbootstrap.com/docs/5.3/components/card/)
+> - [Background utilities](https://getbootstrap.com/docs/5.3/utilities/background/)
+> - [Shadows](https://getbootstrap.com/docs/5.3/utilities/shadows/)
+
+## Properties
+
+<Canvas of={CardProfileStories.Default} />
+<Controls of={CardProfileStories.Default} />
+
+## Stories
+
+<Stories of={CardProfileStories} />
+
+## Examples
+
+### Example 1 — Default profile card
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-profile' with {
+  image: { src: '/path/to/photo.jpg', alt: 'Jane Doe', width: 720, height: 720 },
+  background_color: 'bg-dark',
+  corner_style: 'rounded-4',
+  box_shadow: 'shadow-sm',
+  linkedin_url: 'https://linkedin.com/in/example',
+  twitter_url: 'https://x.com/example',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">Jane Doe</h3>
+    <p class="mb-0 text-white-50">Product Designer</p>
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 2 — All social links
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-profile' with {
+  image: { src: '/path/to/photo.jpg', alt: 'John Smith', width: 720, height: 720 },
+  background_color: 'bg-primary',
+  box_shadow: 'shadow',
+  linkedin_url: 'https://linkedin.com/in/example',
+  twitter_url: 'https://x.com/example',
+  facebook_url: 'https://facebook.com/example',
+  instagram_url: 'https://instagram.com/example',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">John Smith</h3>
+    <p class="mb-0 text-white-50">Engineering Lead</p>
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 3 — No social links
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-profile' with {
+  image: { src: '/path/to/photo.jpg', alt: 'Amara Okafor', width: 720, height: 720 },
+  card_border: true,
+  background_color: 'bg-secondary',
+  box_shadow: 'shadow-none',
+  corner_style: 'rounded-3',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">Amara Okafor</h3>
+    <p class="mb-0 text-white-50">Customer Success Manager</p>
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 4 — Equal height (grid row)
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-profile' with {
+  image: { src: '/path/to/photo.jpg', alt: 'Priya Nair', width: 720, height: 720 },
+  background_color: 'bg-dark',
+  box_shadow: 'shadow-sm',
+  corner_style: 'rounded-4',
+  equal_height: true,
+  linkedin_url: 'https://linkedin.com/in/example',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-1 text-white">Priya Nair</h3>
+    <p class="mb-0 text-white-50">Marketing Director</p>
+  {% endblock %}
+{% endembed %}
+```
+
+Pair `equal_height: true` on each card with `vertical_alignment: align-items-stretch` on the containing `atoms/section` row so every card in the row matches height.
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

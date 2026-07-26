@@ -1,0 +1,207 @@
+{% stories Map with {
+  title: 'Map/Map',
+  parameters: {
+    componentSubtitle: 'Self-contained interactive SVG world map (no external map API or key) with any number of highlighted, clickable countries.',
+    docs: {
+      description: {
+        component: 'No external map API or key required. Drop one or more molecules/map-info-card components into the "countries" slot, each with its own "Country code" prop set — the map highlights every matching country and opens that exact card when it\'s clicked.',
+      },
+      story: {
+        inline: true,
+        iframeHeight: 500,
+      },
+    },
+  },
+  argTypes: {
+    map_height: {
+      name: 'Map height',
+      control: 'select',
+      options: {
+        Small: 'sm',
+        Medium: 'md',
+        Large: 'lg',
+      },
+      defaultValue: 'md',
+    },
+    corner_style: {
+      name: 'Border radius',
+      control: 'select',
+      options: {
+        "'None (square)'": 'rounded-0',
+        Small: 'rounded-1',
+        Large: 'rounded-3',
+        "'Extra large'": 'rounded-4',
+        Pill: 'rounded-pill',
+      },
+      defaultValue: 'rounded-4',
+    },
+    box_shadow: {
+      name: 'Shadow',
+      control: 'select',
+      options: {
+        None: 'shadow-none',
+        Small: 'shadow-sm',
+        Medium: 'shadow',
+        Large: 'shadow-lg',
+      },
+      defaultValue: 'shadow-none',
+    },
+    background_color: {
+      name: 'Background color',
+      control: 'select',
+      options: {
+        None: 'none',
+        "'Body tertiary'": 'bg-body-tertiary',
+        Tertiary: 'bg-tertiary',
+        Accent: 'bg-accent',
+        "'Accent subtle'": 'bg-accent-subtle',
+        Primary: 'bg-primary',
+        "'Primary subtle'": 'bg-primary-subtle',
+        Secondary: 'bg-secondary',
+        "'Secondary subtle'": 'bg-secondary-subtle',
+        Dark: 'bg-dark',
+      },
+      defaultValue: 'bg-body-tertiary',
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default (3 countries)',
+  args: {
+    map_height: 'md',
+    corner_style: 'rounded-4',
+    box_shadow: 'shadow-sm',
+    background_color: 'bg-body-tertiary',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:map' with _context only %}
+  {% block countries %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'SO',
+      heading: 'Somalia',
+      description: 'Supporting displaced communities and refugee populations across southern and central regions with emergency shelter, clean water access, and legal protection services.',
+      stat_1_value: '2.9M',
+      stat_1_label: 'Internally displaced people reached',
+      stat_2_value: '14K',
+      stat_2_label: 'Legal aid cases supported in 2025',
+      link_url: 'https://example.com/somalia',
+    } only %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'UA',
+      heading: 'Ukraine',
+      description: 'Emergency response for conflict-affected communities, including shelter repair and cash assistance.',
+      stat_1_value: '1.2M',
+      stat_1_label: 'People assisted',
+      link_url: 'https://example.com/ukraine',
+    } only %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'GT',
+      heading: 'Guatemala',
+      description: 'Community-based nutrition programs for children under five.',
+      stat_1_value: '46K',
+      stat_1_label: 'Children screened',
+      link_url: 'https://example.com/guatemala',
+    } only %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story SingleCountry with {
+  name: 'Single country',
+  args: {
+    map_height: 'md',
+    corner_style: 'rounded-4',
+    box_shadow: 'shadow-none',
+    background_color: 'bg-body-tertiary',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:map' with _context only %}
+  {% block countries %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'SO',
+      heading: 'Somalia',
+      description: 'Supporting displaced communities and refugee populations across southern and central regions with emergency shelter, clean water access, and legal protection services.',
+      stat_1_value: '2.9M',
+      stat_1_label: 'Internally displaced people reached',
+      stat_2_value: '14K',
+      stat_2_label: 'Legal aid cases supported in 2025',
+      link_url: 'https://example.com/somalia',
+    } only %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story NoHighlightedCountries with {
+  name: 'No highlighted countries',
+  args: {
+    map_height: 'md',
+    corner_style: 'rounded-4',
+    box_shadow: 'shadow-none',
+    background_color: 'bg-body-tertiary',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:map' with _context only %}
+{% endembed %}
+{% endstory %}
+
+{% story LargeWithIntro with {
+  name: 'Large, with intro content',
+  args: {
+    map_height: 'lg',
+    corner_style: 'rounded-3',
+    box_shadow: 'shadow',
+    background_color: 'bg-body-tertiary',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:map' with _context only %}
+  {% block content %}
+    <h2 class="h3 mb-2">Where we work</h2>
+    <p class="mb-0">Click a highlighted country to see our impact there.</p>
+  {% endblock %}
+  {% block countries %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'SO',
+      heading: 'Somalia',
+      description: 'Supporting displaced communities and refugee populations across southern and central regions.',
+      stat_1_value: '2.9M',
+      stat_1_label: 'Internally displaced people reached',
+      link_url: 'https://example.com/somalia',
+    } only %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'UA',
+      heading: 'Ukraine',
+      description: 'Emergency response for conflict-affected communities.',
+      stat_1_value: '1.2M',
+      stat_1_label: 'People assisted',
+      link_url: 'https://example.com/ukraine',
+    } only %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'VE',
+      heading: 'Venezuela',
+      description: 'Support for migrants and host communities.',
+      stat_1_value: '620K',
+      stat_1_label: 'People reached',
+      link_url: 'https://example.com/venezuela',
+    } only %}
+    {% endembed %}
+    {% embed 'vartheme_bs5_horizonaid:map-info-card' with {
+      country_code: 'MG',
+      heading: 'Madagascar',
+      description: 'Drought resilience and food security programs.',
+      stat_1_value: '310K',
+      stat_1_label: 'People supported',
+      link_url: 'https://example.com/madagascar',
+    } only %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% endstories %}

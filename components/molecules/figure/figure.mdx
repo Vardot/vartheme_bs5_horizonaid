@@ -1,0 +1,65 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as FigureStories from './figure.stories.json';
+import templateSource from './figure.twig?raw';
+
+<Meta of={FigureStories} name="Docs" />
+
+# Figure
+
+A stat figure card: a large number with a description label below it. Background and font sizes/colors are all configurable via Bootstrap utilities — no custom CSS. The number counts up from 0 when it scrolls into view.
+
+- **Progressive enhancement** — the number renders as its final value server-side, so the component is fully usable without JS; the count-up only runs when JS is available and `prefers-reduced-motion` is not set, and only animates the numeric core of `number` (any prefix/suffix like `48K+` or `$2.9M` stays static)
+- **Content is scalar props, not slots** — `number` and `description` are both required
+- `align` aligns both the number and the description together (one shared setting); `number_size`/`number_color` and `description_size`/`description_color` are independent Bootstrap utility choices, so you can pair any background with any text treatment
+
+> ### Bootstrap documentation
+> - [Utilities — Background](https://getbootstrap.com/docs/5.3/utilities/background/)
+> - [Utilities — Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+> - [Display headings](https://getbootstrap.com/docs/5.3/content/typography/#display-headings)
+
+## Properties
+
+<Canvas of={FigureStories.Default_Accent_subtle_} />
+<Controls of={FigureStories.Default_Accent_subtle_} />
+
+## Stories
+
+<Stories of={FigureStories} />
+
+## Examples
+
+### Example 1 — Default (accent subtle background)
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:figure' with {
+  number: '0000',
+  description: 'Number description',
+  background_color: 'bg-accent-subtle',
+  align: 'text-start',
+  number_size: 'display-1',
+  number_color: 'text-black',
+  description_size: 'fs-6',
+  description_color: 'text-black',
+} %}
+{% endembed %}
+```
+
+### Example 2 — Dark background
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:figure' with {
+  number: '0000',
+  description: 'Number description',
+  background_color: 'bg-dark',
+  align: 'text-start',
+  number_size: 'display-1',
+  number_color: 'text-white',
+  description_size: 'fs-6',
+  description_color: 'text-white-50',
+} %}
+{% endembed %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

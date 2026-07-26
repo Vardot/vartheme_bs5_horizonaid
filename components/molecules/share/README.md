@@ -1,6 +1,6 @@
 # Share
 
-Social share buttons with native Web Share API support. This is the Vartheme BS5 Horizon Aid override of `webshare:share`, exposed in Drupal Canvas, rendering platform icons with the Bootstrap Icons font.
+Social share buttons with native Web Share API support. This is the Vartheme BS5 Horizonaid override of `webshare:share`, exposed in Drupal Canvas, rendering platform icons with the Bootstrap Icons font.
 
 ## What it does
 

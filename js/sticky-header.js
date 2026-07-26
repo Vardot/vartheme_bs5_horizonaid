@@ -1,6 +1,6 @@
 /**
  * @file
- * Sticky-header scroll behavior for Vartheme BS5 Horizon Aid.
+ * Sticky-header scroll behavior for Vartheme BS5 Horizonaid.
  *
  * Progressive enhancement: the header is `position: sticky` in CSS on its own,
  * so it stays usable without JS. This behavior only toggles a `scrolled` class
@@ -25,7 +25,7 @@
     }
   };
 
-  Drupal.behaviors.varthemeBs5StickyHeader = {
+  Drupal.behaviors.varthemeBs5HorizonaidStickyHeader = {
     attach(context) {
       // This behavior ships in the sticky-header library, which the theme only
       // attaches when the "Sticky header" setting is enabled — so reaching here
@@ -36,7 +36,7 @@
       }
 
       once(
-        'vartheme-bs5-sticky-header',
+        'vartheme-bs5-horizonaid-sticky-header',
         '.page > header[role="banner"]',
         context,
       ).forEach((header) => {

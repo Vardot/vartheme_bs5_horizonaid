@@ -6,17 +6,15 @@ import templateSource from './accordion-container.twig?raw';
 
 # Accordion container
 
-A Bootstrap 5 accordion wrapper that manages a group of collapsible **Accordion block** items. The container owns the shared ID, controls whether multiple items can be open simultaneously, applies the `flush` style, and passes a default header color down to nested items.
+A wrapper that manages a group of collapsible **Accordion block** items, stacked in a flex column with a fixed gap. The container owns the shared ID and controls whether multiple items can be open simultaneously.
 
-- `flush: true` removes outer borders and border-radius for edge-to-edge layouts
 - `always_open: true` lets multiple items be expanded at the same time
-- `color` sets the default `text-bg-*` class passed to every nested accordion block that uses `color: inherit`
-- Nested items can override the container color individually
+- Nested items can still override the container's grouping individually with their own `always_open: true`
 - Leave `id` empty to have the container generate a unique ID automatically
+- Items always keep their own rounded corners and background — there is no edge-to-edge "flush" mode
 
 > ### Bootstrap documentation
 > - [Accordion component](https://getbootstrap.com/docs/5.3/components/accordion/)
-> - [Flush accordion](https://getbootstrap.com/docs/5.3/components/accordion/#flush)
 > - [Always open accordion](https://getbootstrap.com/docs/5.3/components/accordion/#always-open)
 
 ## Properties
@@ -35,9 +33,7 @@ A Bootstrap 5 accordion wrapper that manages a group of collapsible **Accordion 
 ```twig
 {% embed 'vartheme_bs5_horizonaid:accordion-container' with {
   id: 'faq-accordion',
-  flush: false,
   always_open: false,
-  color: '',
 } %}
   {% block accordion_content %}
     {% embed 'vartheme_bs5_horizonaid:accordion-block' with {
@@ -45,7 +41,6 @@ A Bootstrap 5 accordion wrapper that manages a group of collapsible **Accordion 
       heading_level: 3,
       open_by_default: true,
       item_id: 'faq-password',
-      color: 'inherit',
     } %}
       {% block accordion_content %}
         <p class="mb-0">Go to the login page and click Forgot password.</p>
@@ -57,7 +52,6 @@ A Bootstrap 5 accordion wrapper that manages a group of collapsible **Accordion 
       heading_level: 3,
       open_by_default: false,
       item_id: 'faq-email',
-      color: 'inherit',
     } %}
       {% block accordion_content %}
         <p class="mb-0">Yes. Navigate to Account settings and update your email.</p>
@@ -67,19 +61,17 @@ A Bootstrap 5 accordion wrapper that manages a group of collapsible **Accordion 
 {% endembed %}
 ```
 
-### Example #2: Always-open with Info color
+### Example #2: Always-open (multiple expanded)
 
 ```twig
 {% embed 'vartheme_bs5_horizonaid:accordion-container' with {
   id: 'support-topics',
   always_open: true,
-  color: 'text-bg-info',
 } %}
   {% block accordion_content %}
     {% embed 'vartheme_bs5_horizonaid:accordion-block' with {
       title: 'Topic 1',
       open_by_default: true,
-      color: 'inherit',
     } %}
       {% block accordion_content %}
         <p class="mb-0">This item can stay open with other items.</p>
@@ -89,7 +81,6 @@ A Bootstrap 5 accordion wrapper that manages a group of collapsible **Accordion 
     {% embed 'vartheme_bs5_horizonaid:accordion-block' with {
       title: 'Topic 2',
       open_by_default: true,
-      color: 'inherit',
     } %}
       {% block accordion_content %}
         <p class="mb-0">Both items are open simultaneously.</p>
@@ -99,25 +90,31 @@ A Bootstrap 5 accordion wrapper that manages a group of collapsible **Accordion 
 {% endembed %}
 ```
 
-### Example #3: Flush style for sidebars
+### Example #3: One independent item in a grouped container
 
 ```twig
 {% embed 'vartheme_bs5_horizonaid:accordion-container' with {
-  flush: true,
-  color: '',
+  id: 'mixed-group',
 } %}
   {% block accordion_content %}
     {% embed 'vartheme_bs5_horizonaid:accordion-block' with {
-      title: 'Navigation section',
+      title: 'Grouped item',
       heading_level: 3,
       open_by_default: true,
-      color: 'inherit',
     } %}
       {% block accordion_content %}
-        <ul class="mb-0 list-unstyled">
-          <li><a href="#">Sub-page one</a></li>
-          <li><a href="#">Sub-page two</a></li>
-        </ul>
+        <p class="mb-0">Opening this closes its grouped siblings.</p>
+      {% endblock %}
+    {% endembed %}
+
+    {% embed 'vartheme_bs5_horizonaid:accordion-block' with {
+      title: 'Independent item',
+      heading_level: 3,
+      open_by_default: true,
+      always_open: true,
+    } %}
+      {% block accordion_content %}
+        <p class="mb-0">This one stays open regardless of the others.</p>
       {% endblock %}
     {% endembed %}
   {% endblock %}

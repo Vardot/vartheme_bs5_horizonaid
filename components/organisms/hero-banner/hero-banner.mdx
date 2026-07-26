@@ -1,0 +1,96 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as HeroBannerStories from './hero-banner.stories.json';
+import templateSource from './hero-banner.twig?raw';
+
+<Meta of={HeroBannerStories} name="Docs" />
+
+# Hero Banner
+
+An uploaded image with a floating content box slot for a heading, text, buttons, or any other component. The content box's background color is configurable and its text color auto-switches to white on dark backgrounds; the image accepts a Bootstrap border-radius or this component's own 1.25rem preset.
+
+- `content` slot accepts any component output — heading, text, button, or any other component
+- `image_radius: rounded-hero` is this component's own 1.25rem preset, used by default to match the reference design
+- the content box floats over the image's bottom edge, offset from its end side on `lg`+ screens, and stays in flow (pulled up slightly) on smaller screens
+
+> ### Bootstrap documentation
+> - [Border-radius](https://getbootstrap.com/docs/5.3/utilities/borders/#radius)
+> - [Background](https://getbootstrap.com/docs/5.3/utilities/background/)
+> - [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+
+## Properties
+
+<Canvas of={HeroBannerStories.Default} />
+<Controls of={HeroBannerStories.Default} />
+
+## Stories
+
+<Stories of={HeroBannerStories} />
+
+## Example
+
+### Example #1 : Dark content box (default)
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:hero-banner' with {
+  media: {
+    src: '/path/to/hero.jpg',
+    alt: 'Hero image',
+    width: 1200,
+    height: 800
+  },
+  image_radius: 'rounded-hero',
+  content_bg: 'bg-dark',
+  content_color: 'auto'
+} only %}
+  {% block content %}
+    {% include 'vartheme_bs5_horizonaid:heading' with {
+      heading_text: 'Hero Title',
+      level: 2,
+      text_color: 'text-white'
+    } only %}
+    {% include 'vartheme_bs5_horizonaid:text' with {
+      text: '<p>Elevate your digital experience with Varbase\'s dynamic design system.</p>',
+      text_color: 'text-white'
+    } only %}
+    {% include 'vartheme_bs5_horizonaid:button' with {
+      label: 'Button',
+      variant: 'btn-primary',
+      size: 'btn-md',
+      radius: 'rounded-pill',
+      alignment: 'left'
+    } only %}
+  {% endblock %}
+{% endembed %}
+```
+
+### Example #2 : Light content box, square image corners
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:hero-banner' with {
+  media: {
+    src: '/path/to/hero.jpg',
+    alt: 'Hero image',
+    width: 1200,
+    height: 800
+  },
+  image_radius: 'none',
+  content_bg: 'bg-white',
+  content_color: 'auto'
+} only %}
+  {% block content %}
+    {% include 'vartheme_bs5_horizonaid:heading' with {
+      heading_text: 'Built for every story',
+      level: 2,
+      text_color: 'text-dark'
+    } only %}
+    {% include 'vartheme_bs5_horizonaid:text' with {
+      text: '<p>Swap the content box background to any Bootstrap color utility.</p>',
+      text_color: 'text-dark'
+    } only %}
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+
+<Source code={templateSource} />

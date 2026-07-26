@@ -1,3 +1,40 @@
-.card-impressed .stretched-link {
-  z-index: 99;
+.card-impressed{
+  --card-impressed-img-duration:0.45s;
+  --card-impressed-color-duration:0.25s;
+  --card-impressed-easing:cubic-bezier(0.22, 1, 0.36, 1);
+  --card-impressed-scale-hover:1.0724;
+}
+
+.card-impressed .stretched-link{
+  z-index:99;
+}
+
+.card-impressed .card-img img{
+  transition:transform var(--card-impressed-img-duration) var(--card-impressed-easing);
+  transform:scale(1);
+  transform-origin:center;
+  will-change:transform;
+}
+
+.card-impressed:hover .card-img img{
+  transform:scale(var(--card-impressed-scale-hover));
+}
+
+.card-impressed .card-body :is(h1, h2, h3, h4, h5, h6){
+  transition:color var(--card-impressed-color-duration) ease;
+}
+
+.card-impressed--on-light-bg:hover .card-body :is(h1, h2, h3, h4, h5, h6){
+  color:var(--bs-accent);
+}
+
+.card-impressed--on-dark-bg:hover .card-body :is(h1, h2, h3, h4, h5, h6){
+  color:var(--bs-primary);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .card-impressed .card-img img,
+  .card-impressed .card-body :is(h1, h2, h3, h4, h5, h6){
+    transition:none;
+  }
 }

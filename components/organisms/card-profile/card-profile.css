@@ -1,0 +1,46 @@
+.card-profile{
+  --card-profile-zoom-scale:1.05;
+  --card-profile-media-duration:0.45s;
+  --card-profile-icon-duration:0.3s;
+  --card-profile-easing:cubic-bezier(0.22, 1, 0.36, 1);
+  --card-profile-icon-color:var(--bs-white);
+  --card-profile-icon-hover-color:var(--bs-warning);
+}
+
+.card-profile__media{
+  line-height:0;
+}
+
+.card-profile__photo img{
+  transition:transform var(--card-profile-media-duration) var(--card-profile-easing);
+  will-change:transform;
+}
+
+.card-profile:hover .card-profile__photo img, .card-profile:focus-within .card-profile__photo img{
+  transform:scale(var(--card-profile-zoom-scale));
+}
+
+.card-profile__content{
+  min-width:0;
+}
+
+.card-profile__social-link{
+  display:inline-flex;
+  text-decoration:none;
+  color:var(--card-profile-icon-color);
+  line-height:0;
+}
+
+.card-profile__social-link .bi{
+  transition:color var(--card-profile-icon-duration) ease;
+}
+
+.card-profile:hover .card-profile__social-link .bi, .card-profile:focus-within .card-profile__social-link .bi, .card-profile__social-link:hover .bi, .card-profile__social-link:focus-visible .bi{
+  color:var(--card-profile-icon-hover-color);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .card-profile__photo img, .card-profile__social-link .bi{
+    transition:none;
+  }
+}

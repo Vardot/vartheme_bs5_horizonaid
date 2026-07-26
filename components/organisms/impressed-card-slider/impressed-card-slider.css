@@ -1,0 +1,75 @@
+.impressed-card-slider__track{
+  display:flex;
+  overflow-x:auto;
+  gap:1.5rem;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+
+.impressed-card-slider__track::-webkit-scrollbar{
+  display:none;
+}
+
+.impressed-card-slider__track > .card-impressed{
+  flex:0 0 auto;
+  width:85%;
+  scroll-snap-align:start;
+}
+
+@media (min-width: 576px){
+  .impressed-card-slider__track > .card-impressed{
+    width:calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (min-width: 992px){
+  .impressed-card-slider__track > .card-impressed{
+    width:calc((100% - 3rem) / 2.3);
+  }
+}
+
+.impressed-card-slider__track > .card-impressed .card-body p{
+  display:-webkit-box;
+  overflow:hidden;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
+.impressed-card-slider__control{
+  --impressed-card-slider-control-width:3.5rem;
+  --impressed-card-slider-control-height:2.375rem;
+  --impressed-card-slider-arrow-nudge:0.1875rem;
+  width:var(--impressed-card-slider-control-width);
+  height:var(--impressed-card-slider-control-height);
+}
+
+.impressed-card-slider__control:disabled{
+  opacity:0.4;
+}
+
+.impressed-card-slider__control-icon--flip{
+  transform:scaleX(-1);
+}
+
+.impressed-card-slider__control-arrow{
+  transition:transform 0.15s ease;
+}
+
+.impressed-card-slider__control:not(:disabled):hover .impressed-card-slider__control-arrow, .impressed-card-slider__control:not(:disabled):focus-visible .impressed-card-slider__control-arrow{
+  transform:translateX(calc(-1 * var(--impressed-card-slider-arrow-nudge)));
+}
+
+[dir="rtl"] .impressed-card-slider__control:not(:disabled):hover .impressed-card-slider__control-arrow, [dir="rtl"] .impressed-card-slider__control:not(:disabled):focus-visible .impressed-card-slider__control-arrow{
+  transform:translateX(calc(-1*(-1 * var(--impressed-card-slider-arrow-nudge))));
+}
+
+@media (prefers-reduced-motion: reduce){
+  .impressed-card-slider__control-arrow{
+    transition:none;
+  }
+}
+
+.impressed-card-slider__links .link-underline-primary{
+  text-decoration-color:var(--bs-primary) !important;
+}

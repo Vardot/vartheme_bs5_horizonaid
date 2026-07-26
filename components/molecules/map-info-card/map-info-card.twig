@@ -1,0 +1,102 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Map Info Card component.
+ *
+ * Small info card: heading, description, up to two stat rows, a "Learn More"
+ * link, and a close button. Used standalone, or dropped into organisms/map's
+ * "countries" slot with `country_code` set — organisms/map's JS discovers
+ * every card in its slot by its `data-country-code` attribute (this card is
+ * always fully self-rendered; the map never edits its content), highlights
+ * that country, and shows/hides this exact card on click.
+ *
+ * Available properties:
+ * - country_code: Two-letter ISO 3166-1 alpha-2 code. Only needed inside
+ *                 organisms/map's "countries" slot. Defaults to ``.
+ * - heading: Card title (e.g. a country name). Defaults to ``.
+ * - description: Short description paragraph. Defaults to ``.
+ * - stat_1_value / stat_1_label: First stat row. Row hidden when stat_1_value is empty.
+ * - stat_2_value / stat_2_label: Second stat row. Row hidden when stat_2_value is empty.
+ * - link_url: Optional "Learn More" link. Defaults to ``.
+ * - link_text: Visible link label. Defaults to `Learn More`.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root element.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set country_code = country_code|default('')|trim|upper %}
+{% set heading = heading|default('')|trim %}
+{% set description = description|default('')|trim %}
+{% set stat_1_value = stat_1_value|default('')|trim %}
+{% set stat_1_label = stat_1_label|default('')|trim %}
+{% set stat_2_value = stat_2_value|default('')|trim %}
+{% set stat_2_label = stat_2_label|default('')|trim %}
+{% set link_url = link_url|default('')|trim %}
+{% set link_text = link_text|default('Learn More')|trim %}
+
+{# Logic: stat rows — each shown only when its value is present. #}
+{% set has_stat_1 = stat_1_value is not empty %}
+{% set has_stat_2 = stat_2_value is not empty %}
+{% set has_link = link_url is not empty %}
+{% set has_country_code = country_code is not empty %}
+
+{# Logic: merge card classes as arrays. #}
+{% set attributes = attributes.addClass([
+  'map-info-card',
+  'bg-primary-subtle',
+  'rounded-3',
+  'shadow-sm',
+  'p-3',
+]) %}
+{% if has_country_code %}
+  {% set attributes = attributes.setAttribute('data-country-code', country_code) %}
+{% endif %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+    <h3 class="map-info-card__heading h6 fw-bold mb-0">{{ heading }}</h3>
+    {{ include('vartheme_bs5_horizonaid:close-button', {
+      size: 'btn-sm',
+      close_button_utility_classes: ['map-info-card__close', 'flex-shrink-0'],
+    }, with_context = false) }}
+  </div>
+
+  <p class="map-info-card__description small mb-3">{{ description }}</p>
+
+  {% if has_stat_1 or has_stat_2 %}
+    <div class="map-info-card__stats d-flex flex-column gap-2 mb-3">
+      {% if has_stat_1 %}
+        <div class="map-info-card__stat bg-primary rounded-2 d-flex align-items-center gap-3 p-2">
+          <span class="map-info-card__stat-value fw-bold">{{ stat_1_value }}</span>
+          <span class="map-info-card__stat-label small">{{ stat_1_label }}</span>
+        </div>
+      {% endif %}
+      {% if has_stat_2 %}
+        <div class="map-info-card__stat bg-primary rounded-2 d-flex align-items-center gap-3 p-2">
+          <span class="map-info-card__stat-value fw-bold">{{ stat_2_value }}</span>
+          <span class="map-info-card__stat-label small">{{ stat_2_label }}</span>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if has_link %}
+    {{ include('vartheme_bs5_horizonaid:link', {
+      url: link_url,
+      link_utility_classes: ['map-info-card__link', 'fw-bold', 'text-decoration-none'],
+      content: link_text,
+    }, with_context = false) }}
+  {% endif %}
+</div>

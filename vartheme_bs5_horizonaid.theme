@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Theme functions to support Vartheme BS5 Horizon Aid theme.
+ * Theme functions to support Vartheme BS5 Horizonaid theme.
  */
 
 use Drupal\Core\Language\LanguageInterface;
@@ -22,6 +22,27 @@ function vartheme_bs5_horizonaid_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ *
+ * Themes only get the _alter variant invoked (hook_page_attachments() is
+ * module-only in Drupal's hook system). organisms/map's map.js needs an
+ * absolute URL to fetch the component's vendored GeoJSON asset at runtime,
+ * and can't rely on `component_metadata.path` for this the way a couple of
+ * other components use it (card-text, card-country): those only use it as a
+ * narrow, guarded fallback for Storybook example paths
+ * (`if component_metadata.path is defined`), never as the sole source of a
+ * URL — and it resolves to an empty string when Drupal Canvas renders the
+ * component through its own API rendering path (confirmed: geojson fetches
+ * 404 there, breaking the whole map). Computing the path here with
+ * `extension.list.theme` is reliable in every rendering context, the same
+ * reason the old Google Maps API key setting used this hook.
+ */
+function vartheme_bs5_horizonaid_page_attachments_alter(array &$attachments) {
+  $theme_path = \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_horizonaid');
+  $attachments['#attached']['drupalSettings']['varthemeBs5HorizonaidMap']['geojsonUrl'] = base_path() . $theme_path . '/components/organisms/map/assets/world-countries-110m.geojson';
 }
 
 /**
@@ -56,7 +77,7 @@ function vartheme_bs5_horizonaid_library_info_alter(array &$libraries, $module) 
   }
 
   // Replace the Popper.js library file from the Responsive Theme preview module.
-  // Vartheme BS5 Horizon Aid need a different version which still
+  // Vartheme BS5 Horizonaid need a different version which still
   // works for the Responsive Theme preview module.
   if ($module === 'responsive_preview'
     && isset($libraries['drupal.responsive-preview'])
@@ -153,7 +174,7 @@ function vartheme_bs5_horizonaid_preprocess_page_title(&$variables) {
  */
 function vartheme_bs5_horizonaid_preprocess_html(&$variables) {
 
-  // The path for Vartheme BS5 Horizon Aid theme in variables.
+  // The path for Vartheme BS5 Horizonaid theme in variables.
   $variables['vartheme_bs5_horizonaid_path'] = \Drupal::request()->getSchemeAndHttpHost() . \Drupal::request()->getBaseUrl() . '/' . \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_horizonaid');
 
   // Sticky header toggle (theme setting, defaults to enabled). Attach the

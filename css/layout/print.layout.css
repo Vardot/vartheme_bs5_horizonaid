@@ -1,14 +1,12 @@
-@media print {
-  a[href]:after {
-    content: none !important;
+@media print{
+  a[href]:after{
+    content:none !important;
   }
 
-  *,
-  *:before,
-  *:after {
-    color: #000 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
+  *, *:before, *:after{
+    color:#000 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
   }
 }

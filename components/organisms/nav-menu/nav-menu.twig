@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Vartheme BS5 Horizon Aid Starter Kit implementation for the Nav Menu component.
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Nav Menu component.
  *
  * Available config:
  * - alignment: left | right | center | vertical.
@@ -22,6 +22,9 @@
 
 {# Variables: utility classes and config props. #}
 {% set nav_menu_utility_classes = nav_menu_utility_classes ? nav_menu_utility_classes : [] %}
+
+{# Variables: boolean props. #}
+{% set last_item_is_cta = last_item_is_cta ?? false %}
 
 {% import _self as menus %}
 
@@ -55,12 +58,14 @@
   {% set attributes = attributes.addClass(nav_menu_classes) %}
   <ul{{ attributes }}>
     {% for item in items %}
+      {% set is_cta_item = last_item_is_cta and loop.last and not (item.is_expanded and item.below) %}
       {% set nav_item_classes = [
         'nav-item',
         item.is_expanded and item.below ? 'dropdown' : '',
         item.in_active_trail ? 'active',
+        is_cta_item ? 'nav-item--cta',
       ] %}
-      {% set nav_link_classes = ['nav-link'] %}
+      {% set nav_link_classes = is_cta_item ? ['nav-link', 'nav-link--cta'] : ['nav-link'] %}
       {% if item.url.options.attributes.class is iterable %}
         {% set nav_link_classes = nav_link_classes|merge(item.url.options.attributes.class) %}
       {% elseif item.url.options.attributes.class %}

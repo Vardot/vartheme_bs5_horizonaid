@@ -5,7 +5,7 @@
     componentSubtitle: 'Taxonomy badge',
     docs: {
       description: {
-        component: 'Taxonomy component that can render as plain text or a link. Styled entirely with Bootstrap utilities — dark background, accent text, and accent border. No custom CSS.',
+        component: 'Taxonomy component that can render as plain text or a link. Styled entirely with Bootstrap utilities — bg/text color pairing, size and radius. No custom CSS.',
       },
       story: {inline: true},
     },
@@ -43,6 +43,17 @@
         Small: 'taxonomy-sm',
       },
     },
+    color: {
+      name: 'Color',
+      description: 'Background/text color pairing (taxonomy modifier class).',
+      defaultValue: 'taxonomy-primary',
+      control: 'select',
+      options: {
+        Primary: 'taxonomy-primary',
+        Secondary: 'taxonomy-secondary',
+        Tertiary: 'taxonomy-tertiary',
+      },
+    },
 
   },
 } %}
@@ -54,6 +65,7 @@
     url: '',
     target: '_self',
     size: 'taxonomy-lg',
+    color: 'taxonomy-primary',
   },
 } %}
 {{ include('vartheme_bs5_horizonaid:taxonomy') }}
@@ -76,6 +88,36 @@
     url: 'https://example.com',
     target: '_blank',
     size: 'taxonomy-lg',
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:taxonomy') }}
+{% endstory %}
+
+{% story ColorPrimary with {
+  name: 'Color: Primary',
+  args: {
+    label: 'Primary',
+    color: 'taxonomy-primary',
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:taxonomy') }}
+{% endstory %}
+
+{% story ColorSecondary with {
+  name: 'Color: Secondary',
+  args: {
+    label: 'Secondary',
+    color: 'taxonomy-secondary',
+  },
+} %}
+{{ include('vartheme_bs5_horizonaid:taxonomy') }}
+{% endstory %}
+
+{% story ColorTertiary with {
+  name: 'Color: Tertiary',
+  args: {
+    label: 'Tertiary',
+    color: 'taxonomy-tertiary',
   },
 } %}
 {{ include('vartheme_bs5_horizonaid:taxonomy') }}

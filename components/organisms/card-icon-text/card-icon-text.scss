@@ -1,0 +1,65 @@
+// @file Icon Text Card — stacked icon card with hover heading color.
+@import "../../defaults"; // Global component defaults.
+
+.card-icon-text {
+  --card-icon-text-duration-color: 0.3s;
+  // Gap between the icon and the content slot. Bootstrap's largest gap
+  // utility (gap-5) tops out at $spacer * 3, so this genuine special case
+  // is built from the same $spacer token instead.
+  --card-icon-text-gap: #{$spacer * 5};
+  // Icon width. Sized larger than a typical inline icon to match this
+  // card's badge-style icon treatment.
+  --card-icon-text-icon-max-width: 4rem;
+
+  .stretched-link {
+    z-index: 99;
+  }
+
+  // --- Optional icon ----------------------------------------------------
+
+  &__body {
+    gap: var(--card-icon-text-gap);
+  }
+
+  // Icon wrapper: constrains the uploaded image to the chosen size.
+  &__icon {
+    line-height: 0; // collapse any descendant inline spacing
+
+    figure {
+      max-width: var(--card-icon-text-icon-max-width);
+      margin: 0;
+
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  // --- Content slot: heading hover -------------------------------------------
+  // The content slot is free-form (any dropped components), so headings are
+  // targeted generically by tag rather than a fixed class. A parent-hover-
+  // driven color swap on a child element has no Bootstrap utility
+  // equivalent. The base color is set here (via the --bs-secondary custom
+  // property, not the .text-secondary utility) because Bootstrap's color
+  // utilities ship `!important`, which the :hover rule below could never
+  // win against regardless of selector specificity.
+  &__content {
+    :is(h1, h2, h3, h4, h5, h6) {
+      margin: 0;
+      color: var(--bs-secondary);
+      transition: color var(--card-icon-text-duration-color) ease;
+    }
+  }
+
+  &:hover &__content :is(h1, h2, h3, h4, h5, h6) {
+    color: var(--bs-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__content :is(h1, h2, h3, h4, h5, h6) {
+      transition: none;
+    }
+  }
+}

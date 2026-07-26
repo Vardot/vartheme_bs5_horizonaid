@@ -1,4 +1,4 @@
-# AGENTS.md — Vartheme BS5 Horizon Aid component authoring standard
+# AGENTS.md — Vartheme BS5 Horizonaid component authoring standard
 
 Guidance for AI agents (and humans) creating or changing **Single Directory
 Components (SDC)** in this theme so every component stays consistent and
@@ -23,7 +23,7 @@ convention; `CLAUDE.md` imports it.
 | Component template pattern | `components/atoms/section/section.twig` (in this theme) | Before writing/changing any `.twig`. |
 | A component's real props/enums | that component's `*.component.yml` | Before referencing any prop — never assume. |
 | Starterkit / sub-theme | `starterkit.md` (this theme) + [Varbase: theme development](https://docs.varbase.vardot.com/developers/theme-development-with-varbase) and [creating-your-own-theme](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/creating-your-own-theme) | Generating/configuring a sub-theme. |
-| Vartheme BS5 Horizon Aid architecture | [understanding-vartheme-bs5](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/understanding-vartheme-bs5) | SCSS/SDC/CVA/build structure questions. |
+| Vartheme BS5 Horizonaid architecture | [understanding-vartheme-bs5-horizonaid](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/understanding-vartheme-bs5-horizonaid) | SCSS/SDC/CVA/build structure questions. |
 | Theme-switch & component migration | `varbase_components` 4.0.x — `src/EventSubscriber/ActiveThemeChangeSubscriber.php`, `src/Commands/VarbaseComponentsCommands.php` (<https://git.drupalcode.org/project/varbase_components/-/tree/4.0.x>) + [troubleshooting-theme-switch-issues](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/troubleshooting-theme-switch-issues) | Component IDs, version hashes, `auto_switch_components`, migration. |
 | Storybook | [integration-of-varbase-with-storybook](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/integration-of-varbase-with-storybook) + live demo <https://storybook.demo.varbase.vardot.com/> | Stories, `ddev init-storybook`, running on :6006. |
 | Preloaded fonts | [add-preloaded-fonts-in-vartheme](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/add-preloaded-fonts-in-vartheme) | Adding `@font-face` + preload. |
@@ -62,7 +62,7 @@ Every component `.twig` is written in this exact order:
 {#
 /**
  * @file
- * Vartheme BS5 Horizon Aid Starter Kit implementation for the <Name> component.
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the <Name> component.
  *
  * <Short description.>
  *
@@ -106,7 +106,7 @@ Every component `.twig` is written in this exact order:
 ```
 
 - `@file` first descriptive line is **exactly**
-  `Vartheme BS5 Horizon Aid Starter Kit implementation for the <Name> component.`
+  `Vartheme BS5 Horizonaid Starter Kit implementation for the <Name> component.`
   (`<Name>` = the human title, e.g. `Card Hero`, `Badge`).
 - Copy the **AI guidance** comment block verbatim from section.twig.
 - Sections: `Variables` (scalars first, then booleans) → `Logic` → `Print`.
@@ -298,7 +298,7 @@ correct (valid page **and** `#fragment`).
 
 # Part B — Component files: styling, JavaScript & build
 
-Vartheme BS5 Horizon Aid is a **Drupal starterkit theme**: developers generate a sub-theme
+Vartheme BS5 Horizonaid is a **Drupal starterkit theme**: developers generate a sub-theme
 from it and inherit these conventions. Keep every component self-contained and
 on-standard so generated themes stay consistent.
 
@@ -377,12 +377,12 @@ Bootstrap already defines, you're doing it wrong — use the Bootstrap one.
   element `.webshare__item`, modifier `.webshare--vertical`. Do not leak generic
   class names. Prefer Bootstrap utility classes in the Twig markup; reserve SCSS
   for what utilities can't express.
-- **Variants via CVA (Class Variance Authority).** Vartheme BS5 Horizon Aid manages
+- **Variants via CVA (Class Variance Authority).** Vartheme BS5 Horizonaid manages
   component variants with structured class definitions: a base class plus size
   and color/style variant classes (e.g. button → base `btn`, size `btn-sm`/
   `btn-lg`, variant `btn-primary`/`btn-secondary`). Build variant class lists
   from enum props this way (still as `|merge` arrays in Twig).
-  (→ read §0 "Vartheme BS5 Horizon Aid architecture" for the CVA/SCSS structure.)
+  (→ read §0 "Vartheme BS5 Horizonaid architecture" for the CVA/SCSS structure.)
 - Keep specificity low (single class), use `&` nesting for states
   (`&:hover, &:focus`), factor repeated patterns into `@mixin`s.
 - **No Figma references in code.** Never write Figma node IDs, file keys, or
@@ -462,7 +462,7 @@ Bootstrap already defines, you're doing it wrong — use the Bootstrap one.
 - Generate a sub-theme from this starterkit:
   ```sh
   php core/scripts/drupal generate-theme my_theme --starterkit vartheme_bs5_horizonaid \
-    --name "My Theme" --description "Custom theme generated from Vartheme BS5 Horizon Aid"
+    --name "My Theme" --description "Custom theme generated from Vartheme BS5 Horizonaid"
   ```
   The generated theme inherits all components and these conventions; new/changed
   components in it MUST follow this AGENTS.md.
@@ -485,7 +485,7 @@ Bootstrap already defines, you're doing it wrong — use the Bootstrap one.
 Authoritative reference:
 <https://docs.varbase.vardot.com/developers/theme-development-with-varbase>.
 Live design system / Storybook: <https://storybook.demo.varbase.vardot.com/>.
-**Extend Vartheme BS5 Horizon Aid — don't build from scratch.**
+**Extend Vartheme BS5 Horizonaid — don't build from scratch.**
 
 ## 16. Tooling
 
@@ -501,7 +501,7 @@ php core/scripts/drupal generate-theme mytheme \
   --starterkit vartheme_bs5_horizonaid \
   --path themes/custom \
   --name "My Theme" \
-  --description "Custom theme generated from Vartheme BS5 Horizon Aid theme"
+  --description "Custom theme generated from Vartheme BS5 Horizonaid theme"
 
 cd themes/custom/mytheme
 yarn install        # Yarn only
@@ -515,7 +515,7 @@ yarn theme:full-build`.
 - The generated `mytheme.info.yml` ships `auto_switch_components: true` — this
   enables automatic Drupal Canvas component-ID migration when the theme is
   activated. Keep it.
-- The sub-theme is independent: after generating, Vartheme BS5 Horizon Aid can be
+- The sub-theme is independent: after generating, Vartheme BS5 Horizonaid can be
   uninstalled and the sub-theme still works.
 - New/changed components in the sub-theme **must follow Parts A & B** of this
   file (the standard is inherited).

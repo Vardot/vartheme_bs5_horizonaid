@@ -147,7 +147,7 @@ bs-tooltip-script:
   js:
     js/bootstrap/tooltip.js: {}
 
-# Vartheme BS5 Horizon Aid global styles library.
+# Vartheme BS5 Horizonaid global styles library.
 global-styles:
   css:
     base:
@@ -157,10 +157,10 @@ global-styles:
       css/layout/equal-height.layout.css: {}
       css/layout/print.layout.css: { media: print }
     theme:
-      fonts/figtree/css/figtree.css: {}
+      fonts/plus-jakarta-sans/css/plus-jakarta-sans.css: {}
       fonts/dm-mono/css/dm-mono.css: {}
 
-# Vartheme BS5 Horizon Aid global scripts library.
+# Vartheme BS5 Horizonaid global scripts library.
 global-scripts:
   js:
     js/scripts.js: {}
@@ -198,7 +198,7 @@ bootstrap-styles-rtl:
     base:
       css/base/bootstrap-rtl.base.css: {}
 
-# Vartheme BS5 Horizon Aid global RTL styles library.
+# Vartheme BS5 Horizonaid global RTL styles library.
 global-styles-rtl:
   css:
     base:
@@ -206,7 +206,7 @@ global-styles-rtl:
     theme:
       fonts/droid/arabic/kufi/css/droidarabickufi.css: {}
 
-# Vartheme BS5 Horizon Aid content moderation status theme.
+# Vartheme BS5 Horizonaid content moderation status theme.
 content_moderation:
   css:
     theme:
@@ -249,6 +249,16 @@ oembed-frame-video-vimeo:
   js:
     components/organisms/heroslider/js/oembed-frame.heroslider.vimeo.js: {}
 
+# Vendored d3-geo (+ its d3-array dependency) for the Map component's SVG
+# world map projection — replaces the Google Maps JS API. Plain UMD builds
+# (not run through webpack: this theme's component build only compiles
+# SCSS), so d3-array must load first to populate the shared `window.d3`
+# global that d3-geo's own UMD wrapper extends.
+d3-geo-vendor:
+  js:
+    components/organisms/map/assets/vendor/d3-array.min.js: { weight: -3, minified: true }
+    components/organisms/map/assets/vendor/d3-geo.min.js: { weight: -2, minified: true }
+
 # Ckeditor 5 styles.
 ckeditor5-root:
   dependencies:
@@ -259,11 +269,4 @@ ckeditor5-styles:
   dependencies:
     - core/components.vartheme_bs5_horizonaid--alert
     - core/components.vartheme_bs5_horizonaid--callout
-
-# Accordion behavior script (ensures Bootstrap Collapse works inside Drupal Canvas/SDC renders).
-accordion-scripts:
-  dependencies:
-    - vartheme_bs5_horizonaid/bs-collapse-script
-  js:
-    js/components/accordion-init.js: {}
 

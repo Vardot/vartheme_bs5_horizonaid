@@ -1,6 +1,6 @@
 # Dynamic Responsive Image
 
-Vartheme BS5 Horizon Aid Starter Kit implementation to display a dynamic responsive image
+Vartheme BS5 Horizonaid Starter Kit implementation to display a dynamic responsive image
 
 Generate (nearly) perfectly scaled (or cropped) images on-the-fly assumes the width of images is set in CSS, either directly in the wrapper-div or inherited through a parent element. Any grid system will do just fine for this.
 

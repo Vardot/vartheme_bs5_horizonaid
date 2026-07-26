@@ -1,0 +1,94 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Hero Banner
+group: Hero
+status: stable
+description: >
+  Hero banner with an uploaded image and a floating content box slot for a
+  heading, text, buttons, or any other component. Bootstrap 5 utilities only.
+props:
+  type: object
+  properties:
+    media:
+      $ref: json-schema-definitions://canvas.module/image
+      type: object
+      title: Image
+      description: The hero banner image.
+      examples:
+        - src: /themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/hero-1.png
+          alt: Placeholder image
+          width: 1200
+          height: 800
+    image_radius:
+      type: string
+      title: Image border radius
+      description: >
+        Bootstrap border-radius utility applied to the image. "Default" is
+        this component's own 1.25rem preset used in the reference design.
+      enum:
+        - none
+        - rounded-2
+        - rounded-3
+        - rounded-4
+        - rounded-hero
+        - rounded-5
+        - rounded-pill
+      default: rounded-hero
+      examples:
+        - rounded-hero
+      meta:enum:
+        none: Square
+        rounded-2: Small (0.5rem)
+        rounded-3: Medium (0.75rem)
+        rounded-4: Large (1rem)
+        rounded-hero: Default (1.25rem)
+        rounded-5: Extra large (1.5rem)
+        rounded-pill: Pill
+    content_bg:
+      type: string
+      title: Content box background
+      description: Bootstrap background utility applied to the floating content box.
+      enum:
+        - bg-transparent
+        - bg-white
+        - bg-light
+        - bg-dark
+        - bg-black
+        - bg-primary
+        - bg-secondary
+        - bg-success
+        - bg-danger
+        - bg-warning
+        - bg-info
+      default: bg-dark
+      examples:
+        - bg-dark
+      meta:enum:
+        bg-transparent: Transparent
+        bg-white: White
+        bg-light: Light
+        bg-dark: Dark
+        bg-black: Black
+        bg-primary: Primary
+        bg-secondary: Secondary
+        bg-success: Success
+        bg-danger: Danger
+        bg-warning: Warning
+        bg-info: Info
+    content_color:
+      type: string
+      title: Content box text color
+      description: "\"Auto\" switches to white text when the background is dark."
+      enum: [auto, text-dark, text-white]
+      default: auto
+      examples:
+        - auto
+      meta:enum:
+        auto: Auto (based on background)
+        text-dark: Dark text
+        text-white: White text
+slots:
+  content:
+    title: Content box (slot)
+    description: >
+      Content rendered inside the floating content box — drop in a heading,
+      text, button, or any other component.

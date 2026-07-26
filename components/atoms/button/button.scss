@@ -20,11 +20,124 @@
     --bs-btn-padding-x: 0.9375rem;
     --bs-btn-font-size: 0.875rem;
   }
+
+  /*
+   * Brand fill/label pairing for primary and secondary (Figma-matched):
+   * primary fills to the accent blue with a white label; secondary's own
+   * background *is* the accent blue, and fills to white with a navy label.
+   * Overriding the --bs-btn-* custom properties (rather than the fill CSS
+   * below) means the split-fill mechanism picks these up automatically.
+   */
+  &.btn-primary {
+    --bs-btn-hover-bg: var(--bs-accent);
+    --bs-btn-hover-color: var(--bs-white);
+  }
+
+  &.btn-secondary {
+    --bs-btn-bg: var(--bs-accent);
+    --bs-btn-border-color: var(--bs-accent);
+    --bs-btn-hover-bg: var(--bs-white);
+    --bs-btn-hover-color: var(--bs-secondary);
+    --bs-btn-disabled-bg: var(--bs-accent);
+    --bs-btn-disabled-border-color: var(--bs-accent);
+  }
+
+  /*
+   * Link variant: dark label instead of Bootstrap's default link-blue
+   * (--bs-link-color), with the underline removed in every state.
+   */
+  &.btn-link {
+    --bs-btn-color: var(--bs-dark);
+    --bs-btn-hover-color: var(--bs-dark);
+    --bs-btn-active-color: var(--bs-dark);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: none;
+    }
+  }
+
+  /*
+   * Flat, borderless buttons: zeroing the width (not just matching the
+   * color) removes it in every state — rest, hover, active, disabled —
+   * with no risk of the hover-border-color token drifting from the
+   * frozen hover background below. Outline variants keep their border,
+   * since it's the whole point of that style.
+   */
+  &:not(.btn-link):not([class*="btn-outline-"]) {
+    --bs-btn-border-width: 0;
+  }
+
+  /*
+   * Hover: split fill sweeps in from the center instead of Bootstrap's
+   * instant background swap. Reuses Bootstrap's own per-variant
+   * --bs-btn-hover-bg/--bs-btn-hover-color tokens, so every variant
+   * (solid, outline, incl. size/radius combos) gets the effect for free.
+   * Skipped for `.btn-link` (no fill background to animate) and disabled
+   * buttons/links (no hover state).
+   */
+  &:not(.btn-link):not(:disabled):not([aria-disabled="true"]) {
+    --btn-fill-duration: 0.35s;
+    --btn-fill-easing: #{cubic-bezier(0.22, 1, 0.36, 1)};
+
+    position: relative;
+    overflow: hidden;
+
+    // Cancel Bootstrap's instant background swap; the fill halves below
+    // animate the hover background in instead.
+    &:hover,
+    &:focus-visible {
+      background-color: var(--bs-btn-bg);
+      color: var(--bs-btn-hover-color);
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      width: 50%;
+      background-color: var(--bs-btn-hover-bg);
+      transform: scaleX(0);
+      transition: transform var(--btn-fill-duration) var(--btn-fill-easing);
+    }
+
+    &::before {
+      inset-inline-start: 0;
+      transform-origin: left center;
+    }
+
+    &::after {
+      inset-inline-end: 0;
+      transform-origin: right center;
+    }
+
+    &:hover::before,
+    &:hover::after,
+    &:focus-visible::before,
+    &:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    // Label/icon must sit above the fill halves.
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
 }
 
 /* Button text drops to 14px on small viewports. */
 @media (max-width: 767.98px) {
   .btn.btn-md {
     --bs-btn-font-size: 0.875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn::before,
+  .btn::after {
+    transition: none;
   }
 }

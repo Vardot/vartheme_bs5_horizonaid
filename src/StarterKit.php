@@ -8,15 +8,15 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Vartheme BS5 Horizon Aid theme starter kit implementation.
+ * Vartheme BS5 Horizonaid theme starter kit implementation.
  *
- * Handles theme generation from the Vartheme BS5 Horizon Aid starter kit, including
+ * Handles theme generation from the Vartheme BS5 Horizonaid starter kit, including
  * renaming files, replacing theme names, and updating configuration files.
  */
 final class StarterKit implements StarterKitInterface {
 
   /**
-   * List of classes defined in Vartheme BS5 Horizon Aid.
+   * List of classes defined in Vartheme BS5 Horizonaid.
    *
    * Used to differentiate capitalized machine name from theme name
    * used in comments and string content.
@@ -154,8 +154,8 @@ final class StarterKit implements StarterKitInterface {
 
     self::updateThemeInfo($working_dir, $machine_name, $theme_name);
 
-    // Replace "Vartheme BS5 Horizon Aid" in class names before doing bulk find/replace.
-    $old_pattern = 'Vartheme BS5 Horizon Aid';
+    // Replace "Vartheme BS5 Horizonaid" in class names before doing bulk find/replace.
+    $old_pattern = 'Vartheme BS5 Horizonaid';
     $new_pattern = str_replace(' ', '', ucwords(str_replace('_', ' ', $machine_name)));
     foreach (self::$classes as $old_class) {
       $new_class = str_replace($old_pattern, $new_pattern, $old_class);
@@ -163,8 +163,8 @@ final class StarterKit implements StarterKitInterface {
     }
 
     self::findAndReplace($working_dir, 'vartheme_bs5_horizonaid', $machine_name);
-    self::findAndReplace($working_dir, 'Vartheme BS5 Horizon Aid Starter Kit', $theme_name);
-    self::findAndReplace($working_dir, 'Vartheme BS5 Horizon Aid', $theme_name);
+    self::findAndReplace($working_dir, 'Vartheme BS5 Horizonaid Starter Kit', $theme_name);
+    self::findAndReplace($working_dir, 'Vartheme BS5 Horizonaid', $theme_name);
     self::findAndReplace($working_dir, 'starterkit.md', 'README.md', TRUE);
 
     self::findAndReplace($working_dir, 'vartheme_bs5_horizonaid_path', $machine_name . '_path');

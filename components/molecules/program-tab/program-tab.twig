@@ -1,0 +1,131 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Program Tab component.
+ *
+ * A single tab: a full-width image with a content card inset at its
+ * bottom-right corner. Meant to be placed inside the "Programs" container's
+ * `tabs` slot — add as many Program Tab items as needed and reorder via
+ * drag & drop; the container has no fixed limit.
+ *
+ * Canvas / SDC notes:
+ * - The component's root IS the Bootstrap `.tab-pane`; the pill nav
+ *   `<button>` for this tab renders as its first child (so it is still
+ *   reachable, and hidden along with an inactive pane, without JS).
+ *   `organisms/programs`' `programs.js` behavior moves each button out into
+ *   the shared pill nav on page load — Canvas slot children render
+ *   independently, so this cross-sibling rearrangement can't be done in
+ *   Twig. Mirrors `hero-slider-container`/`hero-slide`'s
+ *   `flattenCarouselItems()` pattern.
+ *
+ * Available properties:
+ * - active: Whether this tab is open by default. If no tab in the "Programs"
+ *           container is active, the first one is auto-activated. Defaults
+ *           to `false`.
+ * - title: Pill nav label. Defaults to `Program`.
+ * - image: Image object (src, alt, width, height).
+ * - ratio: Image ratio (crop). (ratio-auto | ratio-16x9 | ratio-4x3 |
+ *          ratio-1x1 | ratio-21x9) Defaults to `ratio-16x9`.
+ * - card_title: Content card heading. Defaults to `Program title`.
+ * - card_text: Content card body text.
+ * - link_url: "Learn More" link URL. Leave empty to hide the link.
+ * - link_label: "Learn More" link text. Defaults to `Learn More`.
+ * - link_target: Link target. (default | _self | _blank)
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root `.tab-pane` element.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set title = title|default('Program') %}
+{% set image = image|default({}) %}
+{% set ratio = ratio|default('ratio-16x9') %}
+{% set card_title = card_title|default('Program title') %}
+{% set card_text = card_text|default('') %}
+{% set link_url = link_url|default('')|trim %}
+{% set link_label = link_label|default('Learn More') %}
+{% set link_target_raw = link_target|default('default') %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set active = active ?? false %}
+
+{# Logic: a Twig-time random id is unique enough for a handful of tabs and
+ # needs no coordination with sibling instances (Canvas renders each slot
+ # child independently). #}
+{% set pane_id = 'program-tab-' ~ random(1000000) %}
+{% set has_link = link_url is not empty %}
+{% set link_target = (link_target_raw == 'default') ? '_self' : link_target_raw %}
+
+{# Logic: merge root and structural classes as arrays. #}
+{% set pane_classes = ['tab-pane', 'fade']|merge(active ? ['show', 'active'] : []) %}
+{% set attributes = attributes
+  .addClass(pane_classes)
+  .setAttribute('id', pane_id)
+  .setAttribute('role', 'tabpanel')
+  .setAttribute('tabindex', 0)
+  .setAttribute('data-programs-pane', true)
+  .setAttribute('data-programs-active', active ? '1' : '0')
+%}
+
+{% set nav_button_classes = ['nav-link', 'program-tab__nav-link', 'rounded-pill', 'px-3', 'py-2', 'fw-semibold', 'text-dark']|merge(active ? ['active'] : []) %}
+{% set nav_button_attributes = create_attribute()
+  .addClass(nav_button_classes)
+  .setAttribute('data-programs-nav-button', true)
+  .setAttribute('data-bs-toggle', 'pill')
+  .setAttribute('data-bs-target', '#' ~ pane_id)
+  .setAttribute('type', 'button')
+  .setAttribute('role', 'tab')
+  .setAttribute('aria-controls', pane_id)
+  .setAttribute('aria-selected', active ? 'true' : 'false')
+%}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <button{{ nav_button_attributes }}>{{ title }}</button>
+
+  <div class="program-tab__panel position-relative rounded-4 overflow-hidden shadow-sm">
+    <div class="program-tab__media">
+      {{ include('vartheme_bs5_horizonaid:image', {
+        media: {
+          src: image.src|default(''),
+          alt: image.alt|default(''),
+          width: image.width|default(null),
+          height: image.height|default(null),
+        },
+        ratio: ratio,
+        fit: 'object-fit-cover',
+        width: 'w-100',
+        rounded: 'rounded-0',
+        loading: 'lazy',
+      }, false, true) }}
+    </div>
+
+    <div class="program-tab__card bg-white p-4 p-lg-5 d-flex flex-column justify-content-center">
+      <h3 class="fs-3 fw-bold text-dark mb-3">{{ card_title }}</h3>
+      <p class="text-body-secondary mb-4">{{ card_text }}</p>
+      {% if has_link %}
+        {{ include('vartheme_bs5_horizonaid:link', {
+          url: link_url,
+          color: 'dark',
+          link_utility_classes: ['fw-bold'],
+          attributes: create_attribute().setAttribute('target', link_target),
+          content: link_label,
+        }, with_context = false) }}
+      {% endif %}
+    </div>
+  </div>
+</div>

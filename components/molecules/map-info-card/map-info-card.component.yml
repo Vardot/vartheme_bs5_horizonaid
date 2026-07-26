@@ -1,0 +1,74 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Map Info Card
+group: Map
+status: stable
+description: 'Small info card used standalone, or dropped into organisms/map''s "countries" slot (with country_code set) to become that country''s click popup — a heading, description, up to two stat rows, a link, and a close button. Built with Bootstrap 5 utility classes.'
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
+props:
+  type: object
+  properties:
+    country_code:
+      type: string
+      title: 'Country code (for use inside organisms/map)'
+      description: 'Two-letter ISO 3166-1 alpha-2 country code (e.g. "SO" for Somalia). Only needed when this card is dropped into organisms/map''s "countries" slot — organisms/map reads this to highlight the matching country on the map and open this card when it''s clicked. Leave empty for standalone use.'
+      default: ''
+      examples:
+        - SO
+    heading:
+      type: string
+      title: Heading
+      description: Card title (e.g. a country name).
+      default: ''
+      examples:
+        - Somalia
+    description:
+      type: string
+      title: Description
+      description: Short description paragraph.
+      default: ''
+      examples:
+        - 'Supporting displaced communities and refugee populations across southern and central regions with emergency shelter, clean water access, and legal protection services.'
+    stat_1_value:
+      type: string
+      title: 'Stat 1 value'
+      description: 'First stat''s number/value (e.g. "2.9M"). Leave empty to hide this stat row.'
+      default: ''
+      examples:
+        - 2.9M
+    stat_1_label:
+      type: string
+      title: 'Stat 1 label'
+      description: Label for the first stat.
+      default: ''
+      examples:
+        - Internally displaced people reached
+    stat_2_value:
+      type: string
+      title: 'Stat 2 value'
+      description: 'Second stat''s number/value. Leave empty to hide this stat row.'
+      default: ''
+      examples:
+        - 14K
+    stat_2_label:
+      type: string
+      title: 'Stat 2 label'
+      description: Label for the second stat.
+      default: ''
+      examples:
+        - Legal aid cases supported in 2025
+    link_url:
+      type: string
+      title: 'Link URL'
+      format: uri-reference
+      description: Optional "Learn More" link. Leave empty to hide the link.
+      default: ''
+    link_text:
+      type: string
+      title: 'Link text'
+      description: Visible label for the link.
+      default: 'Learn More'
+      examples:
+        - 'Learn More'

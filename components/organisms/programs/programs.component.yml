@@ -1,0 +1,41 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Programs
+group: Card
+status: stable
+description: >
+  Pill-tabbed programs showcase container. Add one or more "Program Tab"
+  components into the slot (unlimited, drag & drop reorder); each swaps a
+  full-width image with a content card floating over its bottom-right
+  corner. Built with Bootstrap 5 nav-pills + tab-pane utilities.
+props:
+  type: object
+  properties:
+    tabs_id:
+      type: string
+      title: Tabs ID
+      description: Unique id for the tab list / tab-content pair. Change this if more than one Programs component is placed on the same page.
+      default: programs-tabs
+      examples:
+        - programs-tabs
+    container_type:
+      type: string
+      title: Container width
+      enum:
+        - container
+        - container-fluid
+        - none
+      default: container
+      examples:
+        - container
+      meta:enum:
+        container: Standard container
+        container-fluid: Full width container
+        none: No container wrapper
+slots:
+  tabs:
+    title: Program tabs
+    description: Add one or more "Program Tab" components here (unlimited, drag & drop reorder).
+libraryOverrides:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-tab-script
+    - core/once

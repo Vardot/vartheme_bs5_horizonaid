@@ -1,0 +1,260 @@
+{% stories CardIconText with {
+  title: 'Cards/Icon Text Card',
+  parameters: {
+    componentSubtitle: 'Badge-style icon card with a flexible content slot and utility styling options.',
+    docs: {
+      description: {
+        component: 'A stacked icon card with an optional uploaded icon image and a single drag-and-drop content slot. Drop a Heading and a Text component together to form the title and description. Supports padding, background, borders, shadows, and full-card link behavior. Headings switch to the accent color on hover.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    icon_image: {
+      name: 'Icon image',
+      description: 'Upload an icon image (SVG, PNG, or WebP). Leave empty to show no icon.',
+      control: 'object',
+    },
+    icon_alignment: {
+      name: 'Icon alignment',
+      description: 'Horizontal alignment of the icon within the card.',
+      defaultValue: 'start',
+      control: 'select',
+      options: {
+        Left: 'start',
+        Center: 'center',
+        Right: 'end',
+      },
+    },
+    card_border: {
+      name: 'Card border',
+      description: 'Adds default Bootstrap border.',
+      defaultValue: false,
+      control: 'boolean',
+    },
+    background_color: {
+      name: 'Background',
+      description: 'Brand background color applied to the card.',
+      defaultValue: 'bg-primary-subtle',
+      control: 'select',
+      options: {
+        None: 'none',
+        "'Body tertiary'": 'bg-body-tertiary',
+        Tertiary: 'bg-tertiary',
+        Accent: 'bg-accent',
+        "'Accent subtle'": 'bg-accent-subtle',
+        Primary: 'bg-primary',
+        "'Primary subtle'": 'bg-primary-subtle',
+        Secondary: 'bg-secondary',
+        "'Secondary subtle'": 'bg-secondary-subtle',
+        Dark: 'bg-dark',
+      },
+    },
+    padded: {
+      name: 'Padded',
+      description: 'Adds p-4 spacing to the card body.',
+      defaultValue: true,
+      control: 'boolean',
+    },
+    box_shadow: {
+      name: 'Shadow',
+      description: 'Bootstrap shadow utility.',
+      defaultValue: 'shadow-none',
+      control: 'select',
+      options: {
+        None: 'shadow-none',
+        Small: 'shadow-sm',
+        Medium: 'shadow',
+        Large: 'shadow-lg',
+      },
+    },
+    corner_style: {
+      name: 'Border radius',
+      description: 'Rounded utility for the card.',
+      defaultValue: 'rounded-4',
+      control: 'select',
+      options: {
+        "'None (square)'": 'rounded-0',
+        Small: 'rounded-1',
+        Large: 'rounded-3',
+        "'Extra large'": 'rounded-4',
+        Pill: 'rounded-pill',
+      },
+    },
+    equal_height: {
+      name: 'Equal height',
+      description: 'Apply h-100 for grid alignment.',
+      defaultValue: false,
+      control: 'boolean',
+    },
+    stretched_link: {
+      name: 'Stretched link',
+      description: 'Make entire card clickable.',
+      defaultValue: false,
+      control: 'boolean',
+    },
+    link_url: {
+      name: 'Link URL',
+      description: 'Optional card link.',
+      defaultValue: '',
+      control: 'text',
+    },
+    link_target: {
+      name: 'Link target',
+      description: 'Target attribute.',
+      defaultValue: 'default',
+      control: 'select',
+      options: {
+        "'Default (same tab)'": 'default',
+        "'Same tab'": '_self',
+        "'New tab'": '_blank',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    icon_image: { src: '/components/foundation/images/assets/lightbulb.svg', alt: '', width: 64, height: 64 },
+    icon_alignment: 'start',
+    card_border: false,
+    background_color: 'bg-primary-subtle',
+    padded: true,
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-4',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-icon-text' with _context %}
+  {% block content %}
+    <h3 class="h5">Title card</h3>
+    <p class="mb-0">Description text</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story AccentSubtle with {
+  name: 'Accent subtle',
+  args: {
+    icon_image: { src: '/components/foundation/images/assets/lightbulb.svg', alt: '', width: 64, height: 64 },
+    icon_alignment: 'start',
+    card_border: false,
+    background_color: 'bg-accent-subtle',
+    padded: true,
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-4',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-icon-text' with _context %}
+  {% block content %}
+    <h3 class="h5">Title card</h3>
+    <p class="mb-0">Description text</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story NoIcon with {
+  name: 'No icon',
+  args: {
+    card_border: true,
+    background_color: 'none',
+    padded: true,
+    box_shadow: 'shadow-sm',
+    corner_style: 'rounded-3',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-icon-text' with _context %}
+  {% block content %}
+    <h3 class="h5">Plain heading card</h3>
+    <p class="mb-0">Leave icon_image empty to render without the icon area.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story CenteredIcon with {
+  name: 'Centered icon',
+  args: {
+    icon_image: { src: '/components/foundation/images/assets/lightbulb.svg', alt: '', width: 64, height: 64 },
+    icon_alignment: 'center',
+    card_border: false,
+    background_color: 'bg-secondary-subtle',
+    padded: true,
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-4',
+    equal_height: false,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-icon-text' with _context %}
+  {% block content %}
+    <h3 class="h5 text-center">Centered icon card</h3>
+    <p class="mb-0 text-center">Icon and heading aligned to center.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story LinkedCard with {
+  name: 'Linked card',
+  args: {
+    icon_image: { src: '/components/foundation/images/assets/lightbulb.svg', alt: '', width: 64, height: 64 },
+    icon_alignment: 'start',
+    card_border: false,
+    background_color: 'bg-primary-subtle',
+    padded: true,
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-4',
+    equal_height: false,
+    stretched_link: true,
+    link_url: 'https://example.com',
+    link_target: '_blank',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-icon-text' with _context %}
+  {% block content %}
+    <h3 class="h5">Clickable card</h3>
+    <p class="mb-0">Entire card acts as a link.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story EqualHeight with {
+  name: 'Equal height',
+  args: {
+    icon_image: { src: '/components/foundation/images/assets/lightbulb.svg', alt: '', width: 64, height: 64 },
+    icon_alignment: 'start',
+    card_border: false,
+    background_color: 'bg-primary-subtle',
+    padded: true,
+    box_shadow: 'shadow-none',
+    corner_style: 'rounded-4',
+    equal_height: true,
+    stretched_link: false,
+    link_url: '',
+    link_target: 'default',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:card-icon-text' with _context %}
+  {% block content %}
+    <h3 class="h5">Equal height</h3>
+    <p class="mb-0">Useful in grid layouts.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% endstories %}

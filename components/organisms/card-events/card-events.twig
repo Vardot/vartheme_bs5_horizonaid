@@ -1,0 +1,177 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Events Card component.
+ *
+ * - Two-tone layout: primary-subtle top (taxonomy, content) and primary
+ *   bottom bar (date, time)
+ * - One drag & drop content slot: drop a Heading and a Text component together
+ * - Headings dropped in the content slot switch to the accent color on hover
+ *
+ * Available properties:
+ * - taxonomy_label: Eyebrow label shown above the content. Defaults to `Webinar`.
+ * - date_start: Event start date, shown as-is (e.g. "12 Jun").
+ * - date_end: Optional event end date, shown as-is (e.g. "30 Jul"). Leave
+ *             empty for a single-day event — only date_start is shown.
+ * - time: Event time (e.g. "11:00 - 2:30 CET").
+ *
+ * Available attributes:
+ * - top_attributes: Attributes for the top (taxonomy/content) section.
+ * - content_wrap_attributes: Attributes for the content slot wrapper.
+ * - content_placeholder_attributes: Attributes for the empty-slot placeholder.
+ * - bottom_attributes: Attributes for the bottom (date/time) bar.
+ *
+ * Available slots:
+ * - content: Drag & drop content slot — drop a Heading and a Text component
+ *            together to form the event title and description.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set taxonomy_label = taxonomy_label|default('Webinar') %}
+{% set date_start = date_start|default('') %}
+{% set date_end = date_end|default('') %}
+{% set time = time|default('') %}
+{% set box_shadow = box_shadow|default('shadow-none') %}
+{% set corner_style = corner_style|default('rounded-4') %}
+{% set link_url = link_url|default('')|trim %}
+{% set link_target_raw = link_target|default('default') %}
+{% set link_target = (link_target_raw == 'default') ? '_self' : link_target_raw %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set card_border = card_border ?? false %}
+{% set equal_height = equal_height ?? false %}
+{% set stretched_link = stretched_link ?? false %}
+
+{% set use_stretched_link = stretched_link and (link_url is not empty) %}
+{% set has_date = date_start is not empty %}
+
+{# Logic: single drag & drop content slot. #}
+{% set content_slot %}{% block content %}{% endblock %}{% endset %}
+{% set has_content_slot = content_slot|render|trim is not empty %}
+
+{# Logic: merge card classes as arrays. #}
+{% set attributes = attributes.addClass([
+  'card-events',
+  'd-flex',
+  'flex-column',
+  'overflow-hidden',
+  'position-relative',
+  corner_style,
+  (card_border ? 'border' : 'border-0'),
+  box_shadow,
+  (equal_height ? 'h-100' : ''),
+]|filter(v => v is not empty)) %}
+
+{% set top_attributes = create_attribute().addClass([
+  'card-events__top',
+  'bg-primary-subtle',
+  'd-flex',
+  'flex-column',
+  'gap-3',
+  'pt-4',
+  'px-4',
+  'pb-5',
+]) %}
+
+{% set taxonomy_attributes = create_attribute().addClass([
+  'card-events__taxonomy',
+  'd-inline-flex',
+  'align-items-center',
+  'justify-content-center',
+  'align-self-start',
+  'border-bottom',
+  'border-accent',
+  'text-uppercase',
+  'fw-bold',
+  'text-secondary',
+]) %}
+
+{% set content_wrap_attributes = create_attribute().addClass([
+  'card-events__content',
+  'd-flex',
+  'flex-column',
+  'gap-2',
+]) %}
+
+{% set content_placeholder_attributes = create_attribute().addClass([
+  'text-muted',
+  'small',
+  'fst-italic',
+  'py-3',
+  'pe-none',
+]) %}
+
+{% set bottom_attributes = create_attribute().addClass([
+  'card-events__bottom',
+  'bg-primary',
+  'd-flex',
+  'align-items-start',
+  'justify-content-between',
+  'text-nowrap',
+  'py-3',
+  'px-4',
+]) %}
+
+{% set date_attributes = create_attribute().addClass([
+  'card-events__date',
+  'fw-bold',
+  'text-secondary',
+  'mb-0',
+]) %}
+
+{% set time_attributes = create_attribute().addClass([
+  'card-events__time',
+  'fs-5',
+  'mb-0',
+]) %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <div{{ top_attributes }}>
+    <div{{ taxonomy_attributes }}>
+      <span>{{ taxonomy_label }}</span>
+    </div>
+
+    <div{{ content_wrap_attributes }}>
+      {% if has_content_slot %}
+        {{ content_slot }}
+      {% else %}
+        <div{{ content_placeholder_attributes }}>Drop content here</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div{{ bottom_attributes }}>
+    {% if has_date %}
+      <p{{ date_attributes }}>{{ date_start }}{% if date_end %} &ndash; {{ date_end }}{% endif %}</p>
+    {% endif %}
+    {% if time %}
+      <p{{ time_attributes }}>{{ time }}</p>
+    {% endif %}
+  </div>
+
+  {% if use_stretched_link %}
+    {% set _link_accessible_label = content_slot|striptags|trim %}
+    {{ include('vartheme_bs5_horizonaid:link', {
+      url: link_url,
+      target: link_target,
+      attributes: create_attribute().setAttribute('aria-label', _link_accessible_label),
+      content: '',
+      link_utility_classes: ['stretched-link'],
+    }) }}
+  {% endif %}
+</div>

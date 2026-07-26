@@ -1,0 +1,42 @@
+// @file
+// Vartheme BS5 Horizonaid — Program Tab component styles.
+//
+// Insets the content card at the bottom-right of the tab's image on lg+
+// screens, flush against the right edge but held up off the bottom edge by
+// a fixed gap, and rounded only on the corners that don't sit flush against
+// the image edge (start/left side). Stacks as a plain, fully-rounded block
+// below the image on smaller screens. Bootstrap's `position`/inset
+// utilities aren't breakpoint-responsive, and neither is `rounded-start`,
+// so both the stacked-vs-inset toggle and the per-corner rounding are
+// genuine special cases. Border radius is built from the Bootstrap
+// `--bs-border-radius-xl` token (the `rounded-4` value) rather than a
+// hard-coded size. Scoped to the `.program-tab` block so nothing leaks to
+// the rest of the theme.
+
+@import "../../defaults";
+
+.program-tab {
+  &__card {
+    // Card width, the fraction of the image height it spans, and the gap
+    // held between the card and the image's bottom edge — derived from the
+    // spacer scale / a simple ratio rather than hard-coded values.
+    --program-tab-card-width: #{$spacer * 22};
+    --program-tab-card-height-fraction: 60%;
+    --program-tab-card-bottom-gap: #{$spacer * 2.5};
+
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--bs-border-radius-xl);
+
+    @include media-breakpoint-up(lg) {
+      position: absolute;
+      inset-inline-end: 0;
+      inset-block-end: var(--program-tab-card-bottom-gap);
+      inset-block-start: calc(100% - var(--program-tab-card-height-fraction));
+      width: min(var(--program-tab-card-width), 42%);
+      max-width: none;
+      z-index: 1;
+      border-radius: var(--bs-border-radius-xl) 0 0 var(--bs-border-radius-xl);
+    }
+  }
+}

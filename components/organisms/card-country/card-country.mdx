@@ -1,0 +1,110 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CardCountryStories from './card-country.stories.json';
+import templateSource from './card-country.twig?raw';
+
+<Meta of={CardCountryStories} name="Docs" />
+
+# Card Country
+
+A Bootstrap card for a country / destination teaser: an uploaded photo, a dark footer with a single drag-and-drop content slot, and an optional "Learn more" style link. The footer is clipped to a compact height by default and expands on hover/focus to reveal the full content and link. Controls border, footer background, shadow, border radius, and equal height.
+
+- **The card's total height is fixed** (`26.25rem` / 420px by default) — the reveal never grows the card or reflows the page; the photo shrinks to make room for the expanding footer instead
+- **Photo is uploaded** — set `image` to fill the card above the footer with a cover crop anchored to the top (`object-position: top`, so cropping trims from the bottom as the media area shrinks); drimage sizes the derivative to the media area so it stays sharp at every breakpoint, and it visibly gets smaller while the footer is expanded (matching the reference)
+- **`content` is a single drag & drop slot** — drop a Heading + Text component for the country name and description; the first child (the Heading) stays static as the always-visible title, everything after it slides up on hover
+- **Link is optional and independent of the slot** — `link_url` / `link_text` / `link_target`; leave `link_url` empty to hide it. Its `#FFC72C` gold underline is forced with an explicit CSS override (`.card-country__link.link-underline-warning`) — the compiled Bootstrap bundle would otherwise let the base `.link-underline` utility (blue `$accent`) win an `!important` specificity tie. The link wrapper's own `mb-4` (`1.5rem`) adds clear space below "Learn more" on top of the footer's `p-4` bottom padding, for `3rem` total before the card's bottom edge.
+- `equal_height: true` overrides the fixed height with Bootstrap's `h-100` for consistent heights in grid row layouts
+- Hovering or focusing the card expands the footer height and slides the description + link up into view (`translateY` + `opacity`, matching the reference reveal animation); respects `prefers-reduced-motion: reduce`
+- **Always expanded inside the Drupal Canvas editor** — `card-country.js` adds `.card-country--editor-reveal` only inside the editor's own canvas (not its live-preview iframe, not the public front-end), so content dropped past the first child in the `content` slot never looks "hidden" while editing
+
+> ### Bootstrap documentation
+> - [Cards](https://getbootstrap.com/docs/5.3/components/card/)
+> - [Colored links](https://getbootstrap.com/docs/5.3/helpers/colored-links/)
+> - [Background utilities](https://getbootstrap.com/docs/5.3/utilities/background/)
+> - [Shadows](https://getbootstrap.com/docs/5.3/utilities/shadows/)
+
+## Properties
+
+<Canvas of={CardCountryStories.Default} />
+<Controls of={CardCountryStories.Default} />
+
+## Stories
+
+<Stories of={CardCountryStories} />
+
+## Examples
+
+### Example 1 — Default country card
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-country' with {
+  image: { src: '/path/to/photo.jpg', alt: 'Peru', width: 720, height: 940 },
+  background_color: 'bg-dark',
+  corner_style: 'rounded-4',
+  box_shadow: 'shadow-sm',
+  link_url: 'https://example.com/peru',
+  link_text: 'Learn more',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-0 text-white">Peru</h3>
+    <p class="mb-0 text-white-50 mt-2">Discover the ancient wonders of Machu Picchu and the vibrant culture of the Andes.</p>
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 2 — No link
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-country' with {
+  image: { src: '/path/to/photo.jpg', alt: 'Japan', width: 720, height: 940 },
+  background_color: 'bg-primary',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-0 text-white">Japan</h3>
+    <p class="mb-0 text-white-50 mt-2">A blend of ancient tradition and futuristic cities.</p>
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 3 — Link opens in a new tab
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-country' with {
+  image: { src: '/path/to/photo.jpg', alt: 'Iceland', width: 720, height: 940 },
+  card_border: true,
+  background_color: 'bg-secondary',
+  box_shadow: 'shadow-none',
+  corner_style: 'rounded-3',
+  link_url: 'https://example.com/iceland',
+  link_text: 'Plan your trip',
+  link_target: '_blank',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-0 text-white">Iceland</h3>
+    <p class="mb-0 text-white-50 mt-2">Glaciers, geysers, and the northern lights await.</p>
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 4 — Equal height (grid row)
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-country' with {
+  image: { src: '/path/to/photo.jpg', alt: 'Morocco', width: 720, height: 940 },
+  background_color: 'bg-dark',
+  box_shadow: 'shadow-sm',
+  corner_style: 'rounded-4',
+  equal_height: true,
+  link_url: 'https://example.com/morocco',
+} %}
+  {% block content %}
+    <h3 class="h5 mb-0 text-white">Morocco</h3>
+    <p class="mb-0 text-white-50 mt-2">Vibrant souks, the Sahara, and centuries of history.</p>
+  {% endblock %}
+{% endembed %}
+```
+
+Pair `equal_height: true` on each card with `vertical_alignment: align-items-stretch` on the containing `atoms/section` row so every card in the row matches height.
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

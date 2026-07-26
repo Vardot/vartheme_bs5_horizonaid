@@ -1,0 +1,8 @@
+// @file Accordion Container — flex column wrapper with a gap between nested accordion-block items.
+@import "../../defaults"; // Global component defaults.
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: $spacer; // 16px.
+}

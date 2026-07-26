@@ -11,5 +11,17 @@
 @import "../node_modules/bootstrap/scss/variables";      // Bootstrap variables.
 @import "../node_modules/bootstrap/scss/variables-dark"; // Bootstrap variables dark.
 @import "../node_modules/bootstrap/scss/maps";           // Bootstrap maps.
+
+// Bootstrap's subtle-bg maps (theme-colors-bg-subtle, utilities-bg-subtle)
+// are hardcoded to its 8 built-in colors in maps.scss — adding "accent" to
+// $theme-colors (above, in vartheme-variables) does not automatically give
+// it a working bg-accent-subtle utility. Extend both maps here, after
+// maps.scss (which defines them) and before utilities.scss (which consumes
+// $utilities-bg-subtle to generate the actual utility classes), so
+// bg-accent-subtle compiles the same way Bootstrap's own *-subtle classes
+// do. $accent-bg-subtle itself is set in bootstrap-variables.scss.
+$theme-colors-bg-subtle: map-merge($theme-colors-bg-subtle, ("accent": $accent-bg-subtle));
+$utilities-bg-subtle: map-merge($utilities-bg-subtle, ("accent-subtle": var(--#{$prefix}accent-bg-subtle)));
+
 @import "../node_modules/bootstrap/scss/mixins";         // Bootstrap mixins.
 @import "../node_modules/bootstrap/scss/utilities";      // Bootstrap utilities.

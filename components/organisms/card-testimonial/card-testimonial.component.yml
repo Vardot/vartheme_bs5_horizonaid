@@ -38,7 +38,7 @@ props:
       $ref: json-schema-definitions://canvas.module/image
       title: Avatar image (optional)
       examples:
-        - src: "assets/avatar-placeholder.svg"
+        - src: "/themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/avatar-placeholder.png"
           alt: "Avatar placeholder"
           width: 120
           height: 120

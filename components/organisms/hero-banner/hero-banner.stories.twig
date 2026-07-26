@@ -1,0 +1,157 @@
+{% stories HeroBanner with {
+  title: 'Hero/Hero Banner',
+  parameters: {
+    componentSubtitle: 'Hero banner with an uploaded image and a floating content box',
+    docs: {
+      description: {
+        component: 'Hero banner with an uploaded image and a floating content box slot for a heading, text, buttons, or any other component. Bootstrap 5 utilities only.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    image_radius: {
+      name: 'Image border radius',
+      defaultValue: 'rounded-hero',
+      control: 'select',
+      options: {
+        Square: 'none',
+        "'Small (0.5rem)'": 'rounded-2',
+        "'Medium (0.75rem)'": 'rounded-3',
+        "'Large (1rem)'": 'rounded-4',
+        "'Default (1.25rem)'": 'rounded-hero',
+        "'Extra large (1.5rem)'": 'rounded-5',
+        Pill: 'rounded-pill',
+      },
+    },
+    content_bg: {
+      name: 'Content box background',
+      defaultValue: 'bg-dark',
+      control: 'select',
+      options: {
+        Transparent: 'bg-transparent',
+        White: 'bg-white',
+        Light: 'bg-light',
+        Dark: 'bg-dark',
+        Black: 'bg-black',
+        Primary: 'bg-primary',
+        Secondary: 'bg-secondary',
+      },
+    },
+    content_color: {
+      name: 'Content box text color',
+      defaultValue: 'auto',
+      control: 'select',
+      options: {
+        "'Auto (based on background)'": 'auto',
+        "'Dark text'": 'text-dark',
+        "'White text'": 'text-white',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    media: {
+      src: '/themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/hero-1.png',
+      alt: 'Children smiling outdoors',
+      width: 1200,
+      height: 800,
+    },
+    image_radius: 'rounded-hero',
+    content_bg: 'bg-dark',
+    content_color: 'auto',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:hero-banner' %}
+  {% block content %}
+    {{ include('vartheme_bs5_horizonaid:heading', {
+      heading_text: 'Hero Title',
+      level: 2,
+      text_color: 'text-white',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:text', {
+      text: '<p>Elevate your digital experience with Varbase\'s dynamic design system, seamlessly blending aesthetic appeal with unparalleled functionality.</p>',
+      text_color: 'text-white',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:button', {
+      label: 'Button',
+      variant: 'btn-primary',
+      size: 'btn-md',
+      radius: 'rounded-pill',
+      alignment: 'left',
+    }, false) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story LightContentBox with {
+  name: 'Light content box',
+  args: {
+    media: {
+      src: '/themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/hero-2.png',
+      alt: 'Placeholder hero image',
+      width: 1200,
+      height: 800,
+    },
+    image_radius: 'rounded-hero',
+    content_bg: 'bg-white',
+    content_color: 'auto',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:hero-banner' %}
+  {% block content %}
+    {{ include('vartheme_bs5_horizonaid:heading', {
+      heading_text: 'Built for every story',
+      level: 2,
+      text_color: 'text-dark',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:text', {
+      text: '<p>Swap the content box background to any Bootstrap color utility — text color follows automatically.</p>',
+      text_color: 'text-dark',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:button', {
+      label: 'Learn more',
+      variant: 'btn-primary',
+      size: 'btn-md',
+      radius: 'rounded-pill',
+      alignment: 'left',
+    }, false) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story SquareImage with {
+  name: 'Square image corners',
+  args: {
+    media: {
+      src: '/themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/hero-1.png',
+      alt: 'Children smiling outdoors',
+      width: 1200,
+      height: 800,
+    },
+    image_radius: 'none',
+    content_bg: 'bg-dark',
+    content_color: 'auto',
+  },
+} %}
+{% embed 'vartheme_bs5_horizonaid:hero-banner' %}
+  {% block content %}
+    {{ include('vartheme_bs5_horizonaid:heading', {
+      heading_text: 'Square corners',
+      level: 2,
+      text_color: 'text-white',
+    }, false) }}
+    {{ include('vartheme_bs5_horizonaid:text', {
+      text: '<p>The image_radius prop set to "none" removes rounding entirely.</p>',
+      text_color: 'text-white',
+    }, false) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% endstories %}

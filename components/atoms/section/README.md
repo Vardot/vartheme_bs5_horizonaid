@@ -93,6 +93,8 @@ When `aos_animation` is not `none`, the attributes `data-aos`, `data-aos-duratio
 | `25-75` | 2 columns, wide right |
 | `67-33` | 2 columns, 8/4 split |
 | `33-67` | 2 columns, 4/8 split |
+| `60-40` | 2 columns, 7/5 split |
+| `40-60` | 2 columns, 5/7 split |
 | `50-25-25` | 3 columns |
 | `25-25-50` | 3 columns |
 | `25-25-25-25` | 4 equal columns |

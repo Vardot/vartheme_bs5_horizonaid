@@ -1,10 +1,187 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
 name: Figure
-description: Figure
+group: Stats
+status: stable
+description: Stat figure card with a large number and a description. Background and font sizes/colors are all configurable via Bootstrap utilities. The number counts up from 0 when it scrolls into view.
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
 props:
   type: object
+  required:
+    - number
+    - description
   properties:
-    attributes:
-      type: Drupal\Core\Template\Attribute
-      title: Attributes
-      description: HTML attributes for the containing element.
+    number:
+      type: string
+      title: Number
+      description: The main statistic number displayed prominently.
+      examples:
+        - '0000'
+    description:
+      type: string
+      title: Description
+      description: Short descriptive label displayed below the number.
+      examples:
+        - 'Number description'
+    background_color:
+      type: string
+      title: Background color
+      description: Brand background color applied to the card.
+      default: bg-accent-subtle
+      examples:
+        - bg-accent-subtle
+      enum:
+        - none
+        - bg-body-tertiary
+        - bg-tertiary
+        - bg-accent
+        - bg-accent-subtle
+        - bg-primary
+        - bg-primary-subtle
+        - bg-secondary
+        - bg-secondary-subtle
+        - bg-dark
+      meta:enum:
+        none: None
+        bg-body-tertiary: Body tertiary
+        bg-tertiary: Tertiary
+        bg-accent: Accent
+        bg-accent-subtle: Accent subtle
+        bg-primary: Primary
+        bg-primary-subtle: Primary subtle
+        bg-secondary: Secondary
+        bg-secondary-subtle: Secondary subtle
+        bg-dark: Dark
+    align:
+      type: string
+      title: Alignment
+      description: Bootstrap text-* utility controlling the horizontal alignment of both the number and the description.
+      enum:
+        - text-start
+        - text-center
+        - text-end
+      default: text-start
+      examples:
+        - text-start
+      meta:enum:
+        text-start: Left
+        text-center: Center
+        text-end: Right
+    number_size:
+      type: string
+      title: Number size
+      description: Bootstrap display-* utility controlling the number font size.
+      enum:
+        - display-1
+        - display-2
+        - display-3
+        - display-4
+        - display-5
+        - display-6
+      default: display-1
+      examples:
+        - display-1
+      meta:enum:
+        display-1: Display 1 (largest)
+        display-2: Display 2
+        display-3: Display 3
+        display-4: Display 4
+        display-5: Display 5
+        display-6: Display 6 (smallest)
+    number_color:
+      type: string
+      title: Number color
+      description: Bootstrap text color utility applied to the number.
+      enum:
+        - text-body
+        - text-primary
+        - text-secondary
+        - text-success
+        - text-danger
+        - text-warning
+        - text-info
+        - text-light
+        - text-dark
+        - text-muted
+        - text-white
+        - text-white-50
+        - text-black
+        - text-black-50
+      default: text-black
+      examples:
+        - text-black
+      meta:enum:
+        text-body: Body
+        text-primary: Primary
+        text-secondary: Secondary
+        text-success: Success
+        text-danger: Danger
+        text-warning: Warning
+        text-info: Info
+        text-light: Light
+        text-dark: Dark
+        text-muted: Muted
+        text-white: White
+        text-white-50: White 50%
+        text-black: Black
+        text-black-50: Black 50%
+    description_size:
+      type: string
+      title: Description size
+      description: Bootstrap fs-* utility controlling the description font size.
+      enum:
+        - fs-1
+        - fs-2
+        - fs-3
+        - fs-4
+        - fs-5
+        - fs-6
+      default: fs-6
+      examples:
+        - fs-6
+      meta:enum:
+        fs-1: FS 1 (largest)
+        fs-2: FS 2
+        fs-3: FS 3
+        fs-4: FS 4
+        fs-5: FS 5
+        fs-6: FS 6 (smallest)
+    description_color:
+      type: string
+      title: Description color
+      description: Bootstrap text color utility applied to the description label.
+      enum:
+        - text-body
+        - text-primary
+        - text-secondary
+        - text-success
+        - text-danger
+        - text-warning
+        - text-info
+        - text-light
+        - text-dark
+        - text-muted
+        - text-white
+        - text-white-50
+        - text-black
+        - text-black-50
+      default: text-black
+      examples:
+        - text-black
+      meta:enum:
+        text-body: Body
+        text-primary: Primary
+        text-secondary: Secondary
+        text-success: Success
+        text-danger: Danger
+        text-warning: Warning
+        text-info: Info
+        text-light: Light
+        text-dark: Dark
+        text-muted: Muted
+        text-white: White
+        text-white-50: White 50%
+        text-black: Black
+        text-black-50: Black 50%

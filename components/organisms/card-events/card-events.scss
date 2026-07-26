@@ -1,0 +1,61 @@
+// @file Events Card — two-tone event card with hover heading color and 3-line text clamp.
+@import "../../defaults"; // Global component defaults.
+
+.card-events {
+  --card-events-duration-color: 0.3s;
+
+  // --- Taxonomy label --------------------------------------------------------
+  // Bootstrap has no smaller-than-.small text utility or a letter-spacing
+  // utility, so the eyebrow's exact type scale is a genuine special case.
+  &__taxonomy {
+    padding-block: 0.125rem;
+
+    span {
+      font-size: 0.75rem; // 12px
+      line-height: 1.35;
+      letter-spacing: 0.06rem;
+      white-space: nowrap;
+    }
+  }
+
+  // --- Content slot: heading hover -------------------------------------------
+  // The content slot is free-form (any dropped components), so headings are
+  // targeted generically by tag rather than a fixed class. A parent-hover-
+  // driven color swap on a child element has no Bootstrap utility
+  // equivalent. The base color is set here (via the --bs-secondary custom
+  // property, not the .text-secondary utility) because Bootstrap's color
+  // utilities ship `!important`, which the :hover rule below could never
+  // win against regardless of selector specificity.
+  &__content {
+    :is(h1, h2, h3, h4, h5, h6) {
+      color: var(--bs-secondary);
+      transition: color var(--card-events-duration-color) ease;
+    }
+  }
+
+  &:hover &__content :is(h1, h2, h3, h4, h5, h6) {
+    color: var(--bs-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__content :is(h1, h2, h3, h4, h5, h6) {
+      transition: none;
+    }
+  }
+
+  // --- Content slot: text clamp ----------------------------------------------
+  // Multi-line text truncation has no Bootstrap utility equivalent. Targets
+  // paragraphs specifically so a dropped Text component's body is clamped
+  // without affecting a dropped Heading.
+  &__content p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stretched-link {
+    z-index: 99;
+  }
+}

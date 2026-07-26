@@ -61,6 +61,14 @@ props:
         type: string
       description: Use to add extra Bootstrap utility classes or custom CSS classes
         over to this to this component.
+    last_item_is_cta:
+      type: boolean
+      title: Last item is a CTA button
+      description: When enabled, styles the last top-level item (e.g. "Donate") as
+        a pill-shaped button instead of a plain link. Used by the main menu only.
+      default: false
+      examples:
+        - false
     attributes:
       type: Drupal\Core\Template\Attribute
       title: Attributes

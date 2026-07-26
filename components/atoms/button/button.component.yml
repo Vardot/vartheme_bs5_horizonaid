@@ -20,6 +20,7 @@ props:
         - btn-info
         - btn-light
         - btn-dark
+        - btn-accent
         - btn-link
       default: btn-primary
       examples:
@@ -33,6 +34,7 @@ props:
         btn-info: Info
         btn-light: Light
         btn-dark: Dark
+        btn-accent: Accent
         btn-link: Link
     outline:
       type: boolean

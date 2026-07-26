@@ -1,0 +1,159 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Country Card component.
+ *
+ * - Uploaded photo fills the card above the footer (cover crop, no hover motion)
+ * - Dark footer with one drag & drop slot: content (drop a Heading + Text)
+ * - The footer is clipped to a compact height by default and expands on
+ *   hover/focus to reveal the full content and the optional link, with the
+ *   link pinned to the footer's bottom edge
+ * - card-country.js keeps the revealed state permanently open inside the
+ *   Drupal Canvas editor's own canvas (see the file's docblock), so content
+ *   dropped into the slot beyond the first child never appears "hidden"
+ *   while editing — the public front-end keeps the real hover/focus reveal
+ *
+ * Available attributes:
+ * - media_attributes: Attributes for the photo wrapper.
+ * - footer_attributes: Attributes for the footer wrapper.
+ * - content_placeholder_attributes: Attributes for the empty-slot placeholder.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set background_color = background_color|default('bg-dark') %}
+{% set background_color_class = (background_color != 'none') ? background_color : '' %}
+{% set box_shadow = box_shadow|default('shadow-none') %}
+{% set corner_style = corner_style|default('rounded-4') %}
+{% set link_url = link_url|default('')|trim %}
+{% set link_text = link_text|default('Learn more')|trim %}
+{% set link_target_raw = link_target|default('default') %}
+{% set link_target = (link_target_raw == 'default') ? '_self' : link_target_raw %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set card_border = card_border ?? false %}
+{% set equal_height = equal_height ?? false %}
+
+{# Logic: photo (uploaded image fills the card above the footer). #}
+{% set image = image|default({}) %}
+{% set has_image = (image.src is defined) and (image.src|trim is not empty) %}
+{% if has_image and image.src starts with 'assets/' and component_metadata.path is defined %}
+  {% set image = image|merge({ src: component_metadata.path ~ '/' ~ image.src }) %}
+{% endif %}
+
+{# Logic: optional link. #}
+{% set has_link = link_url is not empty %}
+{% set link_rel = link_target == '_blank' ? 'noopener noreferrer' : null %}
+
+{# Logic: drag & drop content slot. #}
+{% set content_slot %}{% block content %}{% endblock %}{% endset %}
+{% set has_content_slot = content_slot|render|trim is not empty %}
+
+{# Logic: merge card classes as arrays. #}
+{% set attributes = attributes.addClass([
+  'card',
+  'card-country',
+  'd-flex',
+  'flex-column',
+  'overflow-hidden',
+  'position-relative',
+  corner_style,
+  (card_border ? 'border' : 'border-0'),
+  box_shadow,
+  (equal_height ? 'h-100' : ''),
+]|filter(v => v is not empty)) %}
+
+{% if not media_attributes %}
+  {% set media_attributes = create_attribute() %}
+{% endif %}
+{% set media_attributes = media_attributes.addClass([
+  'card-country__media',
+  'position-relative',
+  'overflow-hidden',
+  'flex-grow-1',
+]) %}
+
+{% if not footer_attributes %}
+  {% set footer_attributes = create_attribute() %}
+{% endif %}
+{% set footer_attributes = footer_attributes.addClass([
+  'card-country__footer',
+  'card-body',
+  'p-4',
+  'd-flex',
+  'flex-column',
+  'flex-shrink-0',
+  'justify-content-between',
+  'overflow-hidden',
+  background_color_class,
+]|filter(v => v is not empty)) %}
+
+{% set content_placeholder_attributes = create_attribute().addClass([
+  'text-white-50',
+  'small',
+  'pe-none',
+]) %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+
+  {# Photo — fills the card above the footer #}
+  <div{{ media_attributes }}>
+    {% if has_image %}
+      {{ include('vartheme_bs5_horizonaid:image', {
+        media: image,
+        ratio: 'ratio-auto',
+        fit: 'object-fit-cover',
+        width: 'w-100',
+        align: 'mx-auto',
+        loading: 'eager',
+        cover_fill: true,
+        attributes: create_attribute().addClass(['card-country__photo', 'h-100', 'w-100', 'm-0']),
+      }, with_context = false) }}
+    {% endif %}
+  </div>
+
+  {# Footer — clipped to a compact height, expands on hover/focus #}
+  <div{{ footer_attributes }}>
+
+    {# Drag & drop content slot (drop a Heading + Text for name/description) #}
+    <div class="card-country__content">
+      {% if has_content_slot %}
+        {{ content_slot }}
+      {% else %}
+        <div{{ content_placeholder_attributes }}>Drop heading & text here</div>
+      {% endif %}
+    </div>
+
+    {% if has_link %}
+      <div class="card-country__link-wrap mt-3 mb-4">
+        {{ include('vartheme_bs5_horizonaid:link', {
+          url: link_url,
+          color: 'light',
+          underline_color: 'warning',
+          underline_opacity: '100',
+          underline_offset: '2',
+          link_utility_classes: ['card-country__link', 'fw-bold'],
+          attributes: link_rel
+            ? create_attribute().setAttribute('target', link_target).setAttribute('rel', link_rel)
+            : create_attribute().setAttribute('target', link_target),
+          content: link_text,
+        }, with_context = false) }}
+      </div>
+    {% endif %}
+
+  </div>
+</div>

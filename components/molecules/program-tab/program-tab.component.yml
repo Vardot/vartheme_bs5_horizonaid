@@ -1,0 +1,92 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Program Tab
+group: Card
+status: stable
+description: >
+  A single program tab item (pill label, image, content card, "Learn More"
+  link) meant to be placed inside "Programs". Add as many Program Tab items
+  as you want and reorder via drag & drop in Canvas.
+props:
+  type: object
+  properties:
+    active:
+      type: boolean
+      title: Active by default
+      description: If no tab is active, the container will auto-activate the first tab.
+      default: false
+      examples:
+        - false
+    title:
+      type: string
+      title: Pill label
+      default: Program
+      examples:
+        - Program
+    image:
+      $ref: json-schema-definitions://canvas.module/image
+      type: object
+      title: Image
+      examples:
+        - src: /themes/contrib/vartheme_bs5_horizonaid/components/foundation/images/assets/teaser-1.png
+          alt: Placeholder image
+          width: 750
+          height: 440
+    ratio:
+      type: string
+      title: Image ratio (crop)
+      enum:
+        - ratio-auto
+        - ratio-16x9
+        - ratio-4x3
+        - ratio-1x1
+        - ratio-21x9
+      default: ratio-16x9
+      examples:
+        - ratio-16x9
+      meta:enum:
+        ratio-auto: Auto (no crop)
+        ratio-16x9: Wide (16:9)
+        ratio-4x3: Standard (4:3)
+        ratio-1x1: Square (1:1)
+        ratio-21x9: Ultra-wide (21:9)
+    card_title:
+      type: string
+      title: Card title
+      default: Program title
+      examples:
+        - Program title
+    card_text:
+      type: string
+      title: Card text
+      default: Describe this program in a sentence or two.
+      examples:
+        - Describe this program in a sentence or two.
+    link_url:
+      type: string
+      title: '"Learn More" link URL'
+      format: uri-reference
+      description: Leave empty to hide the link.
+      default: ''
+    link_label:
+      type: string
+      title: Link label
+      default: Learn More
+      examples:
+        - Learn More
+    link_target:
+      type: string
+      title: Link target
+      enum:
+        - default
+        - _self
+        - _blank
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (same tab)
+        _self: Same tab
+        _blank: New tab
+libraryOverrides:
+  dependencies:
+    - vartheme_bs5_horizonaid/bs-tab-script

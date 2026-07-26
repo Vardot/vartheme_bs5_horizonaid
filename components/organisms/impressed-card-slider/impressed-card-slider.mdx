@@ -1,0 +1,82 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ImpressedCardSliderStories from './impressed-card-slider.stories.json';
+import templateSource from './impressed-card-slider.twig?raw';
+
+<Meta of={ImpressedCardSliderStories} name="Docs" />
+
+# Impressed Card Slider
+
+A feature section: a heading, a short list of links, and a CTA on the left; a horizontally-scrolling row of existing "Impressed Card" components on the right, with prev/next controls below. Add one or more Impressed Card components into the slot — unlimited, drag & drop reorder.
+
+- **No Bootstrap component fits a multi-item-visible slider** — only the single-slide-at-a-time [Carousel](https://getbootstrap.com/docs/5.3/components/carousel/). The scrolling track uses [CSS Scroll Snap](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll_snap), the same technique `organisms/country-slider` established
+- **`cards` is a Canvas slot (unlimited); the links are bounded flat props** — the cards need no fixed limit, so they use a slot like `organisms/country-slider` does. The links are a small, bounded list, so they're `link_1_*`..`link_4_*` scalar props instead — even a link (label + URL) isn't one of Canvas's "well-known" `$ref` shapes, so an array of link objects would hit the exact same picker-visibility problem a slot solves for the cards
+- **`card-impressed` has no built-in text truncation** — `impressed-card-slider.scss` clamps each card's dropped `<p>` content to 2 lines, scoped only to cards inside this slider's track; `card-impressed` itself is unchanged
+- **Each active link reuses `atoms/link`'s underline props** (the same pattern `card-country` uses for its "Learn more" link) — `link_N_active: true` shows the gold underline
+- **The CTA renders via `atoms/button`** (`variant: btn-accent`, `radius: rounded-pill`) instead of a link styled with button utility classes
+- **`background_color` shares its full palette with `atoms/section`** — dark-enough options automatically flip the heading/links/placeholder text to white; every other option keeps dark text
+- **`padding_block_start`/`padding_block_end` mirror `atoms/section`'s spacing props** (`pt-0`..`pt-5` / `pb-0`..`pb-5`), both defaulting to `5` to preserve the section's original vertical rhythm
+- **The prev/next icons are custom SVG artwork** (pill outline + arrow baked into one graphic, colored via `currentColor`) — on hover/focus, only the arrow nudges a little further in the direction it points, not the pill outline
+
+> ### Bootstrap / other references
+> - [Buttons](https://getbootstrap.com/docs/5.3/components/buttons/)
+> - [Colored links](https://getbootstrap.com/docs/5.3/helpers/colored-links/)
+> - [CSS Scroll Snap (MDN)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll_snap)
+
+## Properties
+
+<Canvas of={ImpressedCardSliderStories.Default} />
+<Controls of={ImpressedCardSliderStories.Default} />
+
+## Stories
+
+<Stories of={ImpressedCardSliderStories} />
+
+## Examples
+
+### Example 1 — Impressed Card Slider with links and cards
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:impressed-card-slider' with {
+  heading_text: 'Latest Updates',
+  link_1_label: 'Healthcare & Medicine',
+  link_1_url: '/updates/healthcare',
+  link_1_active: true,
+  link_2_label: 'Sustenance & Growth',
+  link_2_url: '/updates/sustenance',
+  cta_label: 'Explore More',
+  cta_url: '/updates'
+} %}
+  {% block cards %}
+    {% embed 'vartheme_bs5_horizonaid:card-impressed' with {
+      media_image: { src: '/path/to/photo.jpg', alt: 'Volunteer handing supplies to a person in need', width: 800, height: 450 },
+      background_color: 'bg-dark'
+    } %}
+      {% block overlay %}
+        {% include 'vartheme_bs5_horizonaid:badge' with { label: 'News', variant: 'text-bg-dark' } only %}
+      {% endblock %}
+      {% block content %}
+        <h3>Bridging Medical Gaps in Border Corridors</h3>
+        <p>Our mobile health units successfully delivered emergency pediatric medicine and preventative care.</p>
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 2 — Empty state
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:impressed-card-slider' with {
+  heading_text: 'Latest Updates',
+  link_1_label: '',
+  link_2_label: '',
+  link_3_label: ''
+} %}
+{% endembed %}
+```
+
+Renders a small "Add "Impressed Card" components here." placeholder when the `cards` slot is empty, and hides the links list entirely when every label is empty.
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

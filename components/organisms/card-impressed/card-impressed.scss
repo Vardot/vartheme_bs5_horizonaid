@@ -1,10 +1,56 @@
-/* Impressed Card helpers
-   - Keeps stretched-link overlay working without blocking internal buttons/links.
-   - Component-scoped selectors only.
-*/
+// @file Impressed Card — media zoom and heading color transition on hover.
+@import "../../defaults"; // Global component defaults.
 
 .card-impressed {
+  --card-impressed-img-duration: 0.45s;
+  --card-impressed-color-duration: 0.25s;
+  --card-impressed-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --card-impressed-scale-hover: 1.0724; // Matches the design: 385px / 359px.
+
   .stretched-link {
     z-index: 99;
+  }
+
+  // --- Media: zoom on hover -----------------------------------------------
+  // Bootstrap has no image-zoom-on-hover utility, so this is a genuine
+  // special case. The card root always carries overflow-hidden (see
+  // card-impressed.twig), so the scaled image is clipped regardless of
+  // card_border.
+  .card-img img {
+    transform: scale(1);
+    transform-origin: center;
+    transition: transform var(--card-impressed-img-duration) var(--card-impressed-easing);
+    will-change: transform;
+  }
+
+  &:hover .card-img img {
+    transform: scale(var(--card-impressed-scale-hover));
+  }
+
+  // --- Content: heading hover color ---------------------------------------
+  // The content slot is free-form (any dropped components), so headings are
+  // targeted generically by tag rather than a fixed class. The hover hue
+  // depends on whether the card sits on a dark or light background so it
+  // stays legible against either pairing (see is_dark_background in the
+  // twig template). Set via --bs-* custom properties, not .text-* utilities,
+  // because Bootstrap's color utilities ship `!important`, which :hover
+  // could never override.
+  .card-body :is(h1, h2, h3, h4, h5, h6) {
+    transition: color var(--card-impressed-color-duration) ease;
+  }
+
+  &--on-light-bg:hover .card-body :is(h1, h2, h3, h4, h5, h6) {
+    color: var(--bs-accent);
+  }
+
+  &--on-dark-bg:hover .card-body :is(h1, h2, h3, h4, h5, h6) {
+    color: var(--bs-primary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-img img,
+    .card-body :is(h1, h2, h3, h4, h5, h6) {
+      transition: none;
+    }
   }
 }

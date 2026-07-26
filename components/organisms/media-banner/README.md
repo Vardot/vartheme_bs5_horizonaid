@@ -1,95 +1,89 @@
-# Media banner
+# Media Banner
 
-A Bootstrap media banner with a background image, color overlay, and flexible content positioning.
+An uploaded image with a floating content box slot for a heading, text, buttons, or any other component. This is the mirrored, start-anchored sibling of `organisms/hero-banner` (which anchors to the end side).
+
+## Bootstrap reference
+
+> [Bootstrap 5.3 — Border-radius](https://getbootstrap.com/docs/5.3/utilities/borders/#radius) · [Background](https://getbootstrap.com/docs/5.3/utilities/background/)
 
 ## What it does
 
-Use this component when you need a banner that can:
+Use this component when you need a media banner that can:
 
-- render a full-bleed background image with an adjustable color overlay
-- position its content using flex presets (top, center, bottom, or hero-center)
-- switch between contained, fluid, sized, or no-container layouts
-- control banner height, inline padding, and border radius
-- expose a single slot for the banner content
+- render an uploaded image, cropped to cover its box
+- round the image with a Bootstrap radius utility, or this component's own 1.25rem preset
+- float a content box over the image's bottom edge, offset from its start side
+- accept any content in the content box through a single slot — heading, text, button, or any other component
+- switch the content box's background color, with text color auto-switching to white on dark backgrounds
 
 ## Files
 
 - `media-banner.component.yml` — component schema and props
 - `media-banner.twig` — component template
+- `media-banner.scss` — component styles (source; `media-banner.css` is the build output)
 - `README.md` — usage notes and examples
 - `media-banner.mdx` — Storybook docs page
 - `media-banner.stories.json` — Storybook story configuration
 - `media-banner.stories.twig` — Storybook story templates
-- `assets/` — bundled placeholder media
 
 ## Props overview
 
-### Layout
+### Image
 
-- `container_type`: `container`, `container-fluid`, `container-sm`, `container-md`, `container-lg`, `container-xl`, `container-xxl`, or `none`; defaults to `container`
-- `bg_edge2edge`: adds `bg-edge2edge` to the outer section so the background image can extend full width; defaults to `false`
-- `height`: banner vertical size — `ribbon` or `large`; defaults to `ribbon`
-- `flex_position`: content position — `top-left`, `center-left`, `bottom-left`, `hero-center`; defaults to `center-left`
-- `content_width`: Bootstrap width utility — `w-100`, `w-75`, `w-50`, `w-25`; defaults to `w-100`
+- `media`: the media banner image (`src`, `alt`, `width`, `height`)
+- `image_radius`: `none`, `rounded-2`, `rounded-3`, `rounded-4`, `rounded-hero`, `rounded-5`, `rounded-pill`; defaults to `rounded-hero`
 
-### Background and overlay
+### Content box
 
-- `media`: background image object
-- `object_position`: background image position — `top`, `center`, `bottom`; defaults to `center`
-- `overlay_bg`: overlay background utility — `bg-transparent`, `bg-dark`, `bg-black`, `bg-primary`, `bg-secondary`, `bg-success`, `bg-danger`, `bg-warning`, `bg-info`, `bg-white`; defaults to `bg-transparent`
-- `overlay_opacity`: overlay opacity utility — `opacity-0`, `opacity-25`, `opacity-50`, `opacity-75`, `opacity-100`; defaults to `opacity-50`
-
-### Spacing and appearance
-
-- `padding_inline_start`: `none`, `ps-0`–`ps-5`; defaults to `none`
-- `padding_inline_end`: `none`, `pe-0`–`pe-5`; defaults to `none`
-- `radius`: border-radius utility — `none`, `rounded`, `rounded-0`, `rounded-1`, `rounded-2`, `rounded-3`, `rounded-4`, `rounded-pill`; defaults to `none`
+- `content_bg`: Bootstrap background utility — `bg-transparent`, `bg-white`, `bg-light`, `bg-dark`, `bg-black`, `bg-primary`, `bg-secondary`, `bg-success`, `bg-danger`, `bg-warning`, `bg-info`; defaults to `bg-light`
+- `content_color`: `auto`, `text-dark`, `text-white`; defaults to `auto`
 
 ## Slots
 
-- `media_banner_slot` — the banner content
-
-## Content position presets
-
-| Value | Vertical alignment | Text alignment |
-|---|---|---|
-| `top-left` | top (`justify-content-start`) | start |
-| `center-left` | center (`justify-content-center`) | start |
-| `bottom-left` | bottom (`justify-content-end`) | start |
-| `hero-center` | center (`justify-content-center`) | center |
+- `content` — content box slot; drop in a heading, text, button, or any other component
 
 ## Example
 
 ```twig
 {% embed 'vartheme_bs5_horizonaid:media-banner' with {
-  container_type: 'container',
-  bg_edge2edge: true,
-  height: 'large',
-  flex_position: 'hero-center',
-  overlay_bg: 'bg-dark',
-  overlay_opacity: 'opacity-50',
-  content_width: 'w-75',
-  object_position: 'center',
-  radius: 'rounded-3',
   media: {
-    src: '/components/foundation/images/assets/banner-2.jpg',
-    alt: 'Placeholder image',
+    src: '/path/to/banner.jpg',
+    alt: 'Banner image',
     width: 1920,
     height: 1075
-  }
+  },
+  image_radius: 'rounded-hero',
+  content_bg: 'bg-light',
+  content_color: 'auto'
 } only %}
-  {% block media_banner_slot %}
-    <h1 class="display-4 text-white">Banner heading</h1>
-    <p class="lead text-white mb-0">A short supporting line of copy.</p>
+  {% block content %}
+    {% include 'vartheme_bs5_horizonaid:heading' with {
+      heading_text: 'Title',
+      level: 2,
+      text_color: 'text-dark'
+    } only %}
+    {% include 'vartheme_bs5_horizonaid:text' with {
+      text: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+      text_color: 'text-dark'
+    } only %}
+    {% include 'vartheme_bs5_horizonaid:button' with {
+      label: 'Button',
+      variant: 'btn-primary',
+      size: 'btn-md',
+      radius: 'rounded-pill',
+      alignment: 'left'
+    } only %}
   {% endblock %}
 {% endembed %}
 ```
 
 ## Notes
 
-- The background image layer is only rendered when a `media` source is resolved; it is decorative (`aria-hidden="true"`) and rendered through `vartheme_bs5_horizonaid:image` with `object-fit-cover` and eager loading.
-- The media source is normalized from a string or iterable value (`url`, `uri`, or `value`).
-- `height: large` applies `py-5 py-lg-6`; `ribbon` applies `py-4 py-lg-5`.
-- The section carries `text-bg-dark` by default, so light content sits well over the overlay.
-- `container_type: none` removes the inner container class while keeping the content wrapper.
-- The boolean prop `bg_edge2edge` arrives as a real boolean from SDC; only a presence fallback is applied in the template.
+- `image_radius: rounded-hero` is this component's own preset (1.25rem) — the theme's Bootstrap radius scale stops at `rounded-4` (1rem) and `rounded-5` (1.5rem), with no utility for the reference design's exact value. Every other `image_radius` value is a stock Bootstrap utility applied directly to the image.
+- The content box's padding (2.5rem), radius (1.25rem on the top corners only), and start-side offset (3rem) are fixed design tokens defined in `media-banner.scss`, matching the reference design; they are not configurable props.
+- The content box's desktop width reads the `--desktop-columns-4col` CSS custom property (a hook for a future global grid/design-token system), falling back to the reference design's own fixed value (22.4375rem) until one is defined.
+- From `lg` up, the box is inset 11.56rem from the image's top edge (image showing above the box) down to its bottom edge, so its height follows the image rather than its content; the image gets a matching `min-height` so there's always room for both the gap and the box's content.
+- Below the `lg` breakpoint the content box stays in normal flow, pulled up slightly over the image's bottom edge, and spans the available width so it never overflows the viewport. From `lg` up it becomes an absolutely positioned card anchored to the image's bottom and start-side offset.
+- `content_color: auto` switches to white text when `content_bg` is one of `bg-dark`, `bg-black`, `bg-primary`, `bg-secondary` — same convention as `atoms/section`.
+- The content box only renders when the `content` slot has content.
+- The image renders through `vartheme_bs5_horizonaid:image` with `cover_fill: true`, so drimage sizes the derivative to the rendered box and stays sharp at every screen size. Fit (`object-fit-cover`) and focal position (`center`) are fixed, not configurable props.

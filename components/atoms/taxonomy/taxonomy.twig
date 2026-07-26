@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Vartheme BS5 Horizon Aid Starter Kit implementation for the Taxonomy component.
+ * Vartheme BS5 Horizonaid Starter Kit implementation for the Taxonomy component.
  *
  * Taxonomy badge rendered with Bootstrap utilities only. Renders as a link
  * when a URL is provided, otherwise as a span.
@@ -13,6 +13,9 @@
  *           (_self | _blank) Defaults to `_self`.
  * - size: Controls the typography size (taxonomy modifier class).
  *         (taxonomy-lg | taxonomy-sm) Defaults to `taxonomy-lg`.
+ * - color: Background/text color pairing (taxonomy modifier class).
+ *          (taxonomy-primary | taxonomy-secondary | taxonomy-tertiary)
+ *          Defaults to `taxonomy-primary`.
  *
  * Available attributes:
  * - attributes: Attributes array.
@@ -32,9 +35,21 @@
 {% set url = url|default('') %}
 {% set target = target|default('_self') %}
 {% set size = size|default('taxonomy-lg') %}
+{% set color = color|default('taxonomy-primary') %}
 
 {# Logic: map size prop to Bootstrap font-size utilities. #}
 {% set size_classes = size == 'taxonomy-sm' ? [] : ['fs-6'] %}
+
+{# Logic: map color prop to a Bootstrap bg/text utility pairing. A plain
+ # `bg-*` + `text-*` pair (rather than the combined `text-bg-*` utility)
+ # is used so the tertiary pairing can reach the exact navy text tone;
+ # `text-bg-primary`'s built-in contrast color is plain black instead. #}
+{% set color_map = {
+  'taxonomy-primary': ['bg-dark', 'text-white'],
+  'taxonomy-secondary': ['bg-accent', 'text-white'],
+  'taxonomy-tertiary': ['bg-primary', 'text-secondary'],
+} %}
+{% set color_classes = color_map[color]|default(color_map['taxonomy-primary']) %}
 
 {# Logic: base visual styling — pure Bootstrap utilities, no custom CSS. #}
 {% set base_classes = [
@@ -46,12 +61,8 @@
   'text-nowrap',
   'fw-bold',
   'text-uppercase',
-  'rounded-1',
-  'bg-dark',
-  'text-accent',
-  'border',
-  'border-accent',
-]|merge(size_classes) %}
+  'rounded-pill',
+]|merge(color_classes)|merge(size_classes) %}
 
 {% set has_url = url is not empty %}
 

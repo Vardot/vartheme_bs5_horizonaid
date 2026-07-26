@@ -1,0 +1,96 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CardEventsStories from './card-events.stories.json';
+import templateSource from './card-events.twig?raw';
+
+<Meta of={CardEventsStories} name="Docs" />
+
+# Events Card
+
+A two-tone Bootstrap card for events: an eyebrow taxonomy label, a single drag-and-drop content slot (headings switch to the accent color on hover), and a bottom date/time bar (date_start/date_end/time are plain text). Controls border, shadow, border radius, equal height, and full-card stretched link.
+
+- **Two-tone layout** — `bg-primary-subtle` top section (taxonomy, content) and `bg-primary` bottom bar (date, time)
+- **One content slot** — drop a Heading and a Text component together; any heading inside switches to `--bs-accent` on card hover, any paragraph inside is clamped to 3 lines
+- **Date range as plain text** — `date_start`/`date_end` render as `date_start – date_end` (or just `date_start` when `date_end` is empty); both fields accept any display format, e.g. "12 Jun" / "30 Jul"
+- `stretched_link` requires `link_url` to be set — makes the entire card clickable
+- `equal_height: true` adds `h-100` for consistent heights in grid row layouts
+
+> ### Bootstrap documentation
+> - [Cards](https://getbootstrap.com/docs/5.3/components/card/)
+> - [Background utilities](https://getbootstrap.com/docs/5.3/utilities/background/)
+> - [Text utilities](https://getbootstrap.com/docs/5.3/utilities/text/)
+> - [Flex utilities (align-self)](https://getbootstrap.com/docs/5.3/utilities/flex/#align-self)
+> - [Stretched link](https://getbootstrap.com/docs/5.3/helpers/stretched-link/)
+> - [Shadows](https://getbootstrap.com/docs/5.3/utilities/shadows/)
+
+## Properties
+
+<Canvas of={CardEventsStories.Default} />
+<Controls of={CardEventsStories.Default} />
+
+## Stories
+
+<Stories of={CardEventsStories} />
+
+## Examples
+
+### Example 1 — Default event card
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-events' with {
+  taxonomy_label: 'Webinar',
+  date_start: '12 Jun',
+  date_end: '30 Jul',
+  time: '11:00 - 2:30 CET',
+} %}
+  {% block content %}
+    {% include 'vartheme_bs5_horizonaid:heading' with { heading_text: 'Event Title', level: 3 } only %}
+    {% include 'vartheme_bs5_horizonaid:text' with {
+      text: '<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id. Pretium tellus duis convallis tempus</p>',
+    } only %}
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 2 — Bordered card with shadow
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-events' with {
+  taxonomy_label: 'Conference',
+  date_start: '3 Sep',
+  date_end: '4 Sep',
+  time: '09:00 - 5:00 CET',
+  card_border: true,
+  box_shadow: 'shadow-sm',
+} %}
+  {% block content %}
+    {% include 'vartheme_bs5_horizonaid:heading' with { heading_text: 'Annual Product Summit', level: 3 } only %}
+    {% include 'vartheme_bs5_horizonaid:text' with {
+      text: '<p>Join us for a full day of keynotes, breakout sessions, and networking with product leaders from across the industry.</p>',
+    } only %}
+  {% endblock %}
+{% endembed %}
+```
+
+### Example 3 — Linked card (entire card clickable)
+
+```twig
+{% embed 'vartheme_bs5_horizonaid:card-events' with {
+  taxonomy_label: 'Workshop',
+  date_start: '20 Oct',
+  time: '2:00 - 4:00 CET',
+  stretched_link: true,
+  link_url: 'https://example.com',
+  link_target: '_blank',
+} %}
+  {% block content %}
+    {% include 'vartheme_bs5_horizonaid:heading' with { heading_text: 'Hands-on Design Systems', level: 3 } only %}
+    {% include 'vartheme_bs5_horizonaid:text' with {
+      text: '<p>A practical, hands-on workshop covering tokens, components, and governance for scaling design systems.</p>',
+    } only %}
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

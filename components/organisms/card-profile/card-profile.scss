@@ -1,0 +1,64 @@
+@import "../../defaults"; // Global component defaults.
+
+.card-profile {
+  // Tokens — computed from Bootstrap variables/custom properties so the
+  // component inherits the active (sub-)theme automatically.
+  --card-profile-zoom-scale: 1.05;
+  --card-profile-media-duration: 0.45s;
+  --card-profile-icon-duration: 0.3s;
+  --card-profile-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --card-profile-icon-color: var(--bs-white);
+  --card-profile-icon-hover-color: var(--bs-warning);
+
+  // --- Photo -----------------------------------------------------------
+
+  &__media {
+    line-height: 0;
+  }
+
+  &__photo img {
+    transition: transform var(--card-profile-media-duration) var(--card-profile-easing);
+    will-change: transform;
+  }
+
+  &:hover &__photo img,
+  &:focus-within &__photo img {
+    transform: scale(var(--card-profile-zoom-scale));
+  }
+
+  // --- Footer top row (content + social) --------------------------------
+
+  // Bootstrap has no min-width utility: without this, long uninterrupted
+  // text keeps the flex item at its content width and pushes the social
+  // icons out of the card instead of wrapping.
+  &__content {
+    min-width: 0;
+  }
+
+  // --- Social links ------------------------------------------------------
+
+  &__social-link {
+    display: inline-flex;
+    color: var(--card-profile-icon-color);
+    line-height: 0;
+    text-decoration: none;
+
+    .bi {
+      transition: color var(--card-profile-icon-duration) ease;
+    }
+  }
+
+  &:hover &__social-link .bi,
+  &:focus-within &__social-link .bi,
+  &__social-link:hover .bi,
+  &__social-link:focus-visible .bi {
+    color: var(--card-profile-icon-hover-color);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__photo img,
+    &__social-link .bi {
+      transition: none;
+    }
+  }
+}
