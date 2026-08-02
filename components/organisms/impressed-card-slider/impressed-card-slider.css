@@ -17,6 +17,13 @@
   scroll-snap-align:start;
 }
 
+.impressed-card-slider__track > .card-impressed .card-body p{
+  display:-webkit-box;
+  overflow:hidden;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
 @media (min-width: 576px){
   .impressed-card-slider__track > .card-impressed{
     width:calc((100% - 1.5rem) / 2);
@@ -27,13 +34,6 @@
   .impressed-card-slider__track > .card-impressed{
     width:calc((100% - 3rem) / 2.3);
   }
-}
-
-.impressed-card-slider__track > .card-impressed .card-body p{
-  display:-webkit-box;
-  overflow:hidden;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
 }
 
 .impressed-card-slider__control{
@@ -64,12 +64,12 @@
   transform:translateX(calc(-1*(-1 * var(--impressed-card-slider-arrow-nudge))));
 }
 
+.impressed-card-slider__links .link-underline-primary{
+  text-decoration-color:var(--bs-primary) !important;
+}
+
 @media (prefers-reduced-motion: reduce){
   .impressed-card-slider__control-arrow{
     transition:none;
   }
-}
-
-.impressed-card-slider__links .link-underline-primary{
-  text-decoration-color:var(--bs-primary) !important;
 }

@@ -160,6 +160,22 @@ $breadcrumb-divider: '\F285';
 $breadcrumb-divider-flipped: '\F285';
 
 // Override border radius for buttons with no radius.
+// The design system's `--spacing/block` (40px) has no Bootstrap default step
+// (the scale jumps 24px -> 48px). This file is loaded BEFORE Bootstrap defines
+// `$spacers`, so the whole map is declared here — Bootstrap's own defaults plus
+// the extra `block` step — rather than map-merge'd onto a variable that does
+// not exist yet. Generates the `*-block` utilities (mt-block, mb-block, ...)
+// used for the vertical rhythm between stacked blocks inside a section.
+$spacers: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+  block: 2.5rem,
+);
+
 // Buttons are pills, matching the design system's `--border-radius/button` (20px).
 $btn-font-weight: 700;
 $btn-border-radius: 1.25rem;

@@ -6,14 +6,6 @@
   --hero-banner-content-min-height:18rem;
 }
 
-@media (min-width: 992px){
-  .hero-banner{
-    display:grid;
-    grid-template-rows:var(--hero-banner-content-top-gap) minmax(var(--hero-banner-content-min-height), auto);
-    grid-template-columns:1fr;
-  }
-}
-
 .hero-banner__media{
   width:100%;
 }
@@ -80,5 +72,13 @@
     max-width:28rem;
     margin:0;
     margin-inline-end:var(--hero-banner-content-offset-end);
+  }
+}
+
+@media (min-width: 992px){
+  .hero-banner{
+    display:grid;
+    grid-template-rows:var(--hero-banner-content-top-gap) minmax(var(--hero-banner-content-min-height), auto);
+    grid-template-columns:1fr;
   }
 }

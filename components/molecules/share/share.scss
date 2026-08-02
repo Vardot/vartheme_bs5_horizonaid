@@ -36,6 +36,15 @@
   &:focus {
     text-decoration: none;
     background: var(--webshare-button-bg-hover);
+
+    // The SVG pack's paths are recolored explicitly, so they do not inherit a
+    // hover colour — restate it here to match the button's hover label.
+    .bi,
+    svg,
+    svg path {
+      color: var(--webshare-icon-color-hover);
+      fill: var(--webshare-icon-color-hover);
+    }
   }
 
   &:active {
@@ -50,24 +59,32 @@
 
 .webshare {
   // ── Sizing tokens (all derived from Bootstrap's $spacer = 1rem) ──
-  --webshare-button-size: #{$spacer * 2.5}; // 40 px
-  --webshare-icon-size: #{$spacer * 1.5}; // 24 px — Figma node 9740:3621 social-btns/02 frame
-  --webshare-gap: #{$spacer * 0.5}; // 8 px
+  --webshare-button-size: #{$spacer * 2.25}; // 36 px — 16 px icon + 10 px padding
+  --webshare-icon-size: #{$spacer}; // 16 px — Figma node 12961:5288 share rail
+  --webshare-gap: #{$spacer * 0.75}; // 12 px — Figma size/sm/size-3
   --webshare-heading-gap: #{$spacer}; // 16 px
 
   // ── Colour + surface tokens (Bootstrap CSS variables) ───────────
   // Figma "brand/secondary" (#ebe8e5) has no exact Bootstrap default;
   // map it to --bs-secondary-bg so themes that re-skin secondary
   // surfaces propagate automatically.
-  --webshare-button-bg: var(--bs-secondary-bg);
-  --webshare-button-bg-hover: var(--bs-primary-bg-subtle);
-  --webshare-button-bg-active: var(--bs-primary-border-subtle);
-  --webshare-button-color: var(--bs-body-color);
-  --webshare-button-radius: #{$border-radius-sm};
+  --webshare-button-bg: var(--bs-secondary-bg-subtle);
+
+  // Hover/active use the same surface as a primary button. The button
+  // component sets `.btn-primary { --bs-btn-hover-bg: var(--bs-accent) }` with
+  // a white label, so the rail follows that rather than Bootstrap's generated
+  // tint — otherwise the two disagree on the same page.
+  --webshare-button-bg-hover: var(--bs-accent);
+  --webshare-button-bg-active: var(--bs-accent);
+
+  // Glyph on those surfaces: white, matching --bs-btn-hover-color.
+  --webshare-icon-color-hover: var(--bs-white);
+  --webshare-button-color: var(--bs-dark);
+  --webshare-button-radius: #{$border-radius-pill};
   --webshare-button-shadow: none;
 
   // ── Heading typography (Bootstrap font variables) ───────────────
-  --webshare-heading-color: var(--bs-body-color);
+  --webshare-heading-color: var(--bs-dark);
   --webshare-heading-font: var(--bs-body-font-family);
   --webshare-heading-font-size: 1.125rem; // 18 px — Figma spec
   --webshare-heading-font-weight: #{$font-weight-bold};
@@ -87,7 +104,9 @@
   --webshare-copied-color: var(--bs-white);
 
   // ── Glyph colour (Figma binds all icons to --brand/primary) ─────
-  --webshare-icon-color: var(--bs-primary);
+  --webshare-icon-color: var(
+    --bs-dark
+  ); // Navy glyph on the subtle surface, per the design.
 
   box-sizing: border-box;
 

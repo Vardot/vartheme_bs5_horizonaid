@@ -12,7 +12,7 @@
   --bs-progress-border-radius:0.125rem;
   --bs-progress-box-shadow:none;
   --bs-progress-bar-color:#fff;
-  --bs-progress-bar-bg:#FFC72C;
+  --bs-progress-bar-bg:#ffc72c;
   --bs-progress-bar-transition:width 0.6s ease;
   display:flex;
   overflow:hidden;
@@ -72,7 +72,7 @@
 }
 
 .progress-bar{
-  padding:0.0625rem 0rem;
+  padding:0.0625rem 0;
   font-weight:700;
   line-height:1.225rem;
 }

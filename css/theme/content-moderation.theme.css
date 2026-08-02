@@ -7,9 +7,6 @@
 
 #edit-moderation-state-wrapper #edit-moderation-state-0 .container-inline,
 #content-moderation-entity-moderation-form #edit-moderation-state-0 .container-inline{
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
   margin-right:calc(1.625rem + 4.5vw);
 }
 
@@ -30,6 +27,13 @@
     margin-right:0;
     margin-left:5rem;
   }
+}
+
+#edit-moderation-state-wrapper #edit-moderation-state-0 .container-inline,
+#content-moderation-entity-moderation-form #edit-moderation-state-0 .container-inline{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
 }
 
 #edit-moderation-state-wrapper #edit-moderation-state-0 label,

@@ -5,8 +5,10 @@
 [dir=rtl] .bg-edge2edge.ms-0,
 [dir=rtl] .bg-edge2edge.me-0{
   --e2e-band:calc(
-    100vw - var(--drupal-displace-offset-left, 0px) -
-      var(--drupal-displace-offset-right, 0px)
+    100vw - var(--drupal-displace-offset-left, 0px) - var(
+        --drupal-displace-offset-right,
+        0px
+      )
   );
   position:relative;
   flex:0 0 var(--e2e-band);

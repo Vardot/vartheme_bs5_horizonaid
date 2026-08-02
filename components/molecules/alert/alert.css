@@ -128,11 +128,11 @@
 }
 
 .alert-primary.alert-dismissible .btn-close{
-  background:#FFC72C;
+  background:#ffc72c;
 }
 
 .alert-secondary.alert-dismissible .btn-close{
-  background:#0D2C54;
+  background:#0d2c54;
 }
 
 .alert-success.alert-dismissible .btn-close{
@@ -140,7 +140,7 @@
 }
 
 .alert-info.alert-dismissible .btn-close{
-  background:#0DCAF0;
+  background:#0dcaf0;
 }
 
 .alert-warning.alert-dismissible .btn-close{
@@ -160,9 +160,9 @@
 }
 
 .alert-tertiary.alert-dismissible .btn-close{
-  background:#F7F9FA;
+  background:#f7f9fa;
 }
 
 .alert-accent.alert-dismissible .btn-close{
-  background:#0073E6;
+  background:#0073e6;
 }

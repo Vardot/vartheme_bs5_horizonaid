@@ -101,8 +101,12 @@
 {% set bi_icons = {
   'linkedin': 'bi-linkedin',
   'facebook_share': 'bi-facebook',
+  'facebook': 'bi-facebook',
+  'instagram': 'bi-instagram',
   'x': 'bi-twitter-x',
+  'twitter': 'bi-twitter-x',
   'whatsapp': 'bi-whatsapp',
+  'email': 'bi-envelope',
   'copy': 'bi-clipboard',
 } %}
 
@@ -179,6 +183,13 @@
             .setAttribute('aria-label', platform.title|default('Copy URL'|t))
           %}
           <button{{ copy_button_attributes }}>
+            {# Prefer the module's SVG glyph: it carries the exact shapes the
+             # design uses (Bootstrap Icons has no bare LinkedIn wordmark, only
+             # the solid box, which reads as a blob in monochrome). The SCSS
+             # hides the SVG's baked-in brand rect and recolors its paths to
+             # --webshare-icon-color, and sizes it from --webshare-icon-size,
+             # so the pack renders monochrome at the design's size. The `bi`
+             # font icon stays as the fallback when a platform ships no SVG. #}
             {% if platform.icon_html %}
               {% set platform_icon_span_attributes = create_attribute().setAttribute('aria-hidden', 'true') %}
               <span{{ platform_icon_span_attributes }}>{{ platform.icon_html|raw }}</span>
@@ -200,6 +211,13 @@
             .setAttribute('aria-label', platform.title ~ ' ' ~ '(opens in a new tab)'|t)
           %}
           <a{{ platform_link_attributes }}>
+            {# Prefer the module's SVG glyph: it carries the exact shapes the
+             # design uses (Bootstrap Icons has no bare LinkedIn wordmark, only
+             # the solid box, which reads as a blob in monochrome). The SCSS
+             # hides the SVG's baked-in brand rect and recolors its paths to
+             # --webshare-icon-color, and sizes it from --webshare-icon-size,
+             # so the pack renders monochrome at the design's size. The `bi`
+             # font icon stays as the fallback when a platform ships no SVG. #}
             {% if platform.icon_html %}
               {% set platform_icon_span_attributes = create_attribute().setAttribute('aria-hidden', 'true') %}
               <span{{ platform_icon_span_attributes }}>{{ platform.icon_html|raw }}</span>

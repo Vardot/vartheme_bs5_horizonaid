@@ -1,8 +1,4 @@
 .social-auth{
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  justify-content:center;
   margin:0 calc(-1.315rem - 0.78vw);
 }
 
@@ -10,6 +6,13 @@
   .social-auth{
     margin:0 -1.9rem;
   }
+}
+
+.social-auth{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
 .social-auth .social-network{
@@ -35,7 +38,7 @@
 }
 
 .social-auth .auth-link:hover, .social-auth .auth-link:active, .social-auth .auth-link:focus{
-  color:#145CC6;
+  color:#145cc6;
 }
 
 .social-auth .auth-icon{

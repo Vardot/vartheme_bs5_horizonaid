@@ -1,15 +1,16 @@
 .webshare{
-  --webshare-button-size:2.5rem;
-  --webshare-icon-size:1.5rem;
-  --webshare-gap:0.5rem;
+  --webshare-button-size:2.25rem;
+  --webshare-icon-size:1rem;
+  --webshare-gap:0.75rem;
   --webshare-heading-gap:1rem;
-  --webshare-button-bg:var(--bs-secondary-bg);
-  --webshare-button-bg-hover:var(--bs-primary-bg-subtle);
-  --webshare-button-bg-active:var(--bs-primary-border-subtle);
-  --webshare-button-color:var(--bs-body-color);
-  --webshare-button-radius:0.25rem;
+  --webshare-button-bg:var(--bs-secondary-bg-subtle);
+  --webshare-button-bg-hover:var(--bs-accent);
+  --webshare-button-bg-active:var(--bs-accent);
+  --webshare-icon-color-hover:var(--bs-white);
+  --webshare-button-color:var(--bs-dark);
+  --webshare-button-radius:50rem;
   --webshare-button-shadow:none;
-  --webshare-heading-color:var(--bs-body-color);
+  --webshare-heading-color:var(--bs-dark);
   --webshare-heading-font:var(--bs-body-font-family);
   --webshare-heading-font-size:1.125rem;
   --webshare-heading-font-weight:700;
@@ -21,7 +22,9 @@
   --webshare-rail-gap:var(--bs-gutter-x, 1.5rem);
   --webshare-copied-bg:var(--bs-success);
   --webshare-copied-color:var(--bs-white);
-  --webshare-icon-color:var(--bs-primary);
+  --webshare-icon-color:var(
+    --bs-dark
+  );
   box-sizing:border-box;
 }
 
@@ -123,6 +126,27 @@
   background:var(--webshare-button-bg-hover);
 }
 
+.webshare__item > a:hover .bi,
+.webshare__item > a:hover svg,
+.webshare__item > a:hover svg path, .webshare__item > a:focus .bi,
+.webshare__item > a:focus svg,
+.webshare__item > a:focus svg path,
+.webshare__item > button:hover .bi,
+.webshare__item > button:hover svg,
+.webshare__item > button:hover svg path,
+.webshare__item > button:focus .bi,
+.webshare__item > button:focus svg,
+.webshare__item > button:focus svg path,
+.webshare__item > span:hover .bi,
+.webshare__item > span:hover svg,
+.webshare__item > span:hover svg path,
+.webshare__item > span:focus .bi,
+.webshare__item > span:focus svg,
+.webshare__item > span:focus svg path{
+  color:var(--webshare-icon-color-hover);
+  fill:var(--webshare-icon-color-hover);
+}
+
 .webshare__item > a:active,
 .webshare__item > button:active,
 .webshare__item > span:active{
@@ -202,6 +226,15 @@
   background:var(--webshare-button-bg-hover);
 }
 
+.webshare__native-button:hover .bi,
+.webshare__native-button:hover svg,
+.webshare__native-button:hover svg path, .webshare__native-button:focus .bi,
+.webshare__native-button:focus svg,
+.webshare__native-button:focus svg path{
+  color:var(--webshare-icon-color-hover);
+  fill:var(--webshare-icon-color-hover);
+}
+
 .webshare__native-button:active{
   background:var(--webshare-button-bg-active);
 }
@@ -213,6 +246,7 @@
 
 .webshare__native-button{
   cursor:pointer;
+  color:var(--webshare-icon-color);
   font:inherit;
   line-height:0;
   appearance:none;
@@ -221,10 +255,6 @@
 .webshare__native-button.webshare--copied{
   color:var(--webshare-copied-color);
   background:var(--webshare-copied-bg);
-}
-
-.webshare__native-button{
-  color:var(--webshare-icon-color);
 }
 
 .webshare__native-button .bi{

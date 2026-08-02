@@ -62,7 +62,7 @@
 
 .breadcrumb-item + .breadcrumb-item::before{
   content:"\f285";
-  font-family:"bootstrap-icons";
+  font-family:bootstrap-icons;
   font-size:1.1rem;
   font-weight:500;
 }

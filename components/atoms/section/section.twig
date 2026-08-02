@@ -201,8 +201,8 @@
 {% set media_wrap_classes = ['position-absolute', 'top-0', 'start-0', 'w-100', 'h-100', 'z-0'] %}
 {% set overlay_classes = ['position-absolute', 'top-0', 'start-0', 'w-100', 'h-100', 'bg-dark', 'z-1']|merge(overlay_opacity_classes) %}
 {% set content_wrap_classes = ['position-relative', 'z-2'] %}
-{% set header_classes = ['sdc-section__header', 'mb-4'] %}
-{% set footer_classes = ['sdc-section__footer', 'mt-4'] %}
+{% set header_classes = ['sdc-section__header', 'mb-block'] %}
+{% set footer_classes = ['sdc-section__footer', 'mt-block'] %}
 
 {# Logic: layout presets mapped to Bootstrap md column widths. #}
 {% set preset_map = {

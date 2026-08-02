@@ -131,8 +131,8 @@
 
 .hero-slider .hero-slider__control:hover{
   opacity:1;
-  border-color:#ffffff !important;
-  background:#ffffff !important;
+  border-color:#fff !important;
+  background:#fff !important;
 }
 
 .hero-slider .hero-slider__control svg{

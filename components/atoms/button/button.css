@@ -43,23 +43,23 @@
   text-decoration:none;
 }
 
-.btn:not(.btn-link):not([class*=btn-outline-]){
+.btn:not(.btn-link, [class*=btn-outline-]){
   --bs-btn-border-width:0;
 }
 
-.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]){
+.btn:not(.btn-link, :disabled, [aria-disabled=true]){
   --btn-fill-duration:0.35s;
   --btn-fill-easing:cubic-bezier(0.22, 1, 0.36, 1);
   position:relative;
   overflow:hidden;
 }
 
-.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):hover, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):focus-visible{
+.btn:not(.btn-link, :disabled, [aria-disabled=true]):hover, .btn:not(.btn-link, :disabled, [aria-disabled=true]):focus-visible{
   color:var(--bs-btn-hover-color);
   background-color:var(--bs-btn-bg);
 }
 
-.btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::before, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::after{
+.btn:not(.btn-link, :disabled, [aria-disabled=true])::before, .btn:not(.btn-link, :disabled, [aria-disabled=true])::after{
   position:absolute;
   width:50%;
   content:"";
@@ -69,29 +69,29 @@
   inset-block:0;
 }
 
-.btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::before{
+.btn:not(.btn-link, :disabled, [aria-disabled=true])::before{
   transform-origin:left center;
   inset-inline-start:0;
 }
 
-[dir="rtl"] .btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::before{
+[dir="rtl"] .btn:not(.btn-link, :disabled, [aria-disabled=true])::before{
   transform-origin:right center;
 }
 
-.btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::after{
+.btn:not(.btn-link, :disabled, [aria-disabled=true])::after{
   transform-origin:right center;
   inset-inline-end:0;
 }
 
-[dir="rtl"] .btn:not(.btn-link):not(:disabled):not([aria-disabled=true])::after{
+[dir="rtl"] .btn:not(.btn-link, :disabled, [aria-disabled=true])::after{
   transform-origin:left center;
 }
 
-.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):hover::before, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):hover::after, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):focus-visible::before, .btn:not(.btn-link):not(:disabled):not([aria-disabled=true]):focus-visible::after{
+.btn:not(.btn-link, :disabled, [aria-disabled=true]):hover::before, .btn:not(.btn-link, :disabled, [aria-disabled=true]):hover::after, .btn:not(.btn-link, :disabled, [aria-disabled=true]):focus-visible::before, .btn:not(.btn-link, :disabled, [aria-disabled=true]):focus-visible::after{
   transform:scaleX(1);
 }
 
-.btn:not(.btn-link):not(:disabled):not([aria-disabled=true]) > *{
+.btn:not(.btn-link, :disabled, [aria-disabled=true]) > *{
   position:relative;
   z-index:1;
 }
