@@ -27,6 +27,18 @@ props:
       default: ''
       examples:
         - '30 Jul'
+    date_start_timestamp:
+      type: integer
+      title: 'Start date (timestamp)'
+      description: 'Unix timestamp for the event start, e.g. bound from a Smart date field. When set it formats Start date as "12 Jun" and, unless Time is given, derives Time from the timestamps. Start date wins if both are provided.'
+      examples:
+        - 1786532400
+    date_end_timestamp:
+      type: integer
+      title: 'End date (timestamp)'
+      description: 'Unix timestamp for the event end. Formats End date as "30 Jul" and is only shown when it falls on a different day than the start.'
+      examples:
+        - 1788100200
     time:
       type: string
       title: Time

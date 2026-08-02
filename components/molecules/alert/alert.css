@@ -144,19 +144,19 @@
 }
 
 .alert-warning.alert-dismissible .btn-close{
-  background:rgb(255, 210.2, 86.2);
+  background:rgb(100%, 82.431372549%, 33.8039215686%);
 }
 
 .alert-danger.alert-dismissible .btn-close{
-  background:rgb(176, 42.4, 55.2);
+  background:rgb(69.0196078431%, 16.6274509804%, 21.6470588235%);
 }
 
 .alert-light.alert-dismissible .btn-close{
-  background:rgb(198.4, 199.2, 200);
+  background:rgb(77.8039215686%, 78.1176470588%, 78.431372549%);
 }
 
 .alert-dark.alert-dismissible .btn-close{
-  background:rgb(61.4, 86.2, 118.2);
+  background:rgb(24.0784313725%, 33.8039215686%, 46.3529411765%);
 }
 
 .alert-tertiary.alert-dismissible .btn-close{

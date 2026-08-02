@@ -14,6 +14,12 @@
  * - date_end: Optional event end date, shown as-is (e.g. "30 Jul"). Leave
  *             empty for a single-day event — only date_start is shown.
  * - time: Event time (e.g. "11:00 - 2:30 CET").
+ * - date_start_timestamp: Unix timestamp for the start, e.g. bound from a Smart
+ *                         date field. Formats date_start as "12 Jun" and, when
+ *                         `time` is empty, derives the time range from the
+ *                         timestamps. Plain date_start/date_end win if given.
+ * - date_end_timestamp: Unix timestamp for the end. Only rendered when it falls
+ *                       on a different day than the start.
  *
  * Available attributes:
  * - top_attributes: Attributes for the top (taxonomy/content) section.
@@ -42,6 +48,34 @@
 {% set date_end = date_end|default('') %}
 {% set time = time|default('') %}
 {% set box_shadow = box_shadow|default('shadow-none') %}
+
+{# Logic: derive the date/time bar from Smart date timestamps.
+ # A Smart date field binds raw Unix timestamps, so formatting has to happen
+ # here - printing the binding directly would show the timestamp. Explicit
+ # date_start / date_end / time strings always take precedence.
+ #
+ # format_date() is used rather than Twig's date(): it renders in the site's
+ # configured timezone and localizes month names, which date() does not.
+ #}
+{% set date_start_timestamp = date_start_timestamp|default(null) %}
+{% set date_end_timestamp = date_end_timestamp|default(null) %}
+{% if date_start_timestamp %}
+  {% if date_start is empty %}
+    {% set date_start = date_start_timestamp|format_date('custom', 'j M') %}
+  {% endif %}
+  {% if date_end is empty and date_end_timestamp
+     and date_end_timestamp|format_date('custom', 'Y-m-d') != date_start_timestamp|format_date('custom', 'Y-m-d') %}
+    {% set date_end = date_end_timestamp|format_date('custom', 'j M') %}
+  {% endif %}
+  {% if time is empty %}
+    {% set time_start = date_start_timestamp|format_date('custom', 'G:i') %}
+    {% set time_end = date_end_timestamp ? date_end_timestamp|format_date('custom', 'G:i') : '' %}
+    {% set time = time_end
+      ? time_start ~ ' - ' ~ time_end ~ ' ' ~ date_start_timestamp|format_date('custom', 'T')
+      : time_start ~ ' ' ~ date_start_timestamp|format_date('custom', 'T') %}
+  {% endif %}
+{% endif %}
+
 {% set corner_style = corner_style|default('rounded-4') %}
 {% set link_url = link_url|default('')|trim %}
 {% set link_target_raw = link_target|default('default') %}
@@ -76,6 +110,11 @@
   (equal_height ? 'h-100' : ''),
 ]|filter(v => v is not empty)) %}
 
+{# The top section fills the card when equal_height is on, so the date/time bar
+ # always sits on the bottom edge. Without it the bar stops right under the
+ # content and cards in the same row show their bars at different heights, even
+ # though equal_height already makes the cards themselves equal.
+ #}
 {% set top_attributes = create_attribute().addClass([
   'card-events__top',
   'bg-primary-subtle',
@@ -85,7 +124,8 @@
   'pt-4',
   'px-4',
   'pb-5',
-]) %}
+  (equal_height ? 'flex-grow-1' : ''),
+]|filter(v => v is not empty)) %}
 
 {% set taxonomy_attributes = create_attribute().addClass([
   'card-events__taxonomy',
