@@ -9,11 +9,13 @@
  * inherits the theme's icon styling automatically.
  *
  * Props are identical to webshare:share — see the module component for
- * the full prop reference.
+ * the full prop reference. Adds `heading_level` (2–6, default 2) so the
+ * title tag follows the surrounding document outline; visual size stays
+ * fixed via the webshare__heading class.
  *
  * Available attributes:
  * - attributes: HTML attributes for the <nav> wrapper element.
- * - heading_attributes: HTML attributes for the <h3> heading.
+ * - heading_attributes: HTML attributes for the title heading element.
  * - list_attributes: HTML attributes for the <ul> list element.
  * - native_item_attributes: HTML attributes for the native share <li>.
  * - native_button_attributes: HTML attributes for the native share button.
@@ -40,6 +42,7 @@
 
 {# Variables: scalar props with schema defaults. #}
 {% set heading = heading|default('Share') %}
+{% set heading_level = heading_level|default(2) %}
 {% set alignment = alignment|default('end') %}
 {% set orientation = orientation|default('vertical') %}
 {% set mobile_visibility = mobile_visibility|default('all') %}
@@ -128,7 +131,7 @@
 {# Print the HTML. #}
 <nav{{ attributes }}>
   {% if _show_heading %}
-    <h3{{ heading_attributes }}>{{ heading }}</h3>
+    <h{{ heading_level }}{{ heading_attributes }}>{{ heading }}</h{{ heading_level }}>
   {% endif %}
   <ul{{ list_attributes }}>
     {% if native_share %}
