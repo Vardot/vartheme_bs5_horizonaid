@@ -1,4 +1,4 @@
-@import "../../defaults";   // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .navbar {
   height: 5.25rem;
@@ -14,8 +14,8 @@
     .nav-item {
       a.nav-link {
         position: relative;
-        font-weight: bold;
         color: var(--bs-gray-900);
+        font-weight: bold;
 
         &:hover,
         &:focus,
@@ -23,26 +23,26 @@
           color: var(--bs-primary) !important;
 
           &:after {
-            content: "";
             position: absolute;
+            right: 15% !important;
+            bottom: 0;
+            left: 15% !important;
+            height: 1px;
+            content: '';
             transition: left 0.3s;
             transition: right 0.3s;
-            left: 15% !important;
-            right: 15% !important;
-            height: 1px;
-            bottom: 0;
             background-color: var(--bs-primary);
           }
         }
 
         &.is-active {
           &:after {
-            content: "";
             position: absolute;
-            left: 30%;
             right: 30%;
-            height: 1px;
             bottom: 0;
+            left: 30%;
+            height: 1px;
+            content: '';
             background-color: var(--bs-primary);
           }
         }
@@ -51,7 +51,7 @@
   }
 }
 
-[data-bs-theme=dark] {
+[data-bs-theme='dark'] {
   .navbar {
     background: $blue-700;
 
@@ -65,30 +65,29 @@
           &:focus,
           &:active {
             color: var(--bs-white) !important;
-  
+
             &:after {
-              content: "";
-              left: 15% !important;
-              right: 15% !important;
               position: absolute;
-              height: 1px;
+              right: 15% !important;
               bottom: 0;
+              left: 15% !important;
+              height: 1px;
+              content: '';
               background-color: var(--bs-white);
             }
           }
-  
+
           &.is-active {
+            border-bottom: 1px var(--bs-white);
             &:after {
-              content: "";
               position: absolute;
-              left: 30%;
               right: 30%;
-              height: 1px;
               bottom: 0;
+              left: 30%;
+              height: 1px;
+              content: '';
               background-color: var(--bs-white);
             }
-
-            border-bottom: 1px var(--bs-white);
           }
         }
       }

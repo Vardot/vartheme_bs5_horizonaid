@@ -14,7 +14,7 @@
 // `inset-block-end: 0`. Scoped to `.media-banner` so nothing leaks to the
 // rest of the theme.
 
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .media-banner {
   // Fixed design tokens (not derived from the Bootstrap spacing/radius
@@ -31,17 +31,6 @@
   --media-banner-content-offset-start: 3rem;
   --media-banner-content-top-gap: 11.56rem; // image visible above the box, lg+
   --media-banner-content-min-height: 18rem; // comfortable room for heading/text/button
-
-  // `&__media` and `&__content` are grid siblings from `lg` up: row 1 is the
-  // fixed top gap, row 2 holds the content box and grows past `min-height`
-  // when the slot content needs more room (`minmax(…, auto)`), taking the
-  // overall banner height — and the media block spanning both rows — with
-  // it, instead of clipping the box at a fixed height.
-  @include media-breakpoint-up(lg) {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: var(--media-banner-content-top-gap) minmax(var(--media-banner-content-min-height), auto);
-  }
 
   &__media {
     width: 100%;
@@ -84,8 +73,8 @@
     // overlap (arbitrated by z-index) explicit and intentional.
     @include media-breakpoint-up(lg) {
       position: relative;
-      grid-column: 1;
       grid-row: 1 / -1;
+      grid-column: 1;
 
       figure {
         position: absolute;
@@ -115,16 +104,31 @@
     margin-inline: auto;
     margin-block-start: -#{$spacer * 2};
     padding: var(--media-banner-content-padding);
-    border-radius: var(--media-banner-content-radius) var(--media-banner-content-radius) 0 0;
+    border-radius: var(--media-banner-content-radius)
+      var(--media-banner-content-radius) 0 0;
 
     @include media-breakpoint-up(lg) {
       z-index: 2;
-      grid-column: 1;
       grid-row: 2;
+      grid-column: 1;
       justify-self: start;
       width: var(--desktop-columns-4col, 22.4375rem);
       margin: 0;
       margin-inline-start: var(--media-banner-content-offset-start);
     }
+  }
+
+  // `&__media` and `&__content` are grid siblings from `lg` up: row 1 is the
+  // fixed top gap, row 2 holds the content box and grows past `min-height`
+  // when the slot content needs more room (`minmax(…, auto)`), taking the
+  // overall banner height — and the media block spanning both rows — with
+  // it, instead of clipping the box at a fixed height.
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-rows: var(--media-banner-content-top-gap) minmax(
+        var(--media-banner-content-min-height),
+        auto
+      );
+    grid-template-columns: 1fr;
   }
 }

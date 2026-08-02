@@ -4,20 +4,20 @@
 // https://getbootstrap.com/docs/5.3/customize/sass
 // https://github.com/twbs/bootstrap/blob/v5.3.2/scss/_variables.scss
 
-@import "../node_modules/bootstrap/scss/functions";      // Bootstrap functions.
-@import "../node_modules/bootstrap/scss/mixins";         // Bootstrap mixins.
+@import '../node_modules/bootstrap/scss/functions'; // Bootstrap functions.
+@import '../node_modules/bootstrap/scss/mixins'; // Bootstrap mixins.
 
 $prefix: bs-;
 
 // Override aspect ratios array to add more ratios.
 $aspect-ratios: (
-  "1x1": 100%,
-  "2x1": calc(1 / 2 * 100%),
-  "3x1": calc(1 / 3 * 100%),
-  "4x1": calc(1 / 4 * 100%),
-  "4x3": calc(3 / 4 * 100%),
-  "16x9": calc(9 / 16 * 100%),
-  "21x9": calc(9 / 21 * 100%),
+  '1x1': 100%,
+  '2x1': calc(1 / 2 * 100%),
+  '3x1': calc(1 / 3 * 100%),
+  '4x1': calc(1 / 4 * 100%),
+  '4x3': calc(3 / 4 * 100%),
+  '16x9': calc(9 / 16 * 100%),
+  '21x9': calc(9 / 21 * 100%),
 );
 
 // Override the default primary font family to Plus Jakarta Sans - Regular, Bold for sans serif.
@@ -50,7 +50,7 @@ $display-font-sizes: (
   3: 2.375rem,
   4: 1.875rem,
   5: 1.5rem,
-  6: 1.125rem
+  6: 1.125rem,
 );
 
 // Override the default headings.
@@ -67,15 +67,16 @@ $lead-font-weight: 500;
 // Horizon Aid brand colors — exact values confirmed against the Figma design system.
 
 // Primary — gold.
-$primary:               #FFC72C;
+$primary: #ffc72c;
 $primary-text-emphasis: #997404;
-$primary-bg-subtle:     #FFF8E7;
-$primary-border-subtle: #FFF8E7;
+$primary-bg-subtle: #fff8e7;
+$primary-border-subtle: #fff8e7;
 
 // Secondary — navy.
-$secondary:               #0D2C54;
+$secondary: #0d2c54;
 $secondary-text-emphasis: #031633;
-$secondary-bg-subtle:     #F7F9FA;
+$secondary-bg-subtle: #f7f9fa;
+
 // No Figma swatch for a secondary border; left to Bootstrap's auto-computed
 // tint of $secondary.
 
@@ -86,15 +87,16 @@ $secondary-bg-subtle:     #F7F9FA;
 $headings-color: $secondary;
 
 // Dark surfaces (bg-dark, navbar-dark, etc.) share the secondary navy.
-$navy: #0D2C54;
+$navy: #0d2c54;
 $dark: $navy;
 
 // Tertiary (Figma "Tertiary") — blue. Modeled as the theme's custom "accent"
 // Bootstrap color (see $theme-colors map in _vartheme-variables.scss).
-$accent:               #0073E6;
-$accent-bg-subtle:     #EBF4FE;
+$accent: #0073e6;
+$accent-bg-subtle: #ebf4fe;
 $accent-text-emphasis: #212529; // matches Figma "tertiary emphasis" (= gray-900 below).
-$accent-bg:            $accent;
+$accent-bg: $accent;
+
 // No Figma swatch for a tertiary/accent border; left to Bootstrap's
 // auto-computed tint of $accent.
 
@@ -102,60 +104,60 @@ $accent-bg:            $accent;
 // matches the Figma "tertiary emphasis" value above.
 $gray: #212529;
 $gray-900: shade-color($gray, 0%);
-$body-tertiary-bg:    $gray-900;
+$body-tertiary-bg: $gray-900;
 $body-tertiary-color: $gray-900;
 
 // Light neutral background token, distinct from the $accent brand hue.
 $tertiary: $secondary-bg-subtle;
 
 // Success — matches Bootstrap 5.3 defaults exactly (confirmed against Figma).
-$success:               #198754;
-$success-text-emphasis: #146C43;
-$success-bg-subtle:     #D1E7DD;
-$success-border-subtle: #A3CFBB;
+$success: #198754;
+$success-text-emphasis: #146c43;
+$success-bg-subtle: #d1e7dd;
+$success-border-subtle: #a3cfbb;
 
 // Error/Danger — matches Bootstrap 5.3 defaults exactly (confirmed against Figma).
-$danger:               #DC3545;
-$danger-text-emphasis: #B02A37;
-$danger-bg-subtle:     #F8D7DA;
-$danger-border-subtle: #F1AEB5;
+$danger: #dc3545;
+$danger-text-emphasis: #b02a37;
+$danger-bg-subtle: #f8d7da;
+$danger-border-subtle: #f1aeb5;
 
 // Warning — reuses the primary gold (confirmed against Figma).
-$warning:               #FFC72C;
-$warning-text-emphasis: #CC9A06;
-$warning-bg-subtle:     #FFF8E7;
-$warning-border-subtle: #FFE69C;
+$warning: #ffc72c;
+$warning-text-emphasis: #cc9a06;
+$warning-bg-subtle: #fff8e7;
+$warning-border-subtle: #ffe69c;
 
 // Info — matches Bootstrap 5.3 defaults exactly (confirmed against Figma).
-$info:               #0DCAF0;
-$info-text-emphasis: #0AA2C0;
-$info-bg-subtle:     #CFF4FC;
-$info-border-subtle: #9EEAF9;
+$info: #0dcaf0;
+$info-text-emphasis: #0aa2c0;
+$info-bg-subtle: #cff4fc;
+$info-border-subtle: #9eeaf9;
 
 // No Figma token for the generic border color; falls back to Bootstrap's own default.
 
 // Links — Figma's "primary" text sample is the tertiary blue, not the brand
 // gold, so point link color at $accent instead of the Bootstrap default ($primary).
-$link-color:       $accent;
+$link-color: $accent;
 $link-hover-color: #084298;
 
 // Text variables (Figma "Text Variables" section).
-$border-white: #FFFFFF;
-$light-text:   $primary; // gold text on dark backgrounds (Figma "light").
-$subtle-text:  #6C757D; // muted gray body text (Figma "subtle").
+$border-white: #fff;
+$light-text: $primary; // gold text on dark backgrounds (Figma "light").
+$subtle-text: #6c757d; // muted gray body text (Figma "subtle").
 // "default" text (#212529) already equals $gray-900 above.
 // "secondary" text (navy, bold) already equals $secondary above.
 
 // Override border radius for all breakpoints.
-$border-radius-sm: 0.25rem;   // rounded-1
-$border-radius: 0.5rem;       // rounded-2
-$border-radius-lg: 0.75rem;   // rounded-3
-$border-radius-xl: 1rem;      // rounded-4
-$border-radius-xxl: 1.5rem;   // rounded-5
+$border-radius-sm: 0.25rem; // rounded-1
+$border-radius: 0.5rem; // rounded-2
+$border-radius-lg: 0.75rem; // rounded-3
+$border-radius-xl: 1rem; // rounded-4
+$border-radius-xxl: 1.5rem; // rounded-5
 
 // Override default bootstrap breadcrumb variables.
-$breadcrumb-divider: quote("\F285");
-$breadcrumb-divider-flipped: quote("\F285");
+$breadcrumb-divider: '\F285';
+$breadcrumb-divider-flipped: '\F285';
 
 // Override border radius for buttons with no radius.
 $btn-font-weight: 700;
@@ -175,18 +177,14 @@ $card-border-radius: 0;
 $carousel-control-width: 2.1875rem;
 $carousel-control-opacity: 1;
 $carousel-control-hover-opacity: 0.9;
-$carousel-control-transition: opacity .15s ease !default;
-
+$carousel-control-transition: opacity 0.15s ease !default;
 $carousel-indicator-width: 0.625rem;
 $carousel-indicator-height: 0.625rem;
 $carousel-indicator-hit-area-height: 0.625rem;
 $carousel-indicator-spacer: 0.3125rem;
 $carousel-indicator-opacity: 1;
 $carousel-indicator-active-opacity: 1;
-
 $carousel-control-icon-width: 2.1875rem;
-
 $carousel-control-prev-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' viewBox='0 0 35 35' fill='none'><path d='M17.5 0C7.83502 0 0 7.83502 0 17.5C0 27.165 7.83502 35 17.5 35C27.165 35 35 27.165 35 17.5C35 7.83502 27.165 0 17.5 0ZM25.1562 16.4062C25.7603 16.4062 26.25 16.8959 26.25 17.5C26.25 18.1041 25.7603 18.5938 25.1562 18.5938H12.4843L17.1796 23.2891C17.6068 23.7162 17.6068 24.4088 17.1796 24.8359C16.7525 25.263 16.06 25.263 15.6329 24.8359L9.07035 18.2734C8.64322 17.8463 8.64322 17.1537 9.07035 16.7266L15.6329 10.1641C16.06 9.73697 16.7525 9.73697 17.1796 10.1641C17.6068 10.5912 17.6068 11.2838 17.1796 11.7109L12.4843 16.4062H25.1562Z' fill='white'/></svg>");
 $carousel-control-next-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' viewBox='0 0 35 35' fill='none'><path d='M17.5 0C27.165 0 35 7.83502 35 17.5C35 27.165 27.165 35 17.5 35C7.83502 35 0 27.165 0 17.5C0 7.83502 7.83502 0 17.5 0ZM9.84375 16.4062C9.23969 16.4062 8.75 16.8959 8.75 17.5C8.75 18.1041 9.23969 18.5938 9.84375 18.5938H22.5157L17.8204 23.2891C17.3932 23.7162 17.3932 24.4088 17.8204 24.8359C18.2475 25.263 18.94 25.263 19.3671 24.8359L25.9296 18.2734C26.3568 17.8463 26.3568 17.1537 25.9296 16.7266L19.3671 10.1641C18.94 9.73697 18.2475 9.73697 17.8204 10.1641C17.3932 10.5912 17.3932 11.2838 17.8204 11.7109L22.5157 16.4062H9.84375Z' fill='white'/></svg>");
-
-$carousel-transition-duration: .6s !default;
+$carousel-transition-duration: 0.6s !default;

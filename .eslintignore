@@ -7,6 +7,9 @@ drupalci.yml
 js/bootstrap/*
 js/popperjs/*
 
+# Vendored third-party libraries (minified, not ours to lint).
+components/**/assets/vendor/*
+
 webpack.config.init.js
 webpack.config.build.js
 webpack.config.components.js

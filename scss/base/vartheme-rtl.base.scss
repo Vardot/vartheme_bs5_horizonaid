@@ -1,10 +1,10 @@
-@import "../defaults";   // Global defaults.
+@import '../defaults'; // Global defaults.
 
 // Vartheme BS5 Horizonaid Base RTL Global styling.
 // -----------------------------------------------------------------------------
 
 /* Justify content center. */
-[dir="rtl"] {
+[dir='rtl'] {
   .justify-content-center {
     &.nav-pills > li + li {
       margin-left: inherit;
@@ -12,7 +12,7 @@
   }
 }
 
-[dir="rtl"] [dir="rtl"] {
+[dir='rtl'] [dir='rtl'] {
   .justify-content-center {
     &.nav-pills > li + li {
       margin-right: inherit;
@@ -23,13 +23,13 @@
 
 /* Email/tel/url/number inputs default to LTR in browser UA stylesheet. */
 /* Align placeholder with page direction; typed value still flows naturally via unicode-bidi. */
-[dir="rtl"] {
-  input[type="email"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="number"] {
-    direction: rtl;
+[dir='rtl'] {
+  input[type='email'],
+  input[type='tel'],
+  input[type='url'],
+  input[type='number'] {
     text-align: right;
+    direction: rtl;
     unicode-bidi: plaintext;
   }
 }

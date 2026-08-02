@@ -32,4 +32,3 @@ props:
       description: Name and Role, organization, or source of the quote.
       examples:
         - Quotee Name and Position
-

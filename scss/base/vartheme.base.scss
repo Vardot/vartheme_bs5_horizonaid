@@ -1,4 +1,4 @@
-@import "../defaults";   // Global defaults.
+@import '../defaults'; // Global defaults.
 
 // Vartheme BS5 Horizonaid Base Global styling.
 // -----------------------------------------------------------------------------
@@ -10,7 +10,7 @@
  * Issue #3246827: Fix em.placeholder style from Bootstrap 5 base styling with the Drupal core placeholder
  * https://www.drupal.org/i/3246827
  */
- em.placeholder {
+em.placeholder {
   cursor: unset !important;
   vertical-align: unset !important;
   opacity: unset !important;
@@ -28,7 +28,6 @@
 // `url([object Module])` that 404'd and triggered Drupal.AjaxError on forms),
 // inherits the active (sub-)theme's danger colour, and stays crisp at any size.
 .form-required {
-
   &::after {
     content: '*';
     margin-inline: 0.25em;
@@ -38,19 +37,19 @@
 }
 
 .ajax-progress {
-  background-color: transparent !important;
   border: 0 !important;
+  background-color: transparent !important;
 }
 
 .ajax-progress-throbber {
   .throbber {
-    background-color: transparent !important;
     border: 0 !important;
+    background-color: transparent !important;
   }
 
   .message {
-    background-color: transparent !important;
     border: 0 !important;
+    background-color: transparent !important;
   }
 }
 
@@ -110,14 +109,14 @@ a {
 // Auto-adapt foreground colors based on parent background context.
 .bg-dark,
 .bg-black,
-[data-bs-theme="dark"] {
+[data-bs-theme='dark'] {
   --bs-emphasis-color: var(--bs-white);
   --bs-emphasis-color-rgb: #{to-rgb($white)};
 }
 
 .bg-white,
 .bg-light,
-[data-bs-theme="light"] {
+[data-bs-theme='light'] {
   --bs-emphasis-color: var(--bs-black);
   --bs-emphasis-color-rgb: #{to-rgb($black)};
 }
@@ -126,9 +125,9 @@ a {
 // scroll shadow and Canvas-preview handling live in the `sticky-header` library
 // (scss/theme/sticky-header.theme.scss), attached only when the theme setting
 // is enabled.
-.page > header[role="banner"] {
-  background-color: var(--bs-body-bg);
+.page > header[role='banner'] {
   transition: box-shadow 0.3s ease-out;
+  background-color: var(--bs-body-bg);
 
   .navbar {
     transition: height 0.3s ease-out;
@@ -141,7 +140,7 @@ a {
 // one line, while the menu column keeps its full width and the open menu drops
 // full-width below.
 @include media-breakpoint-down(lg) {
-  .page > header[role="banner"] {
+  .page > header[role='banner'] {
     .row {
       position: relative;
     }
@@ -183,68 +182,68 @@ a {
 // stock Bootstrap classes rather than custom media queries.
 
 // Default stacked gap inside the collapsed navbar (< lg).
-.page > header[role="banner"] .navbar-nav {
+.page > header[role='banner'] .navbar-nav {
   gap: 0.25rem;
 }
 
 // At lg+ inline items get a wider 1.875rem gap.
 @include media-breakpoint-up(lg) {
-  .page > header[role="banner"] .navbar-nav {
+  .page > header[role='banner'] .navbar-nav {
     gap: 1.875rem;
   }
 }
 
 // Header menu link styling (bold 1rem, body-color default, primary on hover).
-.page > header[role="banner"] .nav-link {
+.page > header[role='banner'] .nav-link {
   position: relative;
   padding: 0.625rem 0;
-  color: var(--bs-body-color);
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4;
   text-decoration: none;
+  color: var(--bs-body-color);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
 
   &:hover,
   &:focus,
   &:active {
-    color: var(--bs-primary) !important;
     text-decoration: none;
+    color: var(--bs-primary) !important;
   }
 }
 
 // Dropdown chevron inherits the link color so it also turns primary on hover.
-.page > header[role="banner"] .nav-link.dropdown-toggle::after {
-  border-top-color: currentColor;
+.page > header[role='banner'] .nav-link.dropdown-toggle::after {
   vertical-align: 0.15em;
+  border-top-color: currentColor;
 }
 
 // Hover underline indicator — lg+ only (pointer-hover context). Uses ::before
 // so it doesn't collide with Bootstrap's ::after dropdown chevron.
 @include media-breakpoint-up(lg) {
-  .page > header[role="banner"] .nav-link::before {
-    content: "";
+  .page > header[role='banner'] .nav-link::before {
     position: absolute;
     bottom: 0.25rem;
     left: 0;
     width: 100%;
     height: 0.05em;
-    background: currentcolor;
-    border-radius: $border-radius-pill;
+    content: '';
+    transition: transform 0.25s ease-out;
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.25s ease-out;
+    border-radius: $border-radius-pill;
+    background: currentColor;
   }
 
-  .page > header[role="banner"] .nav-link:hover::before,
-  .page > header[role="banner"] .nav-link:focus::before,
-  .page > header[role="banner"] .nav-link:active::before {
+  .page > header[role='banner'] .nav-link:hover::before,
+  .page > header[role='banner'] .nav-link:focus::before,
+  .page > header[role='banner'] .nav-link:active::before {
     transform: scaleX(1);
     transform-origin: left;
   }
 }
 
 // Header dropdown panel for child menu links (desktop floating panel).
-.page > header[role="banner"] .dropdown-menu {
+.page > header[role='banner'] .dropdown-menu {
   margin-top: 0.25rem;
   padding: 0.5rem 0;
   border: 0;
@@ -257,8 +256,8 @@ a {
   .dropdown-item {
     padding: 0.5rem 1.25rem;
     color: var(--bs-body-color);
-    font-weight: 700;
     font-size: 0.9375rem;
+    font-weight: 700;
     line-height: 1.4;
 
     &:hover,
@@ -275,9 +274,9 @@ a {
 // its children inline (no second click required) and drop the panel chrome
 // so it reads as a nested sub-list.
 @include media-breakpoint-down(lg) {
-  .page > header[role="banner"] .dropdown-menu {
-    display: block;
+  .page > header[role='banner'] .dropdown-menu {
     position: static;
+    display: block;
     margin: 0 0 0 1rem;
     padding: 0.25rem 0;
     border: 0;
@@ -286,7 +285,7 @@ a {
     box-shadow: none;
   }
 
-  .page > header[role="banner"] .dropdown-menu .dropdown-item {
+  .page > header[role='banner'] .dropdown-menu .dropdown-item {
     padding: 0.25rem 0;
     font-size: 0.9375rem;
     font-weight: 400;
@@ -298,11 +297,7 @@ a {
 // so the section's `bg-primary` paints in the Vardot dark blue per Figma.
 footer.footer {
   // Footer outer padding: 80px top, 60px bottom (Figma padding/footer).
-  padding-block: 3rem 0rem;
-
-  @include media-breakpoint-down(md) {
-    padding-block: 2.5rem 2rem;
-  }
+  padding-block: 3rem 0;
 
   // The main-menu template wraps in <nav class="navbar navbar-expand-lg">
   // for the header's hamburger behavior. In the footer we never want a
@@ -321,14 +316,14 @@ footer.footer {
   }
 
   a {
-    color: var(--bs-emphasis-color);
     text-decoration: none;
+    color: var(--bs-emphasis-color);
 
     &:hover,
     &:focus,
     &:active {
-      color: var(--bs-emphasis-color);
       text-decoration: underline;
+      color: var(--bs-emphasis-color);
     }
   }
 
@@ -354,6 +349,7 @@ footer.footer {
   }
 
   // Sitemap menu: stacked vertical list, right-aligned column (matches
+  // cspell:disable-next-line -- opaque hosting subdomain, not a real word.
   // main-bvxea6i-wpafon4fgqxwm.eu.platformsh.site reference layout where
   // .sitemap-menu sits in an ms-lg-auto column and items stack top-to-bottom).
   .block-system-menu-blockmain {
@@ -376,36 +372,36 @@ footer.footer {
   .block-system-menu-blockmain .nav-item a.nav-link {
     position: relative;
     padding: 0;
-    color: var(--bs-emphasis-color);
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4;
-    text-decoration: none;
     white-space: nowrap;
+    text-decoration: none;
+    color: var(--bs-emphasis-color);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
   }
 
   // Short left-aligned underline tick under hovered/active item (reference
   // site uses 2.4rem tick on hover, 1.3rem tick on is-active, at top:80%).
   .block-system-menu-blockmain .nav-item a.nav-link.is-active::after {
-    content: "";
     position: absolute;
     top: 80%;
     left: 0;
     width: 1.3rem;
     height: 0.0625rem;
+    content: '';
     background-color: var(--bs-emphasis-color);
   }
 
   .block-system-menu-blockmain .nav-item a.nav-link:hover::after,
   .block-system-menu-blockmain .nav-item a.nav-link:focus::after {
-    content: "";
     position: absolute;
     top: 80%;
     left: 0;
     width: 2.4rem;
     height: 0.0625rem;
-    background-color: var(--bs-emphasis-color);
+    content: '';
     transition: width 0.3s;
+    background-color: var(--bs-emphasis-color);
   }
 
   // Remove the dropdown chevron on parent items in footer (no dropdown behavior here).
@@ -428,11 +424,11 @@ footer.footer {
 
   .block-system-menu-blockfooter .nav-item a.nav-link {
     padding: 0;
-    color: var(--bs-emphasis-color);
-    font-weight: 400;
-    font-size: 0.875rem;
-    line-height: 1.4;
     text-decoration: none;
+    color: var(--bs-emphasis-color);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4;
   }
 
   .block-system-menu-blockfooter .nav-item a.nav-link:hover,
@@ -464,10 +460,10 @@ footer.footer {
     a.nav-link.dropdown-toggle {
       margin-bottom: 1.5rem;
       padding: 0;
-      font-weight: 700;
-      font-size: 1.25rem;
-      line-height: 1.5;
       pointer-events: none; // heading, not interactive
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.5;
 
       &::after {
         display: none; // drop dropdown chevron
@@ -478,49 +474,49 @@ footer.footer {
     // inset/transform reset defeat Bootstrap dropdown Popper inline styles.
     ul.dropdown-menu.level-2 {
       position: static !important;
-      inset: auto !important;
-      transform: none !important;
       display: flex !important;
       flex-direction: column;
-      gap: 1rem;
       margin: 0;
       padding: 0;
+      transform: none !important;
       border: 0;
       background: transparent;
       box-shadow: none;
+      inset: auto !important;
+      gap: 1rem;
     }
 
     a.dropdown-item {
       position: relative;
       width: auto;
       padding: 0;
-      font-weight: 400;
-      font-size: 1.125rem;
-      line-height: 1.5;
+      transition: color 0.15s ease-in-out;
       white-space: nowrap;
       text-decoration: none;
       background: transparent;
-      transition: color 0.15s ease-in-out;
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1.5;
 
       &::after {
-        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
         height: 0.05em;
-        background: currentcolor;
-        border-radius: $border-radius-pill;
+        content: '';
+        transition: transform 0.25s ease-out;
         transform: scaleX(0);
         transform-origin: right;
-        transition: transform 0.25s ease-out;
+        border-radius: $border-radius-pill;
+        background: currentColor;
       }
 
       &:hover,
       &:focus,
       &:active {
-        color: var(--bs-primary);
         text-decoration: none;
+        color: var(--bs-primary);
         background: transparent;
       }
 
@@ -546,18 +542,18 @@ footer.footer {
       justify-content: center;
       width: 1.875rem;
       height: 1.875rem;
+      text-decoration: none;
+      letter-spacing: -9999px !important;
       color: var(--bs-primary);
       font-size: 0 !important;
       line-height: 0 !important;
-      letter-spacing: -9999px !important;
-      text-decoration: none;
 
       &::before {
         display: inline-block;
         margin: 0;
+        letter-spacing: normal;
         color: var(--bs-primary);
         font-size: 1.125rem;
-        letter-spacing: normal;
       }
 
       &:hover,
@@ -590,10 +586,13 @@ footer.footer {
   // html-code section containing an <hr>, so it sits inside the container.
   hr {
     margin: 0;
+    opacity: 1;
     border: 0;
     border-top: 0.0625rem solid currentColor;
-    opacity: 0.4;
-    opacity: 1;
+  }
+
+  @include media-breakpoint-down(md) {
+    padding-block: 2.5rem 2rem;
   }
 }
 
@@ -623,10 +622,10 @@ footer.footer {
     min-width: 12rem;
   }
 
-  .form-item-search input[type="text"] {
+  .form-item-search input[type='text'] {
     padding-left: 2.25rem;
     /* stroke %230D2C54 = $navy = --bs-dark; can't use CSS vars inside SVG data URIs */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M6.125 11.375a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5ZM13.125 13.125 9.84 9.84%27 stroke=%27%230D2C54%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E");
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M6.125 11.375a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5ZM13.125 13.125 9.84 9.84%27 stroke=%27%230D2C54%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E');
     background-repeat: no-repeat;
     background-position: 1rem center;
     background-size: 0.875rem;
@@ -635,14 +634,6 @@ footer.footer {
   .form-item-industry,
   .form-item-type {
     flex: 0 0 var(--vb-filter-col-width);
-  }
-
-  @include media-breakpoint-down(md) {
-    .form-item-search,
-    .form-item-industry,
-    .form-item-type {
-      flex: 1 1 100%;
-    }
   }
 
   label {
@@ -655,7 +646,7 @@ footer.footer {
 
   .form-text,
   .form-select,
-  input[type="text"],
+  input[type='text'],
   select {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -683,9 +674,9 @@ footer.footer {
   .form-actions {
     display: flex;
     align-items: center;
+    height: 3.125rem;
     margin: 0;
     gap: 1.5rem;
-    height: 3.125rem;
   }
 
   .form-submit {
@@ -709,8 +700,8 @@ footer.footer {
     }
   }
 
-  [id*="edit-reset"],
-  input[name="reset"] {
+  [id*='edit-reset'],
+  input[name='reset'] {
     opacity: 0.5;
     color: var(--bs-secondary-color);
 
@@ -720,9 +711,17 @@ footer.footer {
       color: var(--bs-primary);
     }
   }
+
+  @include media-breakpoint-down(md) {
+    .form-item-search,
+    .form-item-industry,
+    .form-item-type {
+      flex: 1 1 100%;
+    }
+  }
 }
 
-[dir="rtl"] #views-exposed-form-blog-all .form-item-search input[type="text"] {
+[dir='rtl'] #views-exposed-form-blog-all .form-item-search input[type='text'] {
   padding-right: 2.25rem;
   padding-left: 0;
 }

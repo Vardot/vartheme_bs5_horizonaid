@@ -56,12 +56,12 @@
   }
 
   .hero-slider__nav {
-    order: 2;
     position: absolute;
+    z-index: 5;
+    order: 2;
+    pointer-events: none;
     inset-inline: 0;
     inset-block-end: 2.5rem;
-    z-index: 5;
-    pointer-events: none;
 
     * {
       pointer-events: auto;
@@ -84,9 +84,9 @@
 
   .carousel-control-prev,
   .carousel-control-next {
+    display: none;
     width: auto;
     opacity: 1;
-    display: none;
   }
 
   .carousel-indicators {
@@ -96,22 +96,24 @@
     gap: 0.5rem;
 
     [data-bs-target] {
+      margin: 0;
+      transition:
+        inline-size 0.3s ease,
+        background-color 0.3s ease;
+      opacity: 1 !important;
+      color: var(--hero-controller-color, #fff);
+      border: 0 !important;
+      border-radius: 999px !important;
+      background-color: rgba(255, 255, 255, 0.45) !important;
       inline-size: 8px;
       block-size: 8px;
-      border-radius: 999px !important;
-      border: 0 !important;
-      background-color: rgba(255, 255, 255, 0.45) !important;
-      color: var(--hero-controller-color, #fff);
-      opacity: 1 !important;
-      margin: 0;
-      transition: inline-size 0.3s ease, background-color 0.3s ease;
     }
 
     .active {
-      inline-size: 1.75rem;
-      background-color: var(--hero-controller-color) !important;
-      border-color: var(--hero-controller-color) !important;
       opacity: 1;
+      border-color: var(--hero-controller-color) !important;
+      background-color: var(--hero-controller-color) !important;
+      inline-size: 1.75rem;
     }
   }
 
@@ -126,21 +128,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: 2.75rem;
-    block-size: 2.75rem;
+    padding: 0;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+    text-decoration: none;
+    color: var(--bs-primary) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
     border-radius: 0.5rem !important;
-    padding: 0;
-    text-decoration: none;
     background: rgba(255, 255, 255, 0.92) !important;
     box-shadow: none;
-    color: var(--bs-primary) !important;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
 
     &:hover {
-      background: #ffffff !important;
-      border-color: #ffffff !important;
       opacity: 1;
+      border-color: #fff !important;
+      background: #fff !important;
     }
 
     svg {
@@ -174,15 +178,20 @@
 
   .hero-slider__overlay-gradient {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.45) 42%, rgba(0, 0, 0, 0) 75%);
     pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.45) 42%,
+      rgba(0, 0, 0, 0) 75%
+    );
+    inset: 0;
   }
 
   @media (max-width: 991.98px) {
     .hero-slider__item {
-      min-height: auto !important;
       height: auto !important;
+      min-height: auto !important;
     }
 
     .hero-slider__item > .h-100,

@@ -6,3 +6,10 @@
 node_modules
 .yarn/*
 .pnp.*
+
+# gitlab-ci-local artifacts (local pipeline runs, see .gitlab-ci-local.yml).
+.gitlab-ci-local/
+
+# Throwaway PHPStan toolchain built by the "🔬 PHPStan" CI job (see
+# .gitlab-ci.yml / .gitlab-ci-local.yml) - never committed.
+.phpstan-tools/

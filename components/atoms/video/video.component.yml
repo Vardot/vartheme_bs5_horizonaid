@@ -40,4 +40,3 @@ props:
       title: Extra classes (optional)
       description: Space-separated Bootstrap utility classes.
       default: ""
-

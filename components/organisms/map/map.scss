@@ -1,4 +1,4 @@
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .map {
   --map-height-sm: 20rem;
@@ -10,13 +10,14 @@
   --map-control-hover-icon: var(--bs-white);
   --map-control-size: 2.5rem;
   --map-control-duration: 0.2s;
+
   // #E0E0E0 has no matching Bootstrap/theme token (checked against
   // scss/_bootstrap-variables.scss — closest neutrals are $gray-900/
   // $body-tertiary-bg, both far darker), so it's a fixed design value here.
   // The highlighted/selected colors do match existing theme tokens exactly:
   // --bs-accent is $accent (#0073E6) and --bs-secondary is $secondary/$navy
   // (#0D2C54) — reusing them instead of repeating the hex literals.
-  --map-country-fill: #E0E0E0;
+  --map-country-fill: #e0e0e0;
   --map-country-stroke: var(--bs-white);
   --map-country-highlighted-fill: var(--bs-accent);
   --map-country-highlighted-hover-fill: var(--bs-secondary);
@@ -80,9 +81,9 @@
 
   &__controls {
     position: absolute;
+    z-index: 1;
     bottom: $spacer;
     left: $spacer;
-    z-index: 1;
   }
 
   &__control {

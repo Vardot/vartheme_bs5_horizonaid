@@ -1,5 +1,5 @@
 // @file Impressed Card — media zoom and heading color transition on hover.
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .card-impressed {
   --card-impressed-img-duration: 0.45s;
@@ -17,9 +17,10 @@
   // card-impressed.twig), so the scaled image is clipped regardless of
   // card_border.
   .card-img img {
+    transition: transform var(--card-impressed-img-duration)
+      var(--card-impressed-easing);
     transform: scale(1);
     transform-origin: center;
-    transition: transform var(--card-impressed-img-duration) var(--card-impressed-easing);
     will-change: transform;
   }
 

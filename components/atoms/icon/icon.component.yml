@@ -120,15 +120,15 @@ props:
       title: Icon size
       description: Bootstrap font-size utility class used to control the icon size.
       enum:
-      - fs-1
-      - fs-2
-      - fs-3
-      - fs-4
-      - fs-5
-      - fs-6
+        - fs-1
+        - fs-2
+        - fs-3
+        - fs-4
+        - fs-5
+        - fs-6
       default: fs-4
       examples:
-      - fs-4
+        - fs-4
       meta:enum:
         fs-1: Extra large
         fs-2: Large
@@ -141,28 +141,28 @@ props:
       title: Color
       description: Bootstrap text color utility class used to control the color.
       enum:
-      - text-body
-      - text-primary
-      - text-secondary
-      - text-success
-      - text-danger
-      - text-warning
-      - text-info
-      - text-light
-      - text-dark
-      - text-white
-      - text-muted
-      - text-body-secondary
-      - text-body-tertiary
-      - text-primary-emphasis
-      - text-secondary-emphasis
-      - text-success-emphasis
-      - text-danger-emphasis
-      - text-warning-emphasis
-      - text-info-emphasis
+        - text-body
+        - text-primary
+        - text-secondary
+        - text-success
+        - text-danger
+        - text-warning
+        - text-info
+        - text-light
+        - text-dark
+        - text-white
+        - text-muted
+        - text-body-secondary
+        - text-body-tertiary
+        - text-primary-emphasis
+        - text-secondary-emphasis
+        - text-success-emphasis
+        - text-danger-emphasis
+        - text-warning-emphasis
+        - text-info-emphasis
       default: text-body
       examples:
-      - text-body
+        - text-body
       meta:enum:
         text-body: Body
         text-primary: Primary

@@ -1,4 +1,4 @@
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .card-profile {
   // Tokens — computed from Bootstrap variables/custom properties so the
@@ -17,7 +17,8 @@
   }
 
   &__photo img {
-    transition: transform var(--card-profile-media-duration) var(--card-profile-easing);
+    transition: transform var(--card-profile-media-duration)
+      var(--card-profile-easing);
     will-change: transform;
   }
 
@@ -39,9 +40,9 @@
 
   &__social-link {
     display: inline-flex;
+    text-decoration: none;
     color: var(--card-profile-icon-color);
     line-height: 0;
-    text-decoration: none;
 
     .bi {
       transition: color var(--card-profile-icon-duration) ease;

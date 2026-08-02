@@ -10,7 +10,7 @@
 // special case. Scoped to the `.programs` block so nothing leaks to the
 // rest of the theme.
 
-@import "../../defaults";
+@import '../../defaults';
 
 .programs {
   &__nav {
@@ -19,11 +19,11 @@
 
     @include media-breakpoint-up(lg) {
       position: absolute;
+      z-index: 1;
+      transform: translateX(-50%);
       inset-block-start: 0;
       inset-inline-start: 50%;
-      transform: translateX(-50%);
       margin-block: $spacer 0;
-      z-index: 1;
     }
   }
 }

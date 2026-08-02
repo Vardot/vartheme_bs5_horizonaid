@@ -22,4 +22,6 @@ class Anchor extends ComponentInstance {
   }
 }
 
+// Registers the component as a side effect; there is nothing to assign.
+// eslint-disable-next-line no-new
 new ComponentType(Anchor, 'anchor', '.anchor');

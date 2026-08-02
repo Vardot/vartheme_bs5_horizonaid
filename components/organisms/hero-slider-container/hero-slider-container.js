@@ -183,7 +183,9 @@
       if (inst0) {
         try {
           inst0.pause();
-        } catch (e) {}
+        } catch (e) {
+          // Carousel instance not ready yet; ignore.
+        }
       }
     }
 

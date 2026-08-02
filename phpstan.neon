@@ -1,0 +1,66 @@
+# PHPStan configuration for the Horizon Aid theme.
+#
+# This theme's composer.json requires drupal/canvas, whose optional
+# canvas_headless submodule extends a class from the uninstalled
+# custom_elements module. mglaman/phpstan-drupal's bootstrap autoloader walks
+# every extension physically present in a full site build and crashes on that
+# submodule before any analysis starts:
+#
+#   Error thrown in .../canvas_headless/src/RenderConverter/
+#   JsComponentCanvasRenderConverter.php ... while loading bootstrap file
+#   .../mglaman/phpstan-drupal/drupal-autoloader.php:
+#   Class "Drupal\custom_elements\RenderConverter\CanvasRenderConverter" not found
+#
+# That happens while the bootstrap file itself is loading, before `paths` /
+# `excludePaths` below are ever consulted - no scoping in this file can
+# prevent it (confirmed: `customRulesetUsed: true` does not help either, it
+# only silences PHPStan's "no rules detected" prompt and has no effect on
+# phpstan/extension-installer's automatic inclusion of phpstan-drupal). That
+# auto-inclusion is controlled by `extra.phpstan/extension-installer.ignore`
+# in the ROOT composer.json of whichever vendor/ directory phpstan runs
+# against - for the templated `phpstan` job that is the full site build
+# assembled fresh every pipeline run, not a file in this repo. So the
+# templated `phpstan` job is disabled in .gitlab-ci.yml and replaced with a
+# self-contained "PHPStan" job that installs its own small, isolated
+# toolchain (phpstan/phpstan + drupal/core, no phpstan-drupal, no
+# extension-installer) under .phpstan-tools/ - it never touches Canvas or any
+# other contrib module, so the crash cannot recur.
+#
+# The theme owns three PHP files, listed under `paths` below. `excludePaths`
+# covers the case where the CLI path argument (`.`) takes precedence over
+# `paths`.
+parameters:
+  level: 1
+
+  paths:
+    - vartheme_bs5_horizonaid.theme
+    - theme-settings.php
+    - src
+
+  # `.theme` is PHP; PHPStan only reads `.php` unless told otherwise.
+  fileExtensions:
+    - php
+    - theme
+
+  excludePaths:
+    analyseAndScan:
+      - web/*
+      - vendor/*
+      - node_modules/*
+      - css/*
+      - js/*
+      - dist/*
+      - .phpstan-tools/*
+
+  # Drupal's procedural theme layer legitimately uses global functions and untyped
+  # hook signatures; do not report the absence of type hints in them.
+  treatPhpDocTypesAsCertain: false
+
+  # Teach PHPStan about Drupal's own procedural global functions used by this
+  # theme's hooks (base_path(), theme_get_setting()). These are declared in
+  # Drupal core's *.inc files, which are include_once'd at bootstrap time.
+  # Composer's class autoloader never loads them, so without this PHPStan
+  # reports a false "Function ... not found" for perfectly valid Drupal API use.
+  scanFiles:
+    - .phpstan-tools/vendor/drupal/core/includes/common.inc
+    - .phpstan-tools/vendor/drupal/core/includes/theme.inc

@@ -1,4 +1,4 @@
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .card-country {
   // Tokens — computed from Bootstrap variables/custom properties so the
@@ -19,6 +19,7 @@
   // themeable gap.
   --card-country-height: 26.25rem;
   --card-country-footer-collapsed-h: 5rem;
+
   // Sized to the component's actual typical content — title (already
   // counted in the collapsed height) + a short 2-3 line description + the
   // link — not a generous guess. p-4 top/bottom padding (1.5rem × 2) +
@@ -63,8 +64,8 @@
   &__photo img,
   &__photo picture,
   &__photo picture img {
-    height: 100%;
     width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: top;
   }
@@ -84,7 +85,8 @@
 
   &__footer {
     height: var(--card-country-footer-collapsed-h);
-    transition: height var(--card-country-duration-panel) var(--card-country-easing);
+    transition: height var(--card-country-duration-panel)
+      var(--card-country-easing);
   }
 
   // `&--editor-reveal` (added by card-country.js only inside the Drupal
@@ -104,10 +106,11 @@
   // hidden 1.25rem below its resting position, fades and rises into place.
   &__content > :not(:first-child),
   &__link-wrap {
-    opacity: 0;
-    transform: translateY(var(--card-country-reveal-offset));
-    transition: opacity var(--card-country-duration-content) var(--card-country-easing),
+    transition:
+      opacity var(--card-country-duration-content) var(--card-country-easing),
       transform var(--card-country-duration-content) var(--card-country-easing);
+    transform: translateY(var(--card-country-reveal-offset));
+    opacity: 0;
   }
 
   &:hover &__content > :not(:first-child),
@@ -116,9 +119,9 @@
   &:focus-within &__link-wrap,
   &--editor-reveal &__content > :not(:first-child),
   &--editor-reveal &__link-wrap {
-    opacity: 1;
-    transform: translateY(0);
     transition-delay: 0.08s;
+    transform: translateY(0);
+    opacity: 1;
   }
 
   &__link {

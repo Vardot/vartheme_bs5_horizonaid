@@ -58,6 +58,9 @@
     }],
     "operator-linebreak": ["error", "after", { "overrides": { "?": "ignore", ":": "ignore" } }],
     "yml/indent": ["error", 2],
+    "import/extensions": ["error", "ignorePackages", {
+      "js": "always"
+    }],
     "no-unused-expressions": ["off"],
     "func-names": ["off"],
     "no-nested-ternary": ["off"],

@@ -1,11 +1,10 @@
-
-@import "../../defaults";   // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 // Override default bootstrap breadcrumb variables.
 $breadcrumb-font-size: 1rem;
 $breadcrumb-padding-x: 0.0625rem;
 
-@import "../../../node_modules/bootstrap/scss/breadcrumb";
+@import '../../../node_modules/bootstrap/scss/breadcrumb';
 
 // Change default bootstrap breadcrumb style.
 
@@ -36,11 +35,11 @@ $breadcrumb-padding-x: 0.0625rem;
 
 // Change the breadcrumb divider to use bootstrap-icons.
 .breadcrumb-item + .breadcrumb-item::before {
-  font-family: 'bootstrap-icons';
+  content: '\F285';
+  font-family: bootstrap-icons;
   font-size: 1.1rem;
   font-weight: 500;
-  content: quote("\F285");
 }
-[dir="rtl"] .breadcrumb-item + .breadcrumb-item::before {
-  content: quote("\F285");
+[dir='rtl'] .breadcrumb-item + .breadcrumb-item::before {
+  content: '\F285';
 }

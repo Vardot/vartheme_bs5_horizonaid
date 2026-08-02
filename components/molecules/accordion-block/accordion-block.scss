@@ -1,6 +1,6 @@
 // @file Accordion Block — single collapsible item with plus/minus icon toggle
 // and a grid-based height animation (no Bootstrap Collapse dependency).
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .accordion-block {
   --accordion-block-duration: 0.3s;
@@ -8,10 +8,11 @@
   --accordion-block-icon-duration: 0.15s;
 
   width: 100%;
+  transition: background-color var(--accordion-block-duration)
+    var(--accordion-block-easing);
   border-radius: $border-radius-xl; // 16px.
-  padding-block: $spacer * 0.5; // 8px.
   background-color: var(--bs-tertiary);
-  transition: background-color var(--accordion-block-duration) var(--accordion-block-easing);
+  padding-block: $spacer * 0.5; // 8px.
 
   &.is-expanded {
     background-color: var(--bs-accent-bg-subtle);
@@ -24,28 +25,28 @@
   }
 
   &__header {
-    width: 100%;
     display: flex;
     align-items: center;
+    width: 100%;
+    cursor: pointer;
+    text-align: start;
+    border: 0;
+    background: none;
+    font-family: inherit;
     gap: $spacer * 0.75; // 12px.
     padding-block: $spacer * 0.5; // 8px.
     padding-inline: $spacer * 1.5; // 24px.
-    background: none;
-    border: 0;
-    cursor: pointer;
-    text-align: start;
-    font-family: inherit;
   }
 
   &__title {
     flex: 1 1 0%;
     min-width: 0;
     margin: 0;
-    font-weight: $font-weight-bold;
-    font-size: $h4-font-size; // 20px.
-    line-height: 1.35;
-    color: var(--bs-secondary);
     transition: color var(--accordion-block-duration) ease;
+    color: var(--bs-secondary);
+    font-size: $h4-font-size; // 20px.
+    font-weight: $font-weight-bold;
+    line-height: 1.35;
   }
 
   &__header:hover &__title {
@@ -80,7 +81,8 @@
   &__body-wrapper {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows var(--accordion-block-duration) var(--accordion-block-easing);
+    transition: grid-template-rows var(--accordion-block-duration)
+      var(--accordion-block-easing);
   }
 
   &.is-expanded &__body-wrapper {
@@ -93,11 +95,11 @@
 
   &__body {
     margin: 0;
-    padding-block: $spacer * 0.5 $spacer; // 8px 16px.
-    padding-inline: $spacer * 2; // 32px.
+    color: var(--bs-body-color);
     font-size: $font-size-lg; // 18px.
     line-height: $line-height-base;
-    color: var(--bs-body-color);
+    padding-block: $spacer * 0.5 $spacer; // 8px 16px.
+    padding-inline: $spacer * 2; // 32px.
   }
 
   &__body--canvas {

@@ -1,6 +1,6 @@
 // Better Login styling.
 // -----------------------------------------------------------------------------
-@import "../../defaults";   // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .page {
   min-height: 100vh;
@@ -28,6 +28,7 @@
   #bottom-part {
     @include font-size(0.75rem);
     @include padding(2rem 0 0);
+
     text-align: center;
   }
 
@@ -36,11 +37,11 @@
       max-width: 100%;
     }
   }
-
 }
 
 .separator {
   @include margin(2rem 0);
+
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -48,18 +49,19 @@
 
   .separator-start,
   .separator-end {
+    width: 100%;
     height: calc(1em / 16);
     background-color: var(--bs-gray-200);
-    width: 100%;
   }
 
   .separator-text {
     @include margin(0 3rem);
-    font-style: normal;
-    font-weight: 600;
-    font-size: 0.9rem;
-    line-height: 1rem;
+
     color: var(--bs-gray-400);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 1rem;
   }
 }
 

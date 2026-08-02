@@ -104,6 +104,7 @@ module.exports = {
               // Global SCSS imports:
               additionalData: `
                 @use "sass:color";
+                @use "sass:map";
                 @use "sass:math";
                 @use "sass:string";
               `,

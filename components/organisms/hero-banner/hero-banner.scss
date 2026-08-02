@@ -14,7 +14,7 @@
 // `inset-block-end: 0`. Scoped to `.hero-banner` so nothing leaks to the
 // rest of the theme.
 
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .hero-banner {
   // Fixed design tokens (not derived from the Bootstrap spacing/radius
@@ -27,17 +27,6 @@
   --hero-banner-content-offset-end: 8.125rem;
   --hero-banner-content-top-gap: 15.6rem; // image visible above the box, lg+
   --hero-banner-content-min-height: 18rem; // comfortable room for heading/text/button
-
-  // `&__media` and `&__content` are grid siblings from `lg` up: row 1 is the
-  // fixed top gap, row 2 holds the content box and grows past `min-height`
-  // when the slot content needs more room (`minmax(…, auto)`), taking the
-  // overall banner height — and the media block spanning both rows — with
-  // it, instead of clipping the box at a fixed height.
-  @include media-breakpoint-up(lg) {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: var(--hero-banner-content-top-gap) minmax(var(--hero-banner-content-min-height), auto);
-  }
 
   &__media {
     width: 100%;
@@ -80,8 +69,8 @@
     // overlap (arbitrated by z-index) explicit and intentional.
     @include media-breakpoint-up(lg) {
       position: relative;
-      grid-column: 1;
       grid-row: 1 / -1;
+      grid-column: 1;
 
       figure {
         position: absolute;
@@ -111,7 +100,8 @@
     margin-inline: auto;
     margin-block-start: -#{$spacer * 2};
     padding: var(--hero-banner-content-padding);
-    border-radius: var(--hero-banner-content-radius) var(--hero-banner-content-radius) 0 0;
+    border-radius: var(--hero-banner-content-radius)
+      var(--hero-banner-content-radius) 0 0;
 
     // `max-width` is a plain 28rem, not a percentage-based calc/min() against
     // the container: at `lg` (992px) and up the container is always wide
@@ -123,13 +113,27 @@
     // both rows) in Chromium/WebKit.
     @include media-breakpoint-up(lg) {
       z-index: 2;
-      grid-column: 1;
       grid-row: 2;
+      grid-column: 1;
       justify-self: end;
       width: auto;
       max-width: 28rem;
       margin: 0;
       margin-inline-end: var(--hero-banner-content-offset-end);
     }
+  }
+
+  // `&__media` and `&__content` are grid siblings from `lg` up: row 1 is the
+  // fixed top gap, row 2 holds the content box and grows past `min-height`
+  // when the slot content needs more room (`minmax(…, auto)`), taking the
+  // overall banner height — and the media block spanning both rows — with
+  // it, instead of clipping the box at a fixed height.
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-rows: var(--hero-banner-content-top-gap) minmax(
+        var(--hero-banner-content-min-height),
+        auto
+      );
+    grid-template-columns: 1fr;
   }
 }

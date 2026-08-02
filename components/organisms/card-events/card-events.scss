@@ -1,5 +1,5 @@
 // @file Events Card — two-tone event card with hover heading color and 3-line text clamp.
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .card-events {
   --card-events-duration-color: 0.3s;
@@ -11,10 +11,10 @@
     padding-block: 0.125rem;
 
     span {
+      white-space: nowrap;
+      letter-spacing: 0.06rem;
       font-size: 0.75rem; // 12px
       line-height: 1.35;
-      letter-spacing: 0.06rem;
-      white-space: nowrap;
     }
   }
 
@@ -28,19 +28,13 @@
   // win against regardless of selector specificity.
   &__content {
     :is(h1, h2, h3, h4, h5, h6) {
-      color: var(--bs-secondary);
       transition: color var(--card-events-duration-color) ease;
+      color: var(--bs-secondary);
     }
   }
 
   &:hover &__content :is(h1, h2, h3, h4, h5, h6) {
     color: var(--bs-accent);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &__content :is(h1, h2, h3, h4, h5, h6) {
-      transition: none;
-    }
   }
 
   // --- Content slot: text clamp ----------------------------------------------
@@ -57,5 +51,11 @@
 
   .stretched-link {
     z-index: 99;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__content :is(h1, h2, h3, h4, h5, h6) {
+      transition: none;
+    }
   }
 }

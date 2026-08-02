@@ -1,4 +1,4 @@
-@import "../../defaults";   // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .nav {
   --bs-nav-link-font-size: 1rem;
@@ -19,11 +19,11 @@
    */
   .nav-link--cta.nav-link--cta.nav-link--cta {
     position: static;
-    padding-block: #{$spacer * 0.625};
-    padding-inline: #{$spacer * 1.5};
+    color: var(--bs-dark);
     border-radius: #{$spacer * 1.25};
     background-color: var(--bs-primary);
-    color: var(--bs-dark);
+    padding-block: #{$spacer * 0.625};
+    padding-inline: #{$spacer * 1.5};
 
     &::before {
       display: none;
@@ -31,8 +31,8 @@
 
     &:hover,
     &:focus-visible {
-      background-color: var(--bs-accent);
       color: var(--bs-white);
+      background-color: var(--bs-accent);
     }
   }
 }

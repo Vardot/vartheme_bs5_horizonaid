@@ -1,8 +1,9 @@
 {
   "extends": [
-    "stylelint-config-standard",
+    "stylelint-config-standard-scss",
     "stylelint-prettier/recommended"
   ],
+  "customSyntax": "postcss-scss",
   "plugins": [
     "stylelint-order"
   ],
@@ -13,6 +14,10 @@
     "comment-empty-line-before": null,
     "custom-property-pattern": "^[a-z][-_a-z0-9IE]*$",
     "declaration-block-no-redundant-longhand-properties": null,
+    "no-invalid-position-at-import-rule": null,
+    "scss/comment-no-empty": null,
+    "scss/operator-no-newline-after": null,
+    "scss/operator-no-newline-before": null,
     "function-url-quotes": null,
     "hue-degree-notation": "number",
     "import-notation": "string",
@@ -395,6 +400,14 @@
     }],
     "value-no-vendor-prefix": null
   },
+  "overrides": [
+    {
+      "files": ["**/*.css"],
+      "rules": {
+        "scss/operator-no-unspaced": null
+      }
+    }
+  ],
   "ignoreFiles": [
     "assets/vendor/**/*.css",
     "tests/Drupal/Tests/Core/Asset/css_test_files/**/*.css",

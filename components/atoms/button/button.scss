@@ -50,6 +50,7 @@
     --bs-btn-color: var(--bs-dark);
     --bs-btn-hover-color: var(--bs-dark);
     --bs-btn-active-color: var(--bs-dark);
+
     text-decoration: none;
 
     &:hover,
@@ -65,7 +66,7 @@
    * frozen hover background below. Outline variants keep their border,
    * since it's the whole point of that style.
    */
-  &:not(.btn-link):not([class*="btn-outline-"]) {
+  &:not(.btn-link, [class*='btn-outline-']) {
     --bs-btn-border-width: 0;
   }
 
@@ -77,7 +78,7 @@
    * Skipped for `.btn-link` (no fill background to animate) and disabled
    * buttons/links (no hover state).
    */
-  &:not(.btn-link):not(:disabled):not([aria-disabled="true"]) {
+  &:not(.btn-link, :disabled, [aria-disabled='true']) {
     --btn-fill-duration: 0.35s;
     --btn-fill-easing: #{cubic-bezier(0.22, 1, 0.36, 1)};
 
@@ -88,19 +89,19 @@
     // animate the hover background in instead.
     &:hover,
     &:focus-visible {
-      background-color: var(--bs-btn-bg);
       color: var(--bs-btn-hover-color);
+      background-color: var(--bs-btn-bg);
     }
 
     &::before,
     &::after {
-      content: "";
       position: absolute;
-      inset-block: 0;
       width: 50%;
-      background-color: var(--bs-btn-hover-bg);
-      transform: scaleX(0);
+      content: '';
       transition: transform var(--btn-fill-duration) var(--btn-fill-easing);
+      transform: scaleX(0);
+      background-color: var(--bs-btn-hover-bg);
+      inset-block: 0;
     }
 
     &::before {

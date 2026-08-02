@@ -74,5 +74,3 @@ props:
       description: Displays a decorative quote icon in the corner.
       default: true
       examples: [true]
-
-    

@@ -1,4 +1,4 @@
-@import "../../defaults";   // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 // Override default bootstrap alert variables.
 $alert-border-width: 0;
@@ -6,7 +6,7 @@ $alert-border-radius: 0.125rem;
 $alert-padding-y: 0.9375rem;
 $alert-padding-x: 0.9375rem;
 
-@import "../../../node_modules/bootstrap/scss/alert";
+@import '../../../node_modules/bootstrap/scss/alert';
 
 // Change default bootstrap alert style.
 
@@ -14,12 +14,13 @@ $alert-padding-x: 0.9375rem;
 .alert-dismissible {
   .btn-close {
     --bs-btn-close-opacity: 1;
-    -webkit-mask-image: var(--bs-btn-close-bg) !important;
-    mask-image: var(--bs-btn-close-bg) !important;
+
     width: 0.75rem !important;
     height: 0.75rem !important;
-    padding: 0.225rem !important;
     margin: 1.22rem !important;
+    padding: 0.225rem !important;
+    -webkit-mask-image: var(--bs-btn-close-bg) !important;
+    mask-image: var(--bs-btn-close-bg) !important;
   }
 }
 
@@ -28,20 +29,23 @@ $alert-padding-x: 0.9375rem;
 @each $color, $value in $theme-colors {
   .alert-#{$color} {
     &.alert-dismissible {
-
-      @if $color == "light" { 
+      @if $color == 'light' {
         .btn-close {
           background: shade-color($value, $btn-active-bg-shade-amount);
         }
-      } @else if $color == "dark" {
+      } @else if $color == 'dark' {
         .btn-close {
           background: tint-color($value, $btn-active-bg-tint-amount);
         }
-      } @else if $color == "warning" {
+      } @else if $color == 'warning' {
         .btn-close {
-          background: if($color == $color-contrast-light, shade-color($value, $btn-active-bg-shade-amount), tint-color($value, $btn-active-bg-tint-amount));
+          background: if(
+            $color == $color-contrast-light,
+            shade-color($value, $btn-active-bg-shade-amount),
+            tint-color($value, $btn-active-bg-tint-amount)
+          );
         }
-      } @else if $color == "danger" {
+      } @else if $color == 'danger' {
         .btn-close {
           background: shade-color($value, $btn-active-bg-shade-amount);
         }

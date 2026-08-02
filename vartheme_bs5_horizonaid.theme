@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_theme().
@@ -232,13 +233,13 @@ function vartheme_bs5_horizonaid_preprocess_user(&$variables) {
     'edit' => [
       '#type' => 'link',
       '#title' => t('Edit profile'),
-      '#url' => \Drupal\Core\Url::fromRoute('entity.user.edit_form', ['user' => $user->id()]),
+      '#url' => Url::fromRoute('entity.user.edit_form', ['user' => $user->id()]),
       '#attributes' => ['class' => ['btn', 'btn-primary', 'user__action-edit']],
     ],
     'logout' => [
       '#type' => 'link',
       '#title' => t('Log out'),
-      '#url' => \Drupal\Core\Url::fromRoute('user.logout'),
+      '#url' => Url::fromRoute('user.logout'),
       '#attributes' => ['class' => ['btn', 'btn-secondary', 'user__action-logout', 'ms-2']],
     ],
   ];

@@ -1,0 +1,98 @@
+# .gitlab-ci-local.yml - the locally reproducible subset of .gitlab-ci.yml.
+#
+# Covers the five self-contained jobs (theme build + eslint + stylelint +
+# cspell + phpstan). Does NOT cover the drupal/gitlab_templates-native jobs
+# (composer, phpcs, phpunit) - the full templated pipeline currently cannot
+# run under gitlab-ci-local at all: any ref of drupal/gitlab_templates crashes
+# rule evaluation before a single job starts
+# (https://github.com/firecow/gitlab-ci-local/issues/1893, open). Those jobs
+# gate on the real remote pipeline on git.drupalcode.org, not this file. The
+# templated `phpstan` job is disabled entirely in .gitlab-ci.yml (see the
+# comment there) and replaced by the self-contained "🔬 PHPStan" job below,
+# which - unlike the templated one - IS reproducible here.
+#
+# Usage:
+#   gitlab-ci-local --file .gitlab-ci-local.yml                # all jobs
+#   gitlab-ci-local --file .gitlab-ci-local.yml "🟨 ESLint"     # one job
+
+stages:
+  - build
+  - validate
+
+variables:
+  YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+
+.yarn_setup: &yarn_setup
+  - corepack enable
+  - 'test -f .yarnrc.yml || echo "nodeLinker: node-modules" > .yarnrc.yml'
+  - yarn install
+
+"🏗️ Theme build":
+  stage: build
+  image: node:20
+  before_script: *yarn_setup
+  script:
+    - node --version
+    - yarn theme:full-build
+
+"🟨 ESLint":
+  stage: validate
+  image: node:20
+  before_script: *yarn_setup
+  script:
+    - node --version
+    - yarn lint:js
+    - yarn lint:yaml
+  allow_failure: false
+
+# Targets the authored scss/**/*.scss + components/**/*.scss source, not the
+# webpack-compiled css/**/*.css output (see .gitlab-ci.yml).
+"🎨 Stylelint":
+  stage: validate
+  image: node:20
+  before_script: *yarn_setup
+  script:
+    - yarn lint:css
+  allow_failure: false
+
+"🔤 Cspell":
+  stage: validate
+  image: node:20
+  before_script: *yarn_setup
+  script:
+    - yarn spellcheck
+  allow_failure: false
+
+# Isolated toolchain (phpstan/phpstan + drupal/core only, no phpstan-drupal)
+# under .phpstan-tools/ - see .gitlab-ci.yml for why the templated `phpstan`
+# job cannot be used instead.
+"🔬 PHPStan":
+  stage: validate
+  image: php:8.4-cli
+  before_script:
+    - apt-get update -y > /dev/null && apt-get install -y -qq git unzip zip > /dev/null
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - mkdir -p .phpstan-tools
+    - |
+      cat > .phpstan-tools/composer.json << 'EOF'
+      {
+        "name": "vardot/vartheme-bs5-horizonaid-phpstan-tools",
+        "description": "Throwaway PHPStan toolchain for the self-contained PHPStan CI job. Not shipped, not autoloaded by the theme.",
+        "type": "project",
+        "require-dev": {
+          "phpstan/phpstan": "^2.2",
+          "drupal/core": "~11.4.0",
+          "symfony/filesystem": "^7.0",
+          "symfony/finder": "^7.0"
+        },
+        "config": {
+          "allow-plugins": false
+        },
+        "minimum-stability": "dev",
+        "prefer-stable": true
+      }
+      EOF
+    - composer update --working-dir=.phpstan-tools --no-interaction --no-progress --ignore-platform-reqs
+  script:
+    - php .phpstan-tools/vendor/bin/phpstan analyze . --autoload-file="$CI_PROJECT_DIR/.phpstan-tools/vendor/autoload.php" --no-progress
+  allow_failure: false

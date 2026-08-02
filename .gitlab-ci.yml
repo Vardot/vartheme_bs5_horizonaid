@@ -1,55 +1,182 @@
 ################################################################################
-# Basic GitLab CI for Vartheme BS5 Horizon Aid.
+# GitLab CI for the Vartheme BS5 Horizon Aid theme, built on the official
+# drupal/gitlab_templates include (project/gitlab_templates).
 #
-# A self-contained build + validate pipeline modeled on the Varbase project CI:
-# build the theme + component assets, then run the JS / CSS / YAML / spelling
-# linters for visibility. The lints run but do not fail the stage (`|| true`),
-# so the basic pipeline stays green. Drop the `|| true` from a job to make that
-# individual check blocking.
+# The template ships its generic eslint/stylelint/cspell jobs as advisory
+# (allow_failure: true) and this theme's PREVIOUS hand-rolled pipeline (before
+# this change) additionally masked every one of them with `|| true`, so a real
+# finding could never fail the job - only a timeout could, which is exactly
+# what started happening once the theme grew two vendored minified JS files
+# (see .eslintignore below). That masking pattern is inherited from the
+# vartheme_bs5 starter kit this theme is cloned from (its own eslint/stylelint
+# jobs are advisory today too - out of scope here, one issue per project).
+#
+# This theme ships its own ESLint/Stylelint/cspell config and toolchain
+# (.eslintrc.json, .stylelintrc.json, .cspell.json, package.json + yarn 4),
+# not Drupal core's - so the template's generic jobs are skipped (SKIP_ESLINT /
+# SKIP_STYLELINT / SKIP_CSPELL) and replaced with self-contained jobs that run
+# this theme's own `yarn lint:*` / `yarn spellcheck` scripts. No `|| true`
+# anywhere: every job below is allow_failure: false and fails on a real
+# finding. Stylelint targets the authored scss/**/*.scss + components/**/*.scss
+# source (via stylelint-config-standard-scss + postcss-scss), not the
+# webpack-compiled css/**/*.css output - linting build output gates on a
+# moving target that regenerates on every build.
 ################################################################################
 
-stages:
-  - build
-  - validate
+include:
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - "/includes/include.drupalci.main.yml"
+      - "/includes/include.drupalci.variables.yml"
+      - "/includes/include.drupalci.workflows.yml"
 
 variables:
+  PROJECT_TYPE: theme
+  # This branch targets Drupal core 11.4, matching the sibling vartheme_bs5
+  # starter kit's pin; the static jobs (phpcs/phpunit) validate against it.
+  DRUPAL_CORE: "11.4.0"
+  IGNORE_PROJECT_DRUPAL_CORE_VERSION: "1"
   # Yarn 4 defaults to immutable installs in CI and would refuse to touch the
-  # lockfile; allow it so `yarn install` works on every job.
+  # lockfile; allow it so `yarn install` works in every job below.
   YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+  # This theme's .eslintrc.json extends airbnb-base + prettier + yml, and its
+  # .stylelintrc.json extends stylelint-config-standard + stylelint-prettier +
+  # stylelint-order + cspell's own dictionary (.cspell.json) - none of that is
+  # Drupal core's tooling, so the template's generic jobs have the wrong
+  # config/plugins available. Replaced below with self-contained jobs that run
+  # this theme's own yarn scripts instead.
+  SKIP_ESLINT: 1
+  SKIP_STYLELINT: 1
+  SKIP_CSPELL: 1
 
-default:
-  image: node:20
-  before_script:
-    - corepack enable
-    - 'test -f .yarnrc.yml || echo "nodeLinker: node-modules" > .yarnrc.yml'
-    - yarn install
+# Blocking quality gates the template ships as allow_failure: true by default.
+phpcs:
+  allow_failure: false
+# The templated `phpstan` job cannot pass on this theme, and no phpstan.neon
+# scoping can fix it - see the "🔬 PHPStan" job below for the confirmed root
+# cause and its self-contained replacement. This is a `rules:` override, not a
+# SKIP_* escape hatch: the check still gates the merge, just as the job below.
+phpstan:
+  rules:
+    - when: never
+phpunit:
+  allow_failure: false
 
-# = Build stage =
+# = Shared yarn setup for the self-contained validate jobs below =
+.yarn_setup: &yarn_setup
+  - corepack enable
+  - 'test -f .yarnrc.yml || echo "nodeLinker: node-modules" > .yarnrc.yml'
+  - yarn install
 
-# Compile the theme assets (SCSS -> CSS) and the SDC component styles.
-build:
+# = Build stage: prove the theme still compiles (SCSS -> CSS, SDC styles) =
+"🏗️ Theme build":
   stage: build
+  image: node:20
+  needs: []
+  before_script: *yarn_setup
   script:
     - node --version
     - yarn theme:full-build
 
-# = Validate stage =
+# = Validate stage: this theme's own toolchain, no masking =
 
-eslint:
+# .eslintignore excludes components/**/assets/vendor/* (two vendored minified
+# d3 libraries) - without it eslint hangs on those files and the job dies at
+# the runner's 30-minute cap instead of reporting real findings.
+"🟨 ESLint":
   stage: validate
+  image: node:20
+  needs: []
+  before_script: *yarn_setup
   script:
-    - yarn lint:js || true
-    - yarn lint:yaml || true
+    - node --version
+    - yarn lint:js
+    - yarn lint:yaml
   allow_failure: false
 
-stylelint:
+# lint:css targets the authored scss/**/*.scss + components/**/*.scss source,
+# not the compiled css/**/*.css output. The compiled CSS is generated by
+# `yarn theme:full-build` (see the build job above) and gets fully rewritten
+# on every build, so linting it directly gates on a moving target: the very
+# next build reintroduces every finding the config would flag. The generated
+# output is intentionally NOT linted here; the source layer is what gates.
+"🎨 Stylelint":
   stage: validate
+  image: node:20
+  needs: []
+  before_script: *yarn_setup
   script:
-    - yarn lint:css || true
+    - yarn lint:css
   allow_failure: false
 
-cspell:
+"🔤 Cspell":
   stage: validate
+  image: node:20
+  needs: []
+  before_script: *yarn_setup
   script:
-    - yarn spellcheck || true
+    - yarn spellcheck
+  allow_failure: false
+
+# The templated `phpstan` job runs `phpstan analyze .` against the whole
+# built site (this theme placed under web/themes/custom/, plus core, contrib
+# and vendor), using the site's own vendor/bin/phpstan. That site always
+# includes drupal/canvas (this theme's own composer.json requires it), whose
+# optional canvas_headless submodule extends a class from the uninstalled
+# custom_elements module. mglaman/phpstan-drupal - auto-activated by
+# phpstan/extension-installer, which the templated pipeline's site build installs
+# - registers a bootstrap file that walks every extension physically present
+# in that build and crashes on canvas_headless before analysis ever starts:
+#
+#   Error thrown in web/modules/contrib/canvas/modules/canvas_headless/src/
+#   RenderConverter/JsComponentCanvasRenderConverter.php on line 15 while
+#   loading bootstrap file vendor/mglaman/phpstan-drupal/drupal-autoloader.php:
+#   Class "Drupal\custom_elements\RenderConverter\CanvasRenderConverter" not found
+#
+# That happens while the bootstrap file is loading, before phpstan.neon's
+# `paths`/`excludePaths` are ever consulted, so no scoping in this repo's own
+# config can prevent it - confirmed locally, including that
+# `customRulesetUsed: true` does NOT help (it only silences PHPStan's "no
+# rules detected" prompt and has no effect on extension-installer's
+# auto-inclusion of phpstan-drupal). The only real switch,
+# `extra.phpstan/extension-installer.ignore`, has to live in the ROOT
+# composer.json of that vendor/ tree - the site build assembled fresh by the
+# templated pipeline every run, not a file in this repo.
+#
+# So: the templated `phpstan` job is disabled above, and this job installs
+# its own small, isolated toolchain (phpstan/phpstan + drupal/core, no
+# phpstan-drupal, no extension-installer) under .phpstan-tools/ instead. It
+# never touches Canvas or any other contrib module, so the crash cannot
+# recur, and it still gates the merge like every other job here.
+"🔬 PHPStan":
+  stage: validate
+  image: php:8.4-cli
+  needs: []
+  before_script:
+    - apt-get update -y > /dev/null && apt-get install -y -qq git unzip zip > /dev/null
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - mkdir -p .phpstan-tools
+    - |
+      cat > .phpstan-tools/composer.json << 'EOF'
+      {
+        "name": "vardot/vartheme-bs5-horizonaid-phpstan-tools",
+        "description": "Throwaway PHPStan toolchain for the self-contained PHPStan CI job. Not shipped, not autoloaded by the theme.",
+        "type": "project",
+        "require-dev": {
+          "phpstan/phpstan": "^2.2",
+          "drupal/core": "~11.4.0",
+          "symfony/filesystem": "^7.0",
+          "symfony/finder": "^7.0"
+        },
+        "config": {
+          "allow-plugins": false
+        },
+        "minimum-stability": "dev",
+        "prefer-stable": true
+      }
+      EOF
+    - composer update --working-dir=.phpstan-tools --no-interaction --no-progress --ignore-platform-reqs
+  script:
+    - php .phpstan-tools/vendor/bin/phpstan analyze . --autoload-file="$CI_PROJECT_DIR/.phpstan-tools/vendor/autoload.php" --no-progress
   allow_failure: false

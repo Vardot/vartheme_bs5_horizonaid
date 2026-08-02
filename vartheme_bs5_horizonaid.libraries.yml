@@ -269,4 +269,3 @@ ckeditor5-styles:
   dependencies:
     - core/components.vartheme_bs5_horizonaid--alert
     - core/components.vartheme_bs5_horizonaid--callout
-

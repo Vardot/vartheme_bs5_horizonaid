@@ -9,7 +9,7 @@
 // values. Scoped to the `.country-slider` block so nothing leaks to the
 // rest of the theme.
 
-@import "../../defaults";
+@import '../../defaults';
 
 .country-slider {
   &__track {
@@ -30,6 +30,7 @@
     > .card-country {
       flex: 0 0 auto;
       scroll-snap-align: start;
+
       // 1 card + a peek of the next on mobile, up to 4 full cards on lg+.
       width: 85%;
 
@@ -70,12 +71,14 @@
   }
 
   &__control[data-country-slider-prev]:not(:disabled):hover &__control-arrow,
-  &__control[data-country-slider-prev]:not(:disabled):focus-visible &__control-arrow {
+  &__control[data-country-slider-prev]:not(:disabled):focus-visible
+    &__control-arrow {
     transform: translateX(calc(-1 * var(--country-slider-arrow-nudge)));
   }
 
   &__control[data-country-slider-next]:not(:disabled):hover &__control-arrow,
-  &__control[data-country-slider-next]:not(:disabled):focus-visible &__control-arrow {
+  &__control[data-country-slider-next]:not(:disabled):focus-visible
+    &__control-arrow {
     transform: translateX(var(--country-slider-arrow-nudge));
   }
 

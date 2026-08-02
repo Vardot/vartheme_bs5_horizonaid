@@ -10,7 +10,7 @@
 // hard-coded values. Scoped to the `.impressed-card-slider` block so
 // nothing leaks to the rest of the theme.
 
-@import "../../defaults";
+@import '../../defaults';
 
 .impressed-card-slider {
   &__track {
@@ -32,16 +32,9 @@
     > .card-impressed {
       flex: 0 0 auto;
       scroll-snap-align: start;
+
       // 1 card + a peek of the next on mobile, ~2 cards + a peek on lg+.
       width: 85%;
-
-      @include media-breakpoint-up(sm) {
-        width: calc((100% - #{$spacer * 1.5}) / 2);
-      }
-
-      @include media-breakpoint-up(lg) {
-        width: calc((100% - #{$spacer * 1.5 * 2}) / 2.3);
-      }
 
       // Multi-line text truncation has no Bootstrap utility equivalent —
       // clamps the dropped content slot's paragraph(s) so every card in
@@ -52,6 +45,14 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+      }
+
+      @include media-breakpoint-up(sm) {
+        width: calc((100% - #{$spacer * 1.5}) / 2);
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: calc((100% - #{$spacer * 1.5 * 2}) / 2.3);
       }
     }
   }
@@ -91,12 +92,6 @@
     transform: translateX(calc(-1 * var(--impressed-card-slider-arrow-nudge)));
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    &__control-arrow {
-      transition: none;
-    }
-  }
-
   // `atoms/link`'s `underline_color` prop adds `.link-underline-primary`
   // (gold underline) alongside the base `.link-underline` class (link-color
   // underline) it also requires; both carry `!important` at equal
@@ -108,5 +103,11 @@
   // Bootstrap's generated CSS.
   &__links .link-underline-primary {
     text-decoration-color: var(--bs-primary) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__control-arrow {
+      transition: none;
+    }
   }
 }

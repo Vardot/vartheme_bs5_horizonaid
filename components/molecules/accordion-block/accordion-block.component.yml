@@ -71,4 +71,3 @@ libraryOverrides:
     accordion-block.js: {}
   dependencies:
     - core/once
-

@@ -1,12 +1,14 @@
 // @file Icon Text Card — stacked icon card with hover heading color.
-@import "../../defaults"; // Global component defaults.
+@import '../../defaults'; // Global component defaults.
 
 .card-icon-text {
   --card-icon-text-duration-color: 0.3s;
+
   // Gap between the icon and the content slot. Bootstrap's largest gap
   // utility (gap-5) tops out at $spacer * 3, so this genuine special case
   // is built from the same $spacer token instead.
   --card-icon-text-gap: #{$spacer * 5};
+
   // Icon width. Sized larger than a typical inline icon to match this
   // card's badge-style icon treatment.
   --card-icon-text-icon-max-width: 4rem;
@@ -48,8 +50,8 @@
   &__content {
     :is(h1, h2, h3, h4, h5, h6) {
       margin: 0;
-      color: var(--bs-secondary);
       transition: color var(--card-icon-text-duration-color) ease;
+      color: var(--bs-secondary);
     }
   }
 

@@ -13,7 +13,7 @@
 // hard-coded size. Scoped to the `.program-tab` block so nothing leaks to
 // the rest of the theme.
 
-@import "../../defaults";
+@import '../../defaults';
 
 .program-tab {
   &__card {
@@ -30,13 +30,13 @@
 
     @include media-breakpoint-up(lg) {
       position: absolute;
+      z-index: 1;
+      width: min(var(--program-tab-card-width), 42%);
+      max-width: none;
+      border-radius: var(--bs-border-radius-xl) 0 0 var(--bs-border-radius-xl);
       inset-inline-end: 0;
       inset-block-end: var(--program-tab-card-bottom-gap);
       inset-block-start: calc(100% - var(--program-tab-card-height-fraction));
-      width: min(var(--program-tab-card-width), 42%);
-      max-width: none;
-      z-index: 1;
-      border-radius: var(--bs-border-radius-xl) 0 0 var(--bs-border-radius-xl);
     }
   }
 }

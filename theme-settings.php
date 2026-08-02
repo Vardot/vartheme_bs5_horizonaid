@@ -50,7 +50,7 @@ function vartheme_bs5_horizonaid_form_system_theme_settings_alter(&$form, FormSt
   $vartheme_bs5_horizonaid_contained_regions = [
     'content' => t('Content'),
     'header' => t('Header'),
-    'footer' => t('Footer '),
+    'footer' => t('Footer'),
   ];
 
   foreach ($vartheme_bs5_horizonaid_contained_regions as $contained_region_name => $contained_region_title) {

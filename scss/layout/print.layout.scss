@@ -1,4 +1,4 @@
-@import "../defaults";   // Global defaults.
+@import '../defaults'; // Global defaults.
 
 @media print {
   /* Hide link's href URL in print. */
@@ -6,7 +6,9 @@
     content: none !important;
   }
 
-  *, *:before, *:after {
+  *,
+  *:before,
+  *:after {
     color: #000 !important;
     background: transparent !important;
     box-shadow: none !important;

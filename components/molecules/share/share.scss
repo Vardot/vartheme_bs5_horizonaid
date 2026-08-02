@@ -13,7 +13,7 @@
 // in brand-primary on the secondary surface, so the rect is hidden
 // and the path is recoloured to the Bootstrap primary token.
 
-@import "../../defaults";
+@import '../../defaults';
 
 // Shared interactive surface for every share trigger.
 @mixin webshare-button {
@@ -50,10 +50,10 @@
 
 .webshare {
   // ── Sizing tokens (all derived from Bootstrap's $spacer = 1rem) ──
-  --webshare-button-size: #{$spacer * 2.5};   // 40 px
-  --webshare-icon-size: #{$spacer * 1.5};     // 24 px — Figma node 9740:3621 social-btns/02 frame
-  --webshare-gap: #{$spacer * 0.5};           // 8 px
-  --webshare-heading-gap: #{$spacer};         // 16 px
+  --webshare-button-size: #{$spacer * 2.5}; // 40 px
+  --webshare-icon-size: #{$spacer * 1.5}; // 24 px — Figma node 9740:3621 social-btns/02 frame
+  --webshare-gap: #{$spacer * 0.5}; // 8 px
+  --webshare-heading-gap: #{$spacer}; // 16 px
 
   // ── Colour + surface tokens (Bootstrap CSS variables) ───────────
   // Figma "brand/secondary" (#ebe8e5) has no exact Bootstrap default;
@@ -189,9 +189,9 @@
       justify-content: center;
       width: var(--webshare-icon-size);
       height: var(--webshare-icon-size);
+      color: var(--webshare-button-color);
       font-size: var(--webshare-icon-size);
       line-height: 1;
-      color: var(--webshare-button-color);
     }
   }
 
@@ -235,20 +235,20 @@
   &__native-button {
     @include webshare-button;
 
-    font: inherit;
-    line-height: 0;
     cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
-
-    &.webshare--copied {
-      background: var(--webshare-copied-bg);
-      color: var(--webshare-copied-color);
-    }
 
     // Native share button glyph uses the same brand-primary token as the
     // platform icons (Figma binds all share glyphs to --brand/primary).
     color: var(--webshare-icon-color);
+    font: inherit;
+    line-height: 0;
+    -webkit-appearance: none;
+    appearance: none;
+
+    &.webshare--copied {
+      color: var(--webshare-copied-color);
+      background: var(--webshare-copied-bg);
+    }
 
     .bi {
       display: inline-flex;
@@ -256,17 +256,21 @@
       justify-content: center;
       width: var(--webshare-icon-size);
       height: var(--webshare-icon-size);
+      color: var(--webshare-icon-color);
       font-size: var(--webshare-icon-size);
       line-height: 1;
-      color: var(--webshare-icon-color);
     }
 
     svg {
       fill: var(--webshare-icon-color);
 
-      rect { fill: transparent; }
+      rect {
+        fill: transparent;
+      }
 
-      path { fill: var(--webshare-icon-color); }
+      path {
+        fill: var(--webshare-icon-color);
+      }
     }
   }
 
@@ -284,8 +288,8 @@
     position: sticky;
     top: var(--webshare-rail-top);
     float: inline-end;
-    margin-inline-start: var(--webshare-rail-gap);
     margin-block-end: $spacer;
+    margin-inline-start: var(--webshare-rail-gap);
   }
 }
 

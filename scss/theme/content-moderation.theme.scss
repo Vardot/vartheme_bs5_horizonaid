@@ -1,4 +1,4 @@
-@import "../defaults";   // Global defaults.
+@import '../defaults'; // Global defaults.
 
 // Vartheme BS5 Horizonaid content moderation status theme.
 // -----------------------------------------------------------------------------
@@ -7,132 +7,136 @@
 #content-moderation-entity-moderation-form {
   #edit-moderation-state-0 {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
+    flex-wrap: wrap;
 
     .container-inline {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
       @include margin-right(5rem);
+
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
     }
-    
+
     label {
-      font-weight: bold;
+      @include margin(0 0.5rem 0 0);
+
       float: left;
       width: fit-content;
-      @include margin(0 .5rem 0 0); 
+      font-weight: bold;
     }
   }
 
   .entity-moderation-form {
-    list-style: none;
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-inline-start: 0;
+    list-style: none;
   }
 
   .entity-moderation-form__item {
     @include margin-top(1rem);
- 
+
     &:first-child {
       margin-top: 0;
     }
 
     label {
-      font-weight: bold;
-      @include margin(0 .5rem .5rem 0); 
-    }
+      @include margin(0 0.5rem 0.5rem 0);
 
+      font-weight: bold;
+    }
   }
 }
 
-@media (max-width: map-get($container-max-widths, "lg")) {
+@media (max-width: map.get($container-max-widths, 'lg')) {
   #edit-moderation-state-wrapper,
   #content-moderation-entity-moderation-form {
     .entity-moderation-form__item {
       button,
       input#edit-submit {
         width: 100%;
-      } 
+      }
     }
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, "lg")) { 
+@media (min-width: map.get($grid-breakpoints, 'lg')) {
   #edit-moderation-state-wrapper,
   #content-moderation-entity-moderation-form {
+    #edit-moderation-state-0 {
+      @include padding-top(1rem);
 
-      #edit-moderation-state-0 {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        @include padding-top(1rem);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .form-item-moderation-state-0-current {
+      label {
+        @include margin-top(0.5rem);
+
+        float: left;
       }
-    
-      .form-item-moderation-state-0-current {
-        label {
-          float: left;
-          @include margin-top(0.5rem);
-        }
-      }
+    }
 
-      .form-control {
-        max-width: 20em;
-        width: fit-content;
-        margin-top: -0.3rem;
-      }
+    .form-control {
+      width: fit-content;
+      max-width: 20em;
+      margin-top: -0.3rem;
+    }
 
-      .entity-moderation-form {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-      }
-  
-      .entity-moderation-form__item {
-        display: table;
-        margin-right: 2em;
-  
-        &:first-child {
-          @include margin-top(1rem);
-          width: 10rem;
-        }
-  
-        .form-item-revision-log {
-          width: 15rem;
-        }
+    .entity-moderation-form {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
 
-        input#edit-submit {
-          @include margin(1.7rem 2rem 0);
-        }
+    .entity-moderation-form__item {
+      display: table;
+      margin-right: 2em;
 
+      &:first-child {
+        @include margin-top(1rem);
+
+        width: 10rem;
       }
 
+      .form-item-revision-log {
+        width: 15rem;
+      }
+
+      input#edit-submit {
+        @include margin(1.7rem 2rem 0);
+      }
+    }
   }
 
-  [dir="rtl"] #edit-moderation-state-wrapper,
-  [dir="rtl"] #content-moderation-entity-moderation-form {
+  [dir='rtl'] #edit-moderation-state-wrapper,
+  [dir='rtl'] #content-moderation-entity-moderation-form {
+    @include margin-left(5rem);
 
-      margin-right: 0;
-      @include margin-left(5rem);
+    margin-right: 0;
 
+    label {
+      @include margin(0 0 0 0.5rem);
+
+      float: right;
+    }
+
+    .form-item-moderation-state-0-current {
       label {
-        float: right;
-        @include margin(0 0 0 0.5rem);
-      }
+        @include margin-top(0.5rem);
 
-      .form-item-moderation-state-0-current {
-        label {
-          float: right;
-          @include margin-top(0.5rem);
-        }
-      }
-
-      .form-control {
         float: right;
       }
+    }
+
+    .form-control {
+      float: right;
+    }
 
     .entity-moderation-form__item {
       margin-right: 0;
@@ -146,7 +150,7 @@
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, "xl")) { 
+@media (min-width: map.get($grid-breakpoints, 'xl')) {
   #edit-moderation-state-wrapper,
   #content-moderation-entity-moderation-form {
     .entity-moderation-form__item {
