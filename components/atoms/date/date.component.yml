@@ -3,9 +3,12 @@ name: Date
 group: Base
 status: stable
 description: >
-  Displays an ISO 8601 date (YYYY-MM-DD) using the semantic <time> element.
+  Displays a date using the semantic <time> element.
   The date is rendered as visible text content server-side.
-  The "date" prop uses format: date so Drupal Canvas maps it to a datetime field.
+  The "date" prop uses format: date so Drupal Canvas maps it to a datetime
+  field. Smart Date field items store a UNIX timestamp instead, so bind those to
+  "timestamp" (for example field_when on an event); when set it wins over
+  "date".
 
 props:
   type: object
@@ -15,6 +18,85 @@ props:
       format: date
       title: Date
       description: "ISO 8601 date string (YYYY-MM-DD). Defaults to today's date."
+    timestamp:
+      type: integer
+      title: Date (timestamp)
+      description: "UNIX timestamp, e.g. bound from a Smart Date field item. Takes precedence over date."
+    format:
+      type: string
+      title: Date format
+      description: "How the date reads. Defaults to the short month form."
+      default: "M j, Y"
+      enum:
+        - "M j, Y"
+        - "j F Y"
+        - "F j, Y"
+        - "j M Y"
+        - "d/m/Y"
+        - "Y-m-d"
+      'meta:enum':
+        "M j, Y": "Jun 12, 2026"
+        "j F Y": "12 June 2026"
+        "F j, Y": "June 12, 2026"
+        "j M Y": "12 Jun 2026"
+        "d/m/Y": "12/06/2026"
+        "Y-m-d": "2026-06-12"
+      examples:
+        - "j F Y"
+    icon:
+      type: string
+      title: Icon
+      description: "Bootstrap icon shown before the date. Defaults to none."
+      default: "none"
+      enum:
+        - "none"
+        - "calendar"
+        - "calendar-event"
+        - "calendar-week"
+        - "calendar-check"
+        - "clock"
+        - "geo-alt"
+      'meta:enum':
+        "none": "No icon"
+        "calendar": "Calendar"
+        "calendar-event": "Calendar event"
+        "calendar-week": "Calendar week"
+        "calendar-check": "Calendar check"
+        "clock": "Clock"
+        "geo-alt": "Location pin"
+      examples:
+        - "calendar-event"
+    display:
+      type: string
+      title: Display
+      description: "Inline keeps the date on the line it sits in; block puts it on its own line."
+      default: "inline"
+      enum:
+        - "inline"
+        - "block"
+      'meta:enum':
+        "inline": "Inline"
+        "block": "Own line"
+      examples:
+        - "block"
+    weight:
+      type: string
+      title: Font weight
+      description: "Bootstrap font-weight utility class applied to the date. Defaults to none."
+      enum:
+        - "fw-light"
+        - "fw-normal"
+        - "fw-medium"
+        - "fw-semibold"
+        - "fw-bold"
+      'meta:enum':
+        "fw-light": "Light"
+        "fw-normal": "Normal"
+        "fw-medium": "Medium"
+        "fw-semibold": "Semibold"
+        "fw-bold": "Bold"
+      examples:
+        - "fw-bold"
     text_color:
       type: string
       title: Text color

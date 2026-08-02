@@ -37,19 +37,39 @@
 {# Variables: scalar props with schema defaults. #}
 {% set date = date|default('now'|date('Y-m-d')) %}
 {% set text_color = text_color|default('text-body') %}
+{% set format = format|default('M j, Y') %}
+{% set icon = icon|default('none') %}
+
+{# Logic: a Smart Date field item gives a UNIX timestamp and wins over an ISO
+ # 8601 date string. format_date renders both in the site's timezone. #}
+{% set timestamp = timestamp|default(null) %}
+{% set stamp = timestamp ?: date|date('U') %}
 
 {# Logic: optional utility classes, only when set. #}
 {% set size_classes = size is defined and size is not empty ? [size] : [] %}
+{% set weight_classes = weight is defined and weight is not empty ? [weight] : [] %}
 {% set text_color_classes = text_color is not empty ? [text_color] : [] %}
 
 {# Logic: merge all classes as arrays. #}
+{# Logic: `d-inline-flex` keeps the date inline with its siblings, which puts it
+ # on the same line as an adjacent inline element such as a button; `d-flex`
+ # gives it its own line. #}
+{% set display_class = display|default('inline') == 'block' ? 'd-flex' : 'd-inline-flex' %}
+
 {% set classes = [
   'vb-date',
+  display_class,
+  'align-items-center',
   'gap-2',
-]|merge(size_classes)|merge(text_color_classes) %}
+]|merge(size_classes)|merge(weight_classes)|merge(text_color_classes) %}
 
 {% set attributes = attributes.addClass(classes) %}
-{% set attributes = attributes.setAttribute('datetime', date) %}
+{% set attributes = attributes.setAttribute('datetime', stamp|format_date('custom', 'Y-m-d')) %}
 
 {# Print the HTML. #}
-<time{{ attributes }}>{{ date|date('M j, Y') }}</time>
+<time{{ attributes }}>
+  {% if icon != 'none' %}
+    <i class="bi bi-{{ icon }} d-inline-block lh-1" aria-hidden="true"></i>
+  {% endif %}
+  <span>{{ stamp|format_date('custom', format) }}</span>
+</time>
