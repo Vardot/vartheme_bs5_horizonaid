@@ -45,6 +45,7 @@ module.exports = {
     'molecules/map-info-card/map-info-card': ['./components/molecules/map-info-card/map-info-card.scss'],
     'organisms/card-icon-text/card-icon-text': ['./components/organisms/card-icon-text/card-icon-text.scss'],
     'organisms/card-events/card-events': ['./components/organisms/card-events/card-events.scss'],
+    'organisms/views-exposed-filters/views-exposed-filters': ['./components/organisms/views-exposed-filters/views-exposed-filters.scss'],
     'organisms/media-banner/media-banner': ['./components/organisms/media-banner/media-banner.scss'],
     'organisms/hero-banner/hero-banner': ['./components/organisms/hero-banner/hero-banner.scss'],
     'organisms/heroslider/heroslider': ['./components/organisms/heroslider/heroslider.scss'],

@@ -1,0 +1,196 @@
+// @file
+// Vartheme BS5 Horizonaid — Views exposed filters component styles.
+//
+// One skin for every listing's exposed filters so the treatment can never
+// drift: the form rendered through this SDC (`.views-exposed-filters
+// .views-exposed-form`,
+// used by Events via setViewsComponentStyleTheme) and any plain exposed form
+// (Blog, Countries, Programs). SDC attaches a component's compiled CSS only
+// when the component renders, and those listings do NOT render through this
+// SDC — so `hook_form_alter()` attaches this component's library on every
+// `views_exposed_form`. All values derive from this theme's Bootstrap tokens.
+//
+// The design is a tinted rounded card: a wrapping filter row (search + selects)
+// above its own action line carrying a filled Apply Filters pill and a ghost
+// Reset.
+
+@import '../../defaults'; // Global component defaults.
+
+.views-exposed-filters .views-exposed-form,
+.views-exposed-form {
+  // ── Tokens (all derived from this theme's Bootstrap tokens) ──
+  --views-exposed-filters-gap: #{$spacer};
+  --views-exposed-filters-margin-block-end: #{$spacer * 2.5};
+  --views-exposed-filters-panel-bg: var(
+    --bs-secondary-bg-subtle
+  ); // #f7f9fa card surface.
+
+  --views-exposed-filters-panel-padding: #{$spacer * 1.25}; // 20px.
+  --views-exposed-filters-panel-radius: #{$spacer * 1.25}; // 20px, the design's card radius.
+  --views-exposed-filters-search-basis: #{$spacer * 16};
+  --views-exposed-filters-search-min-width: #{$spacer * 12};
+  --views-exposed-filters-select-basis: #{$spacer * 16.4375};
+  --views-exposed-filters-input-bg: var(
+    --bs-white
+  ); // White field surface against the tinted card.
+
+  --views-exposed-filters-input-border: var(
+    --bs-dark
+  ); // Navy 1px outline, per the design.
+
+  --views-exposed-filters-input-radius: #{$spacer}; // 16px, the design's input radius.
+  --views-exposed-filters-input-focus-color: var(--bs-primary);
+  --views-exposed-filters-input-focus-ring: #{rgba($primary, 0.15)};
+  --views-exposed-filters-action-height: #{$spacer * 2.8125}; // 45px action line.
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: var(--views-exposed-filters-margin-block-end);
+  padding: var(--views-exposed-filters-panel-padding);
+  border-radius: var(--views-exposed-filters-panel-radius);
+  background-color: var(--views-exposed-filters-panel-bg);
+  gap: var(--views-exposed-filters-gap);
+
+  > .form-item,
+  > .js-form-item {
+    margin: 0;
+  }
+
+  > [class*='form-item-search'] {
+    flex: 1 0 var(--views-exposed-filters-search-basis);
+    min-width: var(--views-exposed-filters-search-min-width);
+  }
+
+  > [class*='form-item-search'] input[type='text'] {
+    padding-left: #{$spacer * 2.25}; // room for the search icon
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M6.125 11.375a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5ZM13.125 13.125 9.84 9.84%27 stroke=%27%230D2C54%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: #{$spacer} center;
+    background-size: #{$spacer * 0.875};
+  }
+
+  // Each listing names its filters after its own fields (Type is
+  // field_event_categories on events, field_country on countries), so match
+  // the widget, not the field name.
+  > .js-form-type-select {
+    flex: 0 0 var(--views-exposed-filters-select-basis);
+  }
+
+  label {
+    margin-bottom: #{$spacer * 0.5};
+    color: var(--bs-dark);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .form-text,
+  .form-select,
+  input[type='text'],
+  select {
+    width: 100%;
+    padding: #{$spacer * 0.75} #{$spacer};
+    transition:
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+    color: $subtle-text;
+    border: var(--bs-border-width) solid
+      var(--views-exposed-filters-input-border);
+    border-radius: var(--views-exposed-filters-input-radius);
+    background-color: var(--views-exposed-filters-input-bg);
+    font-size: #{$spacer * 0.875}; // 14px.
+    line-height: 1.5;
+
+    &::placeholder {
+      color: $subtle-text; // Same subtle-text token as the input text.
+    }
+
+    &:focus {
+      border-color: var(--views-exposed-filters-input-focus-color);
+      outline: 0;
+      box-shadow: 0 0 0 #{$spacer * 0.2}
+        var(--views-exposed-filters-input-focus-ring);
+    }
+  }
+
+  // The actions always break onto their own line under the filter row.
+  .form-actions {
+    display: flex;
+    flex: 1 0 100%;
+    align-items: center;
+    height: var(--views-exposed-filters-action-height);
+    margin: 0;
+    gap: #{$spacer * 1.5};
+  }
+
+  // Apply Filters is the design's filled primary pill: navy label on the brand
+  // yellow (AA ~9.9:1), never an opacity-only fade on hover.
+  .form-submit {
+    padding: #{$spacer * 0.625} #{$spacer * 1.5};
+    transition:
+      background-color 0.15s ease-in-out,
+      color 0.15s ease-in-out;
+    text-decoration: none;
+    color: var(--bs-dark);
+    border: 0;
+    border-radius: #{$spacer * 1.25}; // 20px, matches --border-radius/button.
+    background-color: var(--bs-primary);
+    box-shadow: none;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline; // Visible AA hover/focus cue.
+      color: var(--bs-dark);
+      background-color: var(--bs-primary-border-subtle);
+    }
+  }
+
+  // Reset is secondary to Apply — a ghost action carrying the subtle-text
+  // token, lifting to navy with the same underline cue on hover/focus.
+  [id*='edit-reset'],
+  input[name='reset'] {
+    padding: 0;
+    transition:
+      color 0.15s ease-in-out,
+      text-decoration-color 0.15s ease-in-out;
+    text-decoration: none;
+    color: $subtle-text;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      color: var(--bs-dark);
+      background: transparent;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    > .form-item,
+    > .js-form-item,
+    > [class*='form-item-search'],
+    > .js-form-type-select {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+// SDC layout modifier: force the row into a stacked column.
+.views-exposed-filters--stacked .views-exposed-form {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+[dir='rtl'] .views-exposed-form [class*='form-item-search'] input[type='text'] {
+  padding-right: #{$spacer * 2.25};
+  padding-left: 0;
+}

@@ -204,6 +204,31 @@ function vartheme_bs5_horizonaid_form_alter(&$form, $form_state, $form_id) {
     $form['#attached']['library'][] = 'vartheme_bs5_horizonaid/content_moderation';
   }
 
+  // Load the exposed-filters SDC CSS wherever a views exposed form renders.
+  // SDC only attaches a component's CSS when the component itself renders, and
+  // the listings that do not use the components_exposed_form plugin would
+  // otherwise show unstyled filters.
+  if ($form_id === 'views_exposed_form') {
+    $form['#attached']['library'][] = 'core/components.vartheme_bs5_horizonaid--views-exposed-filters';
+  }
+
+  // Events exposed filter row. Matched on the form-ID prefix so every events
+  // display (block_1, all) gets the same treatment. Views exposes no config for
+  // the "- Any -" option text, nor a placeholder on a core string filter, so
+  // both need a form alter to match the design.
+  if ($form_id === 'views_exposed_form'
+    && str_starts_with($form['#id'] ?? '', 'views-exposed-form-events-')) {
+    if (isset($form['event_categories']['#options']['All'])) {
+      $form['event_categories']['#options']['All'] = t('Select Type');
+    }
+    if (isset($form['event_topics']['#options']['All'])) {
+      $form['event_topics']['#options']['All'] = t('Search Topic');
+    }
+    if (isset($form['search'])) {
+      $form['search']['#attributes']['placeholder'] = t('Search Keyword');
+    }
+  }
+
   // Blog exposed filter row.
   // Search-by placeholder + label-hide are config-driven (BEF advanced settings
   // in views.view.blog). Only the select empty-option labels need a form alter,
