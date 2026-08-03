@@ -13,6 +13,10 @@
   line-height:1.35;
 }
 
+.card-events__bottom{
+  padding-block:0.75rem;
+}
+
 .card-events__content :is(h1, h2, h3, h4, h5, h6){
   transition:color var(--card-events-duration-color) ease;
   color:var(--bs-secondary);
@@ -28,6 +32,11 @@
   text-overflow:ellipsis;
   -webkit-line-clamp:3;
   -webkit-box-orient:vertical;
+}
+
+.card-events__content .rich-text,
+.card-events__content p{
+  font-size:1rem;
 }
 
 .card-events .stretched-link{

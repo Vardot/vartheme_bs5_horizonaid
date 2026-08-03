@@ -951,9 +951,19 @@ progress{
   --bs-gutter-x:2.5rem;
 }
 
+.g-grid,
+.gx-grid{
+  --bs-gutter-x:2rem;
+}
+
 .g-block,
 .gy-block{
   --bs-gutter-y:2.5rem;
+}
+
+.g-grid,
+.gy-grid{
+  --bs-gutter-y:2rem;
 }
 
 @media (min-width: 576px){
@@ -1234,9 +1244,19 @@ progress{
     --bs-gutter-x:2.5rem;
   }
 
+  .g-sm-grid,
+  .gx-sm-grid{
+    --bs-gutter-x:2rem;
+  }
+
   .g-sm-block,
   .gy-sm-block{
     --bs-gutter-y:2.5rem;
+  }
+
+  .g-sm-grid,
+  .gy-sm-grid{
+    --bs-gutter-y:2rem;
   }
 }
 
@@ -1518,9 +1538,19 @@ progress{
     --bs-gutter-x:2.5rem;
   }
 
+  .g-md-grid,
+  .gx-md-grid{
+    --bs-gutter-x:2rem;
+  }
+
   .g-md-block,
   .gy-md-block{
     --bs-gutter-y:2.5rem;
+  }
+
+  .g-md-grid,
+  .gy-md-grid{
+    --bs-gutter-y:2rem;
   }
 }
 
@@ -1802,9 +1832,19 @@ progress{
     --bs-gutter-x:2.5rem;
   }
 
+  .g-lg-grid,
+  .gx-lg-grid{
+    --bs-gutter-x:2rem;
+  }
+
   .g-lg-block,
   .gy-lg-block{
     --bs-gutter-y:2.5rem;
+  }
+
+  .g-lg-grid,
+  .gy-lg-grid{
+    --bs-gutter-y:2rem;
   }
 }
 
@@ -2086,9 +2126,19 @@ progress{
     --bs-gutter-x:2.5rem;
   }
 
+  .g-xl-grid,
+  .gx-xl-grid{
+    --bs-gutter-x:2rem;
+  }
+
   .g-xl-block,
   .gy-xl-block{
     --bs-gutter-y:2.5rem;
+  }
+
+  .g-xl-grid,
+  .gy-xl-grid{
+    --bs-gutter-y:2rem;
   }
 }
 
@@ -2370,9 +2420,19 @@ progress{
     --bs-gutter-x:2.5rem;
   }
 
+  .g-xxl-grid,
+  .gx-xxl-grid{
+    --bs-gutter-x:2rem;
+  }
+
   .g-xxl-block,
   .gy-xxl-block{
     --bs-gutter-y:2.5rem;
+  }
+
+  .g-xxl-grid,
+  .gy-xxl-grid{
+    --bs-gutter-y:2rem;
   }
 }
 

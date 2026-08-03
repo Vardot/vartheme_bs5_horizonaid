@@ -153,7 +153,9 @@ $border-radius-sm: 0.25rem; // rounded-1
 $border-radius: 0.5rem; // rounded-2
 $border-radius-lg: 0.75rem; // rounded-3
 $border-radius-xl: 1rem; // rounded-4
-$border-radius-xxl: 1.5rem; // rounded-5
+// The design has one block radius, 20px, the same as its buttons. Bootstrap's
+// scale steps 16px -> 24px, so the top step is set to that value.
+$border-radius-xxl: 1.25rem; // rounded-5
 
 // Override default bootstrap breadcrumb variables.
 $breadcrumb-divider: '\F285';
@@ -174,6 +176,19 @@ $spacers: (
   4: 1.5rem,
   5: 3rem,
   block: 2.5rem,
+);
+
+// Gutters carry a 32px step for the space between cards in a listing. Its own
+// map, not $spacers, so it adds `g-grid`/`gx-grid`/`gy-grid` and nothing else.
+$gutters: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+  block: 2.5rem,
+  grid: 2rem,
 );
 
 // Buttons are pills, matching the design system's `--border-radius/button` (20px).

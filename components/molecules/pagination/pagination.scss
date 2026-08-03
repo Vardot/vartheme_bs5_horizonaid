@@ -1,7 +1,7 @@
 @import '../../defaults'; // Global component defaults.
 
 // Override default bootstrap pagination variables.
-$pagination-font-size: 1.25rem;
+$pagination-font-size: 0.875rem; // 14px
 $pagination-bg: transparent;
 $pagination-focus-bg: transparent;
 $pagination-disabled-bg: transparent;
@@ -16,17 +16,98 @@ $pagination-active-color: var(--bs-dark-text-emphasis);
 
 // Change default bootstrap pagination style.
 .pagination {
-  font-size: 1.25rem;
-  font-weight: 700;
+  // Every step is the same 28px box, so the marker is a circle, not a cell that
+  // grows with its label.
+  --#{$prefix}pagination-item-size: #{$spacer * 1.75};
+  --#{$prefix}pagination-item-gap: #{$spacer * 0.25};
 
-  .pager__item--previous,
-  .pager__item--next {
-    a {
-      color: var(--bs-dark);
+  font-weight: 500;
+  gap: var(--#{$prefix}pagination-item-gap);
 
-      &:hover {
-        color: var(--bs-link-hover-color);
-      }
+  .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--#{$prefix}pagination-item-size);
+    height: var(--#{$prefix}pagination-item-size);
+    padding: 0;
+    color: var(--#{$prefix}secondary);
+
+    // Reserve the hover outline's width, so hovering cannot resize the box.
+    border: $border-width solid transparent;
+    border-radius: $btn-border-radius;
+
+    // Hover outlines, never fills: a filled hover would look like a second
+    // current page.
+    &:hover {
+      color: var(--#{$prefix}secondary);
+      border-color: var(--#{$prefix}primary);
+      background-color: transparent;
+    }
+
+    // Keyboard focus gets its own ring.
+    &:focus-visible {
+      color: var(--#{$prefix}secondary);
+      outline: $border-width * 2 solid var(--#{$prefix}primary);
+      outline-offset: $border-width;
+      background-color: transparent;
+    }
+  }
+
+  // The current page keeps its marker on hover: it is not another destination.
+  .pager__item.is-active .page-link,
+  .page-item.active .page-link {
+    color: var(--#{$prefix}secondary);
+    background-color: var(--#{$prefix}primary);
+
+    &:hover,
+    &:focus {
+      color: var(--#{$prefix}secondary);
+      border-color: transparent;
+      background-color: var(--#{$prefix}primary);
+    }
+  }
+
+  // Glyphs are navy; on first and last, hover recolors only the bar.
+  .page-link svg {
+    overflow: visible;
+    width: 1rem;
+    height: 1rem;
+
+    path {
+      fill: var(--#{$prefix}secondary);
+    }
+  }
+
+  .pager__icon-bar {
+    transition: fill 0.2s ease;
+  }
+
+  a.page-link:hover .pager__icon-bar {
+    fill: var(--#{$prefix}primary);
+  }
+
+  // An ellipsis is a label, not a step: no hover surface.
+  .pager__item--ellipsis .page-link {
+    &:hover,
+    &:focus {
+      color: var(--#{$prefix}secondary);
+      border-color: transparent;
+      background-color: transparent;
+    }
+  }
+
+  // A step with nowhere to go stays in place, dimmed, with no hover.
+  .page-item.disabled .page-link {
+    opacity: 0.5;
+    color: var(--#{$prefix}secondary);
+    background-color: transparent;
+
+    &:hover,
+    &:focus {
+      color: var(--#{$prefix}secondary);
+      border-color: transparent;
+      background-color: transparent;
     }
   }
 

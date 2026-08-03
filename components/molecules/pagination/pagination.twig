@@ -81,26 +81,50 @@
 {% endif %}
 {% set pagination_attributes = pagination_attributes.addClass(pagination_classes) %}
 
+{# Pager glyphs: chevron alone for previous/next, chevron plus bar for first/
+ # last. Inline so the bar can take the hover colour on its own. #}
+{% macro pager_icon(edge, flip) %}
+  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"{% if flip %} style="transform:scaleX(-1)"{% endif %}>
+    {% if edge %}<path class="pager__icon-bar" d="M4.54998 3.95C4.54998 3.70147 4.75145 3.5 4.99998 3.5C5.2485 3.5 5.44998 3.70147 5.44998 3.95V12.05C5.44998 12.2985 5.2485 12.5 4.99998 12.5C4.75145 12.5 4.54998 12.2985 4.54998 12.05V3.95Z"/>{% endif %}
+    <path d="M5.63161 7.99784C5.63161 7.88823 5.69757 7.74281 5.76483 7.67218L9.55431 3.64586C9.73123 3.46294 10.0216 3.44542 10.2278 3.63117C10.4123 3.79713 10.4132 4.11708 10.2425 4.29729L7.20057 7.52427C6.92902 7.89361 6.93995 8.10262 7.20057 8.47164L10.2425 11.6986C10.413 11.8788 10.4046 12.1982 10.2278 12.3722C10.0411 12.5558 9.72853 12.5357 9.55431 12.3499L5.76483 8.32357C5.65349 8.21436 5.63348 8.10906 5.63161 7.99784Z"{% if edge %} transform="translate(1.6,0)"{% endif %}/>
+  </svg>
+{% endmacro %}
+
 {# Print the HTML. #}
 {% if items %}
   <nav{{ attributes }}>
     <ul{{ pagination_attributes }}>
-      {# Print first item if we are not on the first page. #}
+      {# First. Core omits it on page one; kept as a disabled step so the page
+       # numbers do not shift between pages. #}
       {% if items.first %}
         <li class="page-item pager__item pager__item--first">
           <a href="{{ items.first.href }}" title="{{ 'Go to first page'|t }}"{{ items.first.attributes|without('href', 'title') }} class="page-link">
+            {{ _self.pager_icon(true, false) }}
             <span class="visually-hidden">{{ 'First page'|t }}</span>
-            <span aria-hidden="true">{{ 'First'|t }}</span>
           </a>
         </li>
+      {% elseif items.pages %}
+        <li class="page-item pager__item pager__item--first disabled" role="presentation">
+          <span class="page-link" aria-disabled="true">
+            {{ _self.pager_icon(true, false) }}
+            <span class="visually-hidden">{{ 'First page'|t }}</span>
+          </span>
+        </li>
       {% endif %}
-      {# Print previous item if we are not on the first page. #}
+      {# Previous, disabled on page one. #}
       {% if items.previous %}
         <li class="page-item pager__item pager__item--previous">
           <a href="{{ items.previous.href }}" title="{{ 'Go to previous page'|t }}" rel="prev"{{ items.previous.attributes|without('href', 'title', 'rel') }} class="page-link">
-            {{ include('vartheme_bs5_horizonaid:icon', {icon: 'chevron-left'}, false) }}
+            {{ _self.pager_icon(false, false) }}
             <span class="visually-hidden">{{ 'Previous page'|t }}</span>
           </a>
+        </li>
+      {% elseif items.pages %}
+        <li class="page-item pager__item pager__item--previous disabled" role="presentation">
+          <span class="page-link" aria-disabled="true">
+            {{ _self.pager_icon(false, false) }}
+            <span class="visually-hidden">{{ 'Previous page'|t }}</span>
+          </span>
         </li>
       {% endif %}
       {# Add an ellipsis if there are further previous pages. #}
@@ -136,22 +160,36 @@
       {% if ellipses.next %}
         <li class="page-item pager__item pager__item--ellipsis disabled" role="presentation"><span class="page-link">&hellip;</span></li>
       {% endif %}
-      {# Print next item if we are not on the last page. #}
+      {# Next, disabled on the last page. #}
       {% if items.next %}
         <li class="page-item pager__item pager__item--next">
           <a href="{{ items.next.href }}" title="{{ 'Go to next page'|t }}" rel="next"{{ items.next.attributes|without('href', 'title', 'rel') }} class="page-link">
-            {{ include('vartheme_bs5_horizonaid:icon', {icon: 'chevron-right'}, false) }}
+            {{ _self.pager_icon(false, true) }}
             <span class="visually-hidden">{{ 'Next page'|t }}</span>
           </a>
         </li>
+      {% elseif items.pages %}
+        <li class="page-item pager__item pager__item--next disabled" role="presentation">
+          <span class="page-link" aria-disabled="true">
+            {{ _self.pager_icon(false, true) }}
+            <span class="visually-hidden">{{ 'Next page'|t }}</span>
+          </span>
+        </li>
       {% endif %}
-      {# Print last item if we are not on the last page. #}
+      {# Last, disabled on the last page. #}
       {% if items.last %}
         <li class="page-item pager__item pager__item--last">
           <a href="{{ items.last.href }}" title="{{ 'Go to last page'|t }}"{{ items.last.attributes|without('href', 'title') }} class="page-link">
+            {{ _self.pager_icon(true, true) }}
             <span class="visually-hidden">{{ 'Last page'|t }}</span>
-            <span aria-hidden="true">{{ 'Last'|t }}</span>
           </a>
+        </li>
+      {% elseif items.pages %}
+        <li class="page-item pager__item pager__item--last disabled" role="presentation">
+          <span class="page-link" aria-disabled="true">
+            {{ _self.pager_icon(true, true) }}
+            <span class="visually-hidden">{{ 'Last page'|t }}</span>
+          </span>
         </li>
       {% endif %}
     </ul>

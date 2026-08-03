@@ -18,6 +18,12 @@
     }
   }
 
+  // --- Bottom strip ----------------------------------------------------------
+  // 12px: Bootstrap's spacing scale runs 8px -> 16px, with no step between.
+  &__bottom {
+    padding-block: 0.75rem; // 12px
+  }
+
   // --- Content slot: heading hover -------------------------------------------
   // The content slot is free-form (any dropped components), so headings are
   // targeted generically by tag rather than a fixed class. A parent-hover-
@@ -47,6 +53,15 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  // --- Content slot: body copy -----------------------------------------------
+  // 16px. The theme's base font is 18px, a step too large inside a card.
+  &__content {
+    .rich-text,
+    p {
+      font-size: 1rem; // 16px
+    }
   }
 
   .stretched-link {
