@@ -34,6 +34,7 @@ module.exports = {
     'organisms/nav/nav': ['./components/organisms/nav/nav.scss'],
     'organisms/nav-menu/nav-menu': ['./components/organisms/nav-menu/nav-menu.scss'],
     'organisms/navbar/navbar': ['./components/organisms/navbar/navbar.scss'],
+    'organisms/icon-toggle/icon-toggle': ['./components/organisms/icon-toggle/icon-toggle.scss'],
     'organisms/page-footer/page-footer': ['./components/organisms/page-footer/page-footer.scss'],
     'pages/page-better-login/page-better-login': ['./components/pages/page-better-login/page-better-login.scss'],
     'organisms/social-auth/social-auth': ['./components/organisms/social-auth/social-auth.scss'],
