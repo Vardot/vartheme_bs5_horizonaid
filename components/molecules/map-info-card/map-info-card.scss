@@ -10,6 +10,19 @@
     color: var(--bs-emphasis-color);
   }
 
+  // Clamp so a longer description (real editorial copy runs longer than a
+  // short sample) can't grow this popup taller than the map itself —
+  // map.js's own positioning clamp (see organisms/map/map.js showCard())
+  // can only keep the popup inside the map's bounds, it can't shrink
+  // content that's already taller than the map, which clips the stats/link
+  // below it via the map's own overflow: hidden.
+  &__description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
   &__stat {
     color: var(--bs-emphasis-color);
   }

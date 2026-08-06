@@ -100,6 +100,20 @@
     height: var(--card-country-footer-expanded-h);
   }
 
+  // The description (the content slot's 2nd child, typically the dropped
+  // Text) has to fit inside --card-country-footer-expanded-h alongside the
+  // title and link, and real editorial copy runs longer than the design's
+  // sample text — measured overflow of ~106px on a typical description
+  // without this. Clamping to 2 lines is the guaranteed-fit budget: title
+  // (~2rem) + gap + 2 description lines + the link's own margin/height all
+  // stay inside the fixed 15rem footer with no clipped text.
+  &__content > :nth-child(2) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
   // The content slot's first child (typically the dropped Heading) is the
   // always-visible title and stays put. Everything after it — and the link —
   // is the "extra" that slides up into view on hover, same as the reference:
@@ -126,20 +140,6 @@
 
   &__link {
     width: fit-content;
-  }
-
-  // `atoms/link`'s `underline_color: 'warning'` adds `.link-underline-warning`
-  // (#FFC72C gold — this theme's $warning/$primary) alongside the base
-  // `.link-underline` class it also requires; both carry `!important` at
-  // equal specificity, and this theme's compiled Bootstrap utility CSS
-  // happens to emit `.link-underline` *after* `.link-underline-warning`, so
-  // the base class's link-color underline (blue $accent) wins the tie
-  // instead of the intended gold. The two-class selector below outranks
-  // either single-class utility, forcing the intended color without
-  // touching the shared atoms/link component or Bootstrap's generated CSS
-  // (same fix organisms/impressed-card-slider applies for its own link list).
-  &__link.link-underline-warning {
-    text-decoration-color: var(--bs-warning) !important;
   }
 
   @media (prefers-reduced-motion: reduce) {

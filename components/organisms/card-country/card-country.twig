@@ -139,14 +139,11 @@
     </div>
 
     {% if has_link %}
+      {# Design: plain bold white text, no underline decoration. #}
       <div class="card-country__link-wrap mt-3 mb-4">
         {{ include('vartheme_bs5_horizonaid:link', {
           url: link_url,
-          color: 'light',
-          underline_color: 'warning',
-          underline_opacity: '100',
-          underline_offset: '2',
-          link_utility_classes: ['card-country__link', 'fw-bold'],
+          link_utility_classes: ['card-country__link', 'text-white', 'fw-bold', 'text-decoration-none'],
           attributes: link_rel
             ? create_attribute().setAttribute('target', link_target).setAttribute('rel', link_rel)
             : create_attribute().setAttribute('target', link_target),

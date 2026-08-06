@@ -72,6 +72,7 @@
 {# Logic: ratio crop. A special value (ratio-auto) means "no crop". #}
 {% set has_ratio = ratio_value != 'ratio-auto' %}
 {% set ratio_wrapper_class = has_ratio ? ('ratio ' ~ ratio_value) : '' %}
+{% set fills_container = has_ratio or (cover_fill is defined and cover_fill) %}
 
 {# Logic: rounded utility, only when set. #}
 {% set rounded_class = rounded != 'none' ? rounded : '' %}
@@ -80,9 +81,14 @@
 {% set figure_classes = (['d-block', 'm-0', width_class, align_class])|filter(v => v is not empty) %}
 {% set attributes = attributes.addClass(figure_classes) %}
 
-{# Logic: image classes — w-100 always; h-100 only inside a ratio box. #}
+{# Logic: image classes — w-100 always; h-100 inside a ratio box, or when
+ # cover_fill asks the image to fill its container's actual height. Without
+ # h-100 here, the wrapper chain (this figure > the drimage wrapper div >
+ # picture > img) has no definite height for a percentage height to resolve
+ # against, so a caller's own `height: 100%` CSS on the img/picture is
+ # inert and the image falls back to sizing by its own intrinsic ratio. #}
 {% set img_classes = (['img-fluid', fit_class, rounded_class]|filter(v => v is not empty)) %}
-{% set img_classes_final = ['w-100']|merge(has_ratio ? ['h-100'] : [])|merge(img_classes) %}
+{% set img_classes_final = ['w-100']|merge(fills_container ? ['h-100'] : [])|merge(img_classes) %}
 {% set img_class_final = img_classes_final|join(' ') %}
 
 {# Pick link attributes based on ratio mode. #}
@@ -115,7 +121,7 @@
   {% if (cover_fill is defined and cover_fill) and drimage_data %}
     {% set drimage_data = drimage_data|merge({image_handling: 'container_size'}) %}
   {% endif %}
-  {% set drimage_img_classes = ['w-100']|merge(has_ratio ? ['h-100'] : ['img-fluid'])|merge([fit_class, rounded_class]) %}
+  {% set drimage_img_classes = ['w-100']|merge(fills_container ? ['h-100'] : ['img-fluid'])|merge([fit_class, rounded_class]) %}
   {% if drimage_data %}
     {# Render via vartheme_bs5_horizonaid:dynamic-responsive-image (drimage_improved). #}
     {% set image_markup %}

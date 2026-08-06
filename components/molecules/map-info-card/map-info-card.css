@@ -8,6 +8,13 @@
   color:var(--bs-emphasis-color);
 }
 
+.map-info-card__description{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+}
+
 .map-info-card__stat{
   color:var(--bs-emphasis-color);
 }
