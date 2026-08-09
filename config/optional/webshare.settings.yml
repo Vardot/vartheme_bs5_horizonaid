@@ -5,6 +5,9 @@ icon_map:
   facebook_share:
     pack: 'vartheme_social'
     icon: 'facebook'
+  instagram:
+    pack: 'vartheme_social'
+    icon: 'instagram'
   x:
     pack: 'vartheme_social'
     icon: 'x'
