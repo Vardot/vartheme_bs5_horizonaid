@@ -180,3 +180,86 @@ phpunit:
   script:
     - php .phpstan-tools/vendor/bin/phpstan analyze . --autoload-file="$CI_PROJECT_DIR/.phpstan-tools/vendor/autoload.php" --no-progress
   allow_failure: false
+
+
+# = Test stage =
+
+# Build a Varbase 11 project, install the Horizon Aid site template (which sets
+# this theme as the default) with the checked-out theme substituted in via a
+# Composer path repository, then drive the site in the browser with the Varbase
+# functional testing suite (varbase-e2e / Playwright + Cucumber-js).
+"🧪 Automated Functional Testing":
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.56.0-noble
+  needs: []
+  timeout: 2h
+  retry:
+    max: 1
+    when: [runner_system_failure, stuck_or_timeout_failure]
+  services:
+    - name: mariadb:10.11
+      alias: database
+      command: ["--max-allowed-packet=64M", "--innodb-buffer-pool-size=256M", "--wait-timeout=28800"]
+      variables:
+        MARIADB_DATABASE: drupal
+        MARIADB_USER: drupal
+        MARIADB_PASSWORD: drupal
+        MARIADB_ROOT_PASSWORD: root
+  variables:
+    SITE_DIR: "$CI_PROJECT_DIR/../varbase-site"
+    DB_URL: "mysql://drupal:drupal@database/drupal"
+    VARBASE_PROJECT: "drupal/varbase_project:11.0.x-dev"
+    DRUPAL_ADMIN_USERNAME: "webmaster"
+    DRUPAL_ADMIN_PASSWORD: "dD.123123ddd"
+    LAUNCH_URL: "http://127.0.0.1:8888"
+    COMPOSER_ALLOW_SUPERUSER: "1"
+    COMPOSER_MEMORY_LIMIT: "-1"
+    COMPOSER_NO_INTERACTION: "1"
+  artifacts:
+    when: always
+    paths:
+      - tests/reports/
+      - tests/screenshots/
+    expire_in: 7 days
+  before_script:
+    - apt-get update -y
+    - apt-get install -y --no-install-recommends software-properties-common ca-certificates curl gnupg lsb-release
+    - add-apt-repository -y ppa:ondrej/php
+    - apt-get update -y
+    - apt-get install -y --no-install-recommends php8.4-cli php8.4-mysql php8.4-gd php8.4-curl php8.4-xml php8.4-mbstring php8.4-zip php8.4-intl unzip git default-mysql-client webp imagemagick libmagickcore-6.q16-6-extra
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - corepack enable || true
+    - sed -i 's/rights="none"\s*pattern="WEBP"/rights="read|write" pattern="WEBP"/I' /etc/ImageMagick-*/policy.xml 2>/dev/null || true
+  script:
+    - composer create-project $VARBASE_PROJECT "$SITE_DIR" --no-interaction --no-install --no-scripts
+    - cd "$SITE_DIR"
+    - composer config minimum-stability dev
+    # Substitute the checked-out theme for the packaged one; the version alias
+    # lets the site template's 1.0.x-dev constraint resolve to this checkout.
+    - composer config repositories.theme --json '{"type":"path","url":"'"$CI_PROJECT_DIR"'","options":{"versions":{"drupal/vartheme_bs5_horizonaid":"1.0.x-dev"}}}'
+    - composer require drupal/horizonaid:1.0.x-dev --no-interaction --no-progress --prefer-dist --with-all-dependencies
+    # The drupal.org packaging of 1.0.x-dev can lag the branch by hours. The
+    # dependencies above are fine either way; the recipe FILES must be current,
+    # so refresh them straight from git.
+    - rm -rf recipes/horizonaid
+    - git clone --depth 1 --branch 1.0.x https://git.drupalcode.org/project/horizonaid.git recipes/horizonaid
+    - ./bin/drush site:install recipes/horizonaid --db-url=$DB_URL
+        --account-name=$DRUPAL_ADMIN_USERNAME --account-pass=$DRUPAL_ADMIN_PASSWORD
+        --account-mail=webmaster@vardot.com --site-name="Horizon Aid Theme Test" --locale=en -y
+    - ./bin/drush config:set system.logging error_level all -y
+    - ./bin/drush cache:rebuild
+    - ./bin/drush runserver 127.0.0.1:8888 > $CI_PROJECT_DIR/runserver.log 2>&1 &
+    - sleep 8
+    - cd "$CI_PROJECT_DIR"
+    - npm install --no-save --no-audit --no-fund @vardot/varbase-e2e@~2.0.1 @cucumber/cucumber@10.0.1
+    - ./node_modules/.bin/playwright install chromium
+    - VARBASE_E2E_REPORT_DISABLE=1 ./node_modules/.bin/cucumber-js --config cucumber.js --tags "not @wip"
+  after_script:
+    - cd "$CI_PROJECT_DIR"
+    - export REPORT="vartheme_bs5_horizonaid--${CI_COMMIT_REF_SLUG:-local}--automated-functional-testing-report--$(date +%Y-%m-%d)"
+    - node ./node_modules/@vardot/varbase-e2e/bin/generate-reports.js
+        --json tests/reports/cucumber_report.json
+        --out  "tests/reports/${REPORT}.html"
+        --format all
+        --pdf-out "tests/reports/${REPORT}.pdf" || true
+  allow_failure: false
