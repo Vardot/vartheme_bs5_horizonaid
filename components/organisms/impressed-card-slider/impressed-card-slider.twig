@@ -28,7 +28,7 @@
  *   them) to size the scroll step, and moves them to be direct children of
  *   the track if Canvas ever wraps slot children in extra markup — mirrors
  *   `hero-slider-container`'s `flattenCarouselItems()` defensive pattern.
- * - The CTA renders via atoms/button (variant `btn-accent`) rather than
+ * - The CTA renders via atoms/button (variant `btn-secondary`) rather than
  *   atoms/link styled with button utility classes, so it's a real button
  *   component and stays in sync with any future changes to that atom.
  *
@@ -173,7 +173,7 @@
                   underline_color: link.active ? 'primary' : '',
                   underline_opacity: link.active ? '100' : '',
                   underline_offset: link.active ? '2' : '',
-                  link_utility_classes: ['fs-5']|merge(link.active ? [] : ['text-decoration-none']),
+                  link_utility_classes: ['fs-4', 'fw-bold']|merge(link.active ? [] : ['text-decoration-none']),
                   content: link.label,
                 }, with_context = false) }}
               </li>
@@ -185,7 +185,7 @@
           {{ include('vartheme_bs5_horizonaid:button', {
             label: cta_label,
             href: cta_url,
-            variant: 'btn-accent',
+            variant: 'btn-secondary',
             size: 'btn-md',
             radius: 'rounded-pill',
             target: cta_target,
