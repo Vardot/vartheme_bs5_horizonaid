@@ -1,13 +1,13 @@
 .breadcrumb{
-  --bs-breadcrumb-padding-x:0.0625rem;
+  --bs-breadcrumb-padding-x:0.125rem;
   --bs-breadcrumb-padding-y:0;
   --bs-breadcrumb-margin-bottom:1rem;
-  --bs-breadcrumb-font-size:1rem;
+  --bs-breadcrumb-font-size:0.75rem;
   --bs-breadcrumb-bg:;
   --bs-breadcrumb-border-radius:;
-  --bs-breadcrumb-divider-color:var(--bs-secondary-color);
-  --bs-breadcrumb-item-padding-x:0.5rem;
-  --bs-breadcrumb-item-active-color:var(--bs-secondary-color);
+  --bs-breadcrumb-divider-color:var(--bs-secondary);
+  --bs-breadcrumb-item-padding-x:0.125rem;
+  --bs-breadcrumb-item-active-color:rgba(0, 29, 56, 0.7);
   display:flex;
   flex-wrap:wrap;
   margin-bottom:var(--bs-breadcrumb-margin-bottom);
@@ -44,29 +44,53 @@
   color:var(--bs-breadcrumb-item-active-color);
 }
 
+.breadcrumb{
+  line-height:1.35em;
+}
+
 .breadcrumb .breadcrumb-item{
-  color:var(--bs-dark);
+  color:rgba(0, 29, 56, 0.7);
+  font-weight:700;
 }
 
-.breadcrumb-item + .breadcrumb-item::before{
-  color:var(--bs-dark);
+.breadcrumb .breadcrumb-item a{
+  text-decoration:none;
+  color:inherit;
+  font-weight:inherit;
 }
 
-[data-bs-theme=dark] .breadcrumb .breadcrumb-item{
+.breadcrumb .breadcrumb-item a:hover,
+.breadcrumb .breadcrumb-item a:focus{
+  text-decoration:underline;
+  color:#212529;
+}
+
+@media (max-width: 767.98px){
+  .breadcrumb{
+    font-size:0.625rem;
+  }
+}
+
+[data-bs-theme="dark"] .breadcrumb .breadcrumb-item{
+  color:rgba(var(--bs-light-rgb), 0.7);
+}
+
+[data-bs-theme="dark"] .breadcrumb .breadcrumb-item a:hover,
+[data-bs-theme="dark"] .breadcrumb .breadcrumb-item a:focus{
   color:var(--bs-light);
 }
 
-[data-bs-theme=dark] .breadcrumb-item + .breadcrumb-item::before{
-  color:var(--bs-light);
+[data-bs-theme="dark"] .breadcrumb-item + .breadcrumb-item::before{
+  color:rgba(var(--bs-light-rgb), 0.7);
 }
 
 .breadcrumb-item + .breadcrumb-item::before{
   content:"\f285";
   font-family:bootstrap-icons;
-  font-size:1.1rem;
-  font-weight:500;
+  font-size:0.625rem;
+  font-weight:400;
 }
 
-[dir=rtl] .breadcrumb-item + .breadcrumb-item::before{
+[dir="rtl"] .breadcrumb-item + .breadcrumb-item::before{
   content:"\f285";
 }

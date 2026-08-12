@@ -1,44 +1,84 @@
 @import '../../defaults'; // Global component defaults.
 
 // Override default bootstrap breadcrumb variables.
-$breadcrumb-font-size: 1rem;
-$breadcrumb-padding-x: 0.0625rem;
+//
+// Design: 12px bold crumbs on desktop and 10px on mobile, in the design's
+// "text/subtle-text" (#001d38 at 70%, its own token, not the theme's
+// $secondary navy and not the $subtle-text gray), a navy chevron divider,
+// and a 2px gap between a crumb and its divider (Figma `size/sm/size-0`).
+$breadcrumb-subtle-text: rgba(#001d38, 0.7);
+$breadcrumb-hover-color: $gray-900;
+$breadcrumb-font-size: 0.75rem;
+$breadcrumb-font-size-mobile: 0.625rem;
+
+// An `em` line height (not a unitless one) so the floated divider inherits it
+// as a length and its 10px chevron shares the crumb's line box instead of
+// riding above the text.
+$breadcrumb-line-height: 1.35em;
+$breadcrumb-padding-x: 0.125rem;
+$breadcrumb-item-padding-x: 0.125rem;
+$breadcrumb-divider-color: var(--bs-secondary);
+$breadcrumb-active-color: $breadcrumb-subtle-text;
 
 @import '../../../node_modules/bootstrap/scss/breadcrumb';
 
 // Change default bootstrap breadcrumb style.
 
-// Change the color for text in the breadcrumb.
+// Change the color, weight and size for text in the breadcrumb. The crumb's
+// own link (molecules/breadcrumb passes atoms/link no color/underline props
+// at all) otherwise falls back to Bootstrap's default link-blue + underline
+// instead of matching the design's plain, muted trail.
 .breadcrumb {
-  .breadcrumb-item {
-    color: var(--bs-dark);
-  }
-}
+  line-height: $breadcrumb-line-height;
 
-.breadcrumb-item + .breadcrumb-item::before {
-  color: var(--bs-dark);
+  .breadcrumb-item {
+    color: $breadcrumb-subtle-text;
+    font-weight: 700;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: inherit;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: $breadcrumb-hover-color;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: $breadcrumb-font-size-mobile;
+  }
 }
 
 @if $enable-dark-mode {
   @include color-mode(dark) {
     .breadcrumb {
       .breadcrumb-item {
-        color: var(--bs-light);
+        color: rgba(var(--bs-light-rgb), 0.7);
+
+        a:hover,
+        a:focus {
+          color: var(--bs-light);
+        }
       }
     }
 
     .breadcrumb-item + .breadcrumb-item::before {
-      color: var(--bs-light);
+      color: rgba(var(--bs-light-rgb), 0.7);
     }
   }
 }
 
-// Change the breadcrumb divider to use bootstrap-icons.
+// Change the breadcrumb divider to use bootstrap-icons, sized and weighted
+// to the design's small chevron rather than Bootstrap's larger default.
 .breadcrumb-item + .breadcrumb-item::before {
   content: '\F285';
   font-family: bootstrap-icons;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 0.625rem;
+  font-weight: 400;
 }
 [dir='rtl'] .breadcrumb-item + .breadcrumb-item::before {
   content: '\F285';
