@@ -1,14 +1,20 @@
 // @file
-// Vartheme BS5 — Icon Toggle component.
+// Vartheme BS5 Horizon Aid — Icon Toggle component.
 //
-// Single icon button that reveals a popover panel. All visual values
-// flow through `--icon-toggle-*` tokens resolved from Bootstrap 5 SCSS
-// variables ($spacer, $border-radius-sm, …) or Bootstrap CSS custom
-// properties (--bs-*), so the component inherits the active theme.
+// Values flow through `--icon-toggle-*` tokens resolved from Bootstrap 5, so the
+// component follows the active (sub-)theme. Bootstrap's `dropdown-menu` provides
+// the panel box and positioning.
 //
-// Sibling elements (e.g. the main menu) stay visible while the panel is
-// open — the panel is positioned absolute so it overlays in place instead
-// of displacing them.
+// Panel styles (`panel` prop):
+// - `popover`: the Bootstrap dropdown panel.
+// - `bar`: one hairline-underlined line with the icon, the field and a close
+//   button. icon-toggle.js measures the region it sits in and marks the root
+//   `is-measured`, `is-panel-start` (opens forward) and `is-bar-inline` (a header
+//   row, where it sits on the trigger's line and becomes a full-width band below
+//   lg). Unmarked, it just drops under the trigger.
+//
+// The header-region placement rule lives here, not in the theme's global base,
+// so SDC only loads it where the component is used.
 
 @import '../../defaults';
 
@@ -29,6 +35,30 @@
   --icon-toggle-panel-gap: #{$spacer * 0.5};
   --icon-toggle-panel-width: min(24rem, calc(100vw - #{$spacer * 2}));
   --icon-toggle-panel-top-gap: #{$spacer * 0.5};
+  --icon-toggle-bar-height: #{$spacer * 2.625};
+  --icon-toggle-bar-max-width: #{$spacer * 45};
+
+  // Kept clear between the bar and what it grows towards.
+  --icon-toggle-bar-brand-gap: #{$spacer * 2};
+
+  // Stands in when there is nothing to measure (JS off): max width plus the gap
+  // above, so the cap resolves to the max width and never bites.
+  --icon-toggle-bar-unmeasured-available: #{$spacer * 47};
+  --icon-toggle-bar-padding-inline: #{$spacer};
+  --icon-toggle-bar-gap: #{$spacer * 0.5};
+  --icon-toggle-bar-page-padding: #{$spacer};
+  --icon-toggle-bar-font-size: #{$spacer * 0.875};
+  --icon-toggle-bar-subtle-color: var(--bs-secondary-color);
+
+  // Sharing the header's icon line below lg: the hamburger's box (Bootstrap
+  // sizes it at 1.5em of the toggler font size), the gap between the two icons,
+  // and half their size difference, to line the glyphs up on one centre.
+  --icon-toggle-header-toggler-size: #{$navbar-toggler-font-size * 1.5};
+  --icon-toggle-header-icon-gap: #{$spacer * 1.5};
+  --icon-toggle-header-icon-offset: #{(
+      $spacer * 2.5 - $navbar-toggler-font-size * 1.5
+    ) *
+    0.5};
 
   position: relative;
   display: inline-flex;
@@ -43,6 +73,10 @@
     padding: 0;
     cursor: pointer;
     transition: var(--icon-toggle-transition);
+
+    // Colors only. Bootstrap's token covers `all`, which would animate
+    // `visibility` and keep the revealed trigger unable to take focus for its duration.
+    transition-property: background-color, color;
     color: var(--icon-toggle-button-color);
     border: 0;
     border-radius: var(--icon-toggle-button-radius);
@@ -65,33 +99,413 @@
     line-height: 1;
   }
 
+  // Bootstrap's Dropdown toggles `show`; the panel's own box comes from
+  // `dropdown-menu`. Position and visibility are restated here so the component
+  // does not depend on the theme's Bootstrap CSS subset or its cascade order.
   &__panel {
     position: absolute;
     z-index: $zindex-dropdown;
     top: calc(100% + var(--icon-toggle-panel-top-gap));
+    display: none;
     width: var(--icon-toggle-panel-width);
-    padding: var(--icon-toggle-panel-padding);
-    border: $border-width solid var(--icon-toggle-panel-border);
-    border-radius: var(--icon-toggle-panel-radius);
-    background: var(--icon-toggle-panel-bg);
-    box-shadow: var(--icon-toggle-panel-shadow);
 
-    &[hidden] {
-      display: none;
+    &.show {
+      display: block;
     }
   }
 
-  &--end &__panel {
-    inset-inline-end: 0;
+  // `placement` is the preference; icon-toggle.js flips it when the other side
+  // has more room.
+  &.is-panel-start &__panel {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
   }
 
-  &--start &__panel {
+  // Collision fallback: icon-toggle.js measures the panel against the
+  // viewport on open and adds this modifier when the configured side
+  // (`--end`/`--start`) would overflow — e.g. an `--end` panel opening
+  // leftward off-screen because the button sits near the viewport's start
+  // edge in a content area rather than a header. Swaps to the other
+  // logical side so the panel stays on-screen regardless of where the
+  // component is dropped.
+  &--end.icon-toggle--flip &__panel {
+    inset-inline-end: auto;
     inset-inline-start: 0;
+  }
+
+  &--start.icon-toggle--flip &__panel {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
   }
 
   &__panel-inner {
     display: flex;
     flex-direction: column;
     gap: var(--icon-toggle-panel-gap);
+  }
+}
+
+// Inline bar panel.
+.icon-toggle--panel-bar {
+  // The bar has its own close button, so the trigger steps aside. `visibility`
+  // keeps its space so the row does not reflow.
+  &.icon-toggle--open .icon-toggle__button {
+    visibility: hidden;
+  }
+
+  .icon-toggle__panel {
+    top: calc(100% + var(--icon-toggle-panel-top-gap));
+    width: var(--icon-toggle-bar-max-width);
+    max-width: calc(
+      var(
+          --icon-toggle-bar-available,
+          var(--icon-toggle-bar-unmeasured-available)
+        ) - var(--icon-toggle-bar-brand-gap)
+    );
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+
+    // Opaque: across a header row the bar covers the menu.
+    background: var(--icon-toggle-panel-bg);
+    box-shadow: none;
+  }
+
+  // A header row is the only line the bar may sit on.
+  &.is-bar-inline .icon-toggle__panel {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  // Nothing measurable (bare canvas, or JS off): drop under the trigger.
+  &:not(.is-measured) .icon-toggle__panel {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    max-width: var(
+      --icon-toggle-bar-canvas-width,
+      var(--icon-toggle-bar-unmeasured-available)
+    );
+  }
+
+  .icon-toggle__panel-inner {
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    height: var(--icon-toggle-bar-height);
+    padding-inline-start: var(--icon-toggle-bar-padding-inline);
+    border-block-end: $border-width solid var(--icon-toggle-panel-border);
+    gap: var(--icon-toggle-bar-gap);
+  }
+
+  .icon-toggle__panel-icon {
+    flex: 0 0 auto;
+    color: var(--icon-toggle-button-color);
+    line-height: 1;
+  }
+
+  .icon-toggle__close {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-toggle-button-size);
+    height: var(--icon-toggle-button-size);
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: var(--icon-toggle-transition);
+    transition-property: background-color, color;
+    color: var(--icon-toggle-button-color);
+    border: 0;
+    border-radius: var(--icon-toggle-button-radius);
+    background: var(--icon-toggle-button-bg);
+    appearance: none;
+
+    &:hover,
+    &:focus {
+      background: var(--icon-toggle-button-bg-hover);
+    }
+
+    &:focus-visible {
+      outline: var(--icon-toggle-focus-ring);
+      outline-offset: #{$spacer * 0.125};
+    }
+  }
+
+  // Flatten the block/form chrome the search block brings so the field sits on
+  // the bar's line instead of stacking its own label, borders and button.
+  .icon-toggle__panel-inner {
+    .block,
+    .block__content,
+    form,
+    .form-item,
+    .js-form-item {
+      flex: 1 1 auto;
+      min-width: 0;
+      margin: 0;
+    }
+
+    form {
+      display: flex;
+      align-items: center;
+      gap: var(--icon-toggle-bar-gap);
+    }
+
+    .form-control {
+      height: auto;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+      font-size: var(--icon-toggle-bar-font-size);
+      line-height: $line-height-base;
+
+      &::placeholder {
+        opacity: 1;
+        color: var(--icon-toggle-bar-subtle-color);
+      }
+
+      &:focus {
+        outline: 0;
+        box-shadow: none;
+      }
+    }
+
+    // Enter submits; the button is only removed visually.
+    .form-actions {
+      position: absolute;
+      overflow: hidden;
+      width: $border-width;
+      height: $border-width;
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+  }
+}
+
+// From lg up the theme dresses every header dropdown panel as a floating card
+// (`border-radius`, `box-shadow`, vertical padding). The bar is not a card: it
+// is a flat band across the header row, so it clears that chrome again. The
+// component's own `.icon-toggle--panel-bar .icon-toggle__panel` already asks
+// for this, but at (0,2,0) it is outweighed by the theme's
+// `.page > header[role="banner"] .dropdown-menu` at (0,3,1). Restate it here,
+// above both. Scoped to `up(lg)` on purpose: below lg the theme already flattens
+// the panel itself, and the bar's own padding is measured band geometry that
+// must not be zeroed.
+@include media-breakpoint-up(lg) {
+  .page
+    > header[role='banner']
+    .icon-toggle--panel-bar.is-bar-inline
+    .icon-toggle__panel {
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+// Below lg the bar leaves the header row and becomes a full-width band directly
+// under it. `position: fixed` + the measured band geometry keeps it aligned to
+// the header without a `100vw` breakout (which would ignore the admin toolbar
+// offset and the scrollbar). `top`/`left` are physical on purpose: they consume
+// physically measured viewport coordinates, which stay correct in RTL.
+@include media-breakpoint-down(lg) {
+  /* rtl:ignore */
+  .icon-toggle--panel-bar.is-bar-inline .icon-toggle__panel {
+    position: fixed;
+    top: var(--icon-toggle-bar-top);
+    left: var(--icon-toggle-bar-left);
+    width: var(--icon-toggle-bar-width);
+    max-width: none;
+    padding: var(--icon-toggle-bar-page-padding);
+    transform: none;
+    background: var(--icon-toggle-panel-bg);
+  }
+
+  // The theme reveals collapsed navbar dropdowns inline below lg. This panel is
+  // a real disclosure, so it keeps Bootstrap's show/hide and its own box.
+  .page > header[role='banner'] .icon-toggle .icon-toggle__panel {
+    position: absolute;
+    display: none;
+    margin: 0;
+
+    &.show {
+      display: block;
+    }
+  }
+
+  .page
+    > header[role='banner']
+    .icon-toggle--panel-popover
+    .icon-toggle__panel {
+    padding: var(--bs-dropdown-padding-y, #{$spacer * 0.5}) 0;
+    border: $border-width solid var(--icon-toggle-panel-border);
+    border-radius: var(--icon-toggle-panel-radius);
+    background: var(--icon-toggle-panel-bg);
+    box-shadow: var(--icon-toggle-panel-shadow);
+  }
+
+  // The bar spans the header band using viewport coordinates, so it needs the
+  // `fixed` positioning set above — which the `position: absolute` reset a few
+  // rules up outweighs on specificity. The theme also flattens header dropdown
+  // panels to `background-color: transparent` below lg, which outweighs the
+  // bar's own opaque background. Restate both here, above either.
+  .page
+    > header[role='banner']
+    .icon-toggle--panel-bar.is-bar-inline
+    .icon-toggle__panel {
+    position: fixed;
+    background: var(--icon-toggle-panel-bg);
+  }
+
+  // Below lg the header stacks its columns and pins the hamburger to the
+  // brand's line. Join it there instead of taking a row below the logo.
+  .page > header[role='banner'] .icon-toggle {
+    position: absolute;
+    inset-block-start: calc(
+      var(--bs-gutter-y, 0) - var(--icon-toggle-header-icon-offset)
+    );
+    inset-inline-end: calc(
+      var(--bs-gutter-x, 1.5rem) * 0.5 +
+        var(--icon-toggle-header-toggler-size) +
+        var(--icon-toggle-header-icon-gap) - var(
+          --icon-toggle-header-icon-offset
+        )
+    );
+    z-index: 2;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Horizon Aid brand.
+//
+// Everything above this line is the Vartheme BS5 component, kept verbatim so it
+// can be re-synced. Only the values the brand actually changes live below, as
+// token overrides on the same `--icon-toggle-*` custom properties.
+//
+// The design draws the bar in the brand navy rather than the neutral border and
+// muted body colours Bootstrap resolves by default, on a hairline rather than a
+// full border, and sizes the glyphs to their own scale.
+// ---------------------------------------------------------------------------
+
+// The design's own `text/subtle-text` (#001d38 at 70%) — neither the theme's
+// $subtle-text gray nor the $secondary navy. Same local token the breadcrumb
+// component declares for the same design value.
+$icon-toggle-subtle-text: rgba(#001d38, 0.7);
+
+.icon-toggle {
+  --icon-toggle-button-color: #{$secondary};
+  --icon-toggle-panel-border: #{$secondary};
+  --icon-toggle-bar-subtle-color: #{$icon-toggle-subtle-text};
+
+  // A hairline, not a border: half Bootstrap's $border-width.
+  --icon-toggle-bar-border-width: #{$border-width * 0.5};
+}
+
+// Glyph sizes are NOT set here. The Twig sizes them with Bootstrap's `fs-*`
+// utilities, which this build emits as `!important`, so a rule here could only
+// win by being `!important` too. The design's 17.5px search mark is off
+// Bootstrap's type scale; the marks take the nearest step instead (fs-5 = 1rem
+// for both search marks, fs-6 = 0.875rem for the close mark, which the design
+// matches exactly). Reaching 17.5px needs a new `$font-sizes` step, which is a
+// global token decision, not a component one.
+
+.icon-toggle--panel-bar {
+  // Horizon Aid skins EVERY `.views-exposed-form` as a tinted rounded card
+  // (views-exposed-filters, attached to every exposed form by a form alter), so
+  // the header bar inherited a 1.25rem inset, a fill and a radius that pushed
+  // the field off the design's 0.5rem gap. The bar is a bare underlined line:
+  // strip the card back off inside it. The component above flattens the block
+  // and form-item chrome for the same reason; this is the same list of
+  // properties, for the values only this theme adds.
+  .icon-toggle__panel-inner .views-exposed-form {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  // Width and colour only — the component above owns the border's side and style.
+  .icon-toggle__panel-inner {
+    border-block-end-width: var(--icon-toggle-bar-border-width);
+    border-block-end-color: var(--icon-toggle-panel-border);
+  }
+
+  // The exposed filter carries a real <label> so the field has an accessible
+  // name; the design shows none, and the bar is a single line with no room for
+  // one. Hide it visually, keep it for assistive technology — the same
+  // treatment the component above gives the submit button.
+  .icon-toggle__panel-inner label {
+    @include visually-hidden;
+  }
+}
+
+// Below lg the design draws the bar as a full-width band directly under the
+// header: 375 x 74 at 375px wide, a 42px line inside 1rem of padding.
+//
+// Two things stop the component above from landing that here, both caused by
+// this theme's own header rather than by the component:
+//
+// 1. icon-toggle.js measures the band with `closest()` over a selector list
+//    that ends in `section`. Horizon Aid's header region wraps its contents in
+//    an edge-to-edge Section, so `closest()` stops there instead of at
+//    `header[role="banner"]`, and the Section's breakout box starts half a
+//    gutter outside the viewport. The measured `left`/`width` then pushed the
+//    band 0.469rem off-screen and gave the page a horizontal scrollbar. Pin it
+//    to the viewport instead: on a fixed element `width: 100%` resolves against
+//    the initial containing block, so it tracks the viewport without `100vw`
+//    (which would count the scrollbar). The measured `top` is unaffected -- the
+//    Section's bottom edge and the banner's coincide.
+// 2. The theme dresses every header dropdown panel with its own vertical
+//    padding at (0,3,1), which outweighs the component's own band padding. The
+//    component restates `position` and `background` above that rule but not
+//    padding, so the band collapsed to 0.25rem and the wrapper measured 50px
+//    instead of 74px. Restate padding at the same selector, below it.
+@include media-breakpoint-down(lg) {
+  /* rtl:ignore */
+  .icon-toggle--panel-bar.is-bar-inline .icon-toggle__panel,
+  .page
+    > header[role='banner']
+    .icon-toggle--panel-bar.is-bar-inline
+    .icon-toggle__panel {
+    left: 0;
+    width: 100%;
+    padding: var(--icon-toggle-bar-page-padding);
+  }
+}
+
+// The design draws the trigger as a bare 24px mark: `9641-704` (desktop) and
+// `9640-614` (mobile) both show the closed state as the icon alone, and the
+// token set carries no surface behind it -- there is no fill, radius or hover
+// colour for the trigger anywhere in the design. Base fills a 40px circle with
+// `$gray-200` on hover and focus, which reads as a button the design does not
+// draw, so the fill is dropped and the mark itself carries the state instead.
+//
+// Focus keeps a visible indicator: removing the fill would otherwise leave a
+// keyboard user with nothing, and WCAG 2.4.7 requires one. Bootstrap's focus
+// ring is used, which is already the brand's own colour, so the trigger is flat
+// like the design at rest and on hover, and ringed only when focused.
+.icon-toggle__button {
+  --icon-toggle-button-bg-hover: transparent;
+
+  &:hover,
+  &:focus {
+    background: transparent;
+  }
+
+  // Hover feedback without a surface: the mark deepens to the brand navy.
+  &:hover .bi::before,
+  &:hover svg {
+    color: var(--bs-secondary, #{$secondary});
+  }
+
+  // Keyboard focus stays obvious. `:focus-visible` so a mouse press does not
+  // paint a ring the design never shows.
+  &:focus-visible {
+    outline: $focus-ring-width solid var(--bs-focus-ring-color);
+    outline-offset: $focus-ring-width * 0.5;
   }
 }

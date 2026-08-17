@@ -2,19 +2,19 @@
  * @file
  * Icon Toggle behavior.
  *
- * Owns only the open/close state and focus management — sibling elements
- * (e.g. the main menu) are left untouched and stay visible the whole time;
- * the panel overlays them instead of displacing them.
+ * Bootstrap 5.3's Dropdown owns the disclosure: show/hide, aria-expanded,
+ * Escape, outside clicks, focus return, and Popper flip/shift. No jQuery.
  *
- * Inside the Drupal Canvas editor preview iframe the panel starts open (and
- * stays open) instead of waiting for a click: the panel is the only way to
- * see the "content" slot and drop content into it, so it can't stay hidden
- * behind a click a builder has no reason to make. Same `is-canvas-preview`
- * detection as sticky-header.js.
+ * Left here: swapping the trigger icon, focusing the panel's field, and the
+ * `bar` style's geometry — that style opts out of Popper because it spans the
+ * band the component sits in, measured into `--icon-toggle-bar-*`.
+ *
+ * In the Drupal Canvas preview the panel starts open so its "content" slot
+ * stays droppable; set `expand_in_editor: false` on an instance to opt out
+ * once content is placed.
  */
 ((Drupal, once) => {
-  // The preview document runs inside an iframe whose host element carries
-  // `data-canvas-preview`; same-origin lets us read it from within the frame.
+  // The preview iframe's host element carries `data-canvas-preview`.
   const inCanvasPreview = () => {
     try {
       return Boolean(
@@ -32,14 +32,103 @@
           const button = root.querySelector('.icon-toggle__button');
           const icon = root.querySelector('.icon-toggle__icon');
           const panel = root.querySelector('.icon-toggle__panel');
+          const closeButton = root.querySelector('.icon-toggle__close');
 
           if (!button || !panel) {
             return;
           }
 
-          // The configured "closed" icon class (e.g. "bi-search"), captured
-          // once so it can be restored on close regardless of which icon
-          // was picked.
+          const isBar = root.classList.contains('icon-toggle--panel-bar');
+
+          // The region the component sits in: a Canvas global header or footer,
+          // or page content.
+          const band = root.closest(
+            '[role="banner"], header, [role="contentinfo"], footer,' +
+              ' [role="main"], main, .region, section',
+          );
+          // Only in a header does the bar sit on the trigger's line, clear of
+          // the brand.
+          const isHeaderBand = Boolean(
+            band && band.closest('[role="banner"], header'),
+          );
+          const brand = band
+            ? band.querySelector(
+                '.navbar-brand, .block-system-branding-block, .site-branding',
+              )
+            : null;
+          // Keeps an unmeasured bar inside its context.
+          const canvas = root.offsetParent || document.documentElement;
+
+          const measure = () => {
+            if (!isBar) {
+              return;
+            }
+
+            const canvasRect = canvas.getBoundingClientRect();
+            if (canvasRect.width) {
+              root.style.setProperty(
+                '--icon-toggle-bar-canvas-width',
+                `${canvasRect.width}px`,
+              );
+            }
+
+            if (!band) {
+              return;
+            }
+            const bandRect = band.getBoundingClientRect();
+            if (!bandRect.width) {
+              return;
+            }
+            root.style.setProperty(
+              '--icon-toggle-bar-top',
+              `${bandRect.bottom}px`,
+            );
+            root.style.setProperty(
+              '--icon-toggle-bar-left',
+              `${bandRect.left}px`,
+            );
+            root.style.setProperty(
+              '--icon-toggle-bar-width',
+              `${bandRect.width}px`,
+            );
+
+            // Open towards the side with more room, so the bar never runs off
+            // the edge of its region.
+            const rootRect = root.getBoundingClientRect();
+            const startEdge = brand
+              ? brand.getBoundingClientRect().right
+              : bandRect.left;
+            const roomBeforeTrigger = rootRect.right - startEdge;
+            const roomAfterTrigger = bandRect.right - rootRect.left;
+            const opensFromStart = roomAfterTrigger > roomBeforeTrigger;
+            root.style.setProperty(
+              '--icon-toggle-bar-available',
+              `${Math.max(0, opensFromStart ? roomAfterTrigger : roomBeforeTrigger)}px`,
+            );
+            root.classList.toggle('is-panel-start', opensFromStart);
+
+            // Elsewhere the bar drops below the trigger.
+            root.classList.toggle('is-bar-inline', isHeaderBand);
+
+            // Geometry is trustworthy.
+            root.classList.add('is-measured');
+          };
+
+          let measuring = false;
+          const remeasure = () => {
+            if (measuring) {
+              return;
+            }
+            measuring = true;
+            window.requestAnimationFrame(() => {
+              measuring = false;
+              if (root.classList.contains('icon-toggle--open')) {
+                measure();
+              }
+            });
+          };
+
+          // Captured once so any configured icon can be restored on close.
           const closedIconClass = icon
             ? [...icon.classList].find(
                 (className) =>
@@ -50,64 +139,65 @@
           const closedLabel = button.getAttribute('aria-label');
           const openLabel = button.dataset.iconToggleOpenLabel || closedLabel;
 
-          const isOpen = () => root.classList.contains('icon-toggle--open');
-
-          const close = () => {
-            root.classList.remove('icon-toggle--open');
-            button.setAttribute('aria-expanded', 'false');
-            button.setAttribute('aria-label', closedLabel);
-            panel.setAttribute('hidden', '');
-            if (icon && closedIconClass) {
-              icon.classList.replace('bi-x-lg', closedIconClass);
-            }
-          };
-
-          const open = ({ focusInput = true } = {}) => {
+          // `show` fires before the panel appears, when the bar needs geometry.
+          root.addEventListener('show.bs.dropdown', () => {
+            measure();
             root.classList.add('icon-toggle--open');
-            button.setAttribute('aria-expanded', 'true');
             button.setAttribute('aria-label', openLabel);
-            panel.removeAttribute('hidden');
             if (icon && closedIconClass) {
               icon.classList.replace(closedIconClass, 'bi-x-lg');
             }
-            if (focusInput) {
-              const input = panel.querySelector(
-                'input[type="search"], input[type="text"], input:not([type])',
-              );
-              if (input) {
-                input.focus();
-              }
-            }
-          };
+          });
 
-          if (inCanvasPreview()) {
-            // Stay open regardless of clicks elsewhere in the builder canvas
-            // (e.g. selecting other components) — closing would hide the
-            // "content" slot a builder needs to drop content into.
-            open({ focusInput: false });
-            return;
+          root.addEventListener('shown.bs.dropdown', () => {
+            const input = panel.querySelector(
+              'input[type="search"], input[type="text"], input:not([type])',
+            );
+            if (input) {
+              input.focus();
+            }
+          });
+
+          root.addEventListener('hide.bs.dropdown', () => {
+            root.classList.remove('icon-toggle--open');
+            button.setAttribute('aria-label', closedLabel);
+            if (icon && closedIconClass) {
+              icon.classList.replace('bi-x-lg', closedIconClass);
+            }
+          });
+
+          // Dropdowns have no `data-bs-dismiss`, and the theme loads Bootstrap as
+          // modules (no global), so close by toggling the trigger through
+          // Bootstrap's own data API, which also restores focus.
+          if (closeButton) {
+            closeButton.addEventListener('click', () => {
+              button.click();
+              // Bootstrap only restores focus for keyboard closes.
+              void window.getComputedStyle(button).visibility;
+              button.focus();
+            });
           }
 
-          button.addEventListener('click', () => {
-            if (isOpen()) {
-              close();
-            } else {
-              open();
-            }
-          });
+          if (isBar) {
+            window.addEventListener('resize', remeasure);
+            window.addEventListener('scroll', remeasure, { passive: true });
+          }
 
-          document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && isOpen()) {
-              close();
-              button.focus();
-            }
-          });
+          // `expand_in_editor: false` (→ `icon-toggle--collapsed-in-editor`)
+          // opts an instance out once its slot has content, so the
+          // always-open panel stops covering the editor view. Front-end
+          // behavior is unaffected either way.
+          const expandInEditor = !root.classList.contains(
+            'icon-toggle--collapsed-in-editor',
+          );
 
-          document.addEventListener('click', (event) => {
-            if (isOpen() && !root.contains(event.target)) {
-              close();
-            }
-          });
+          if (inCanvasPreview() && expandInEditor) {
+            // Stay open so the slot keeps taking drops.
+            measure();
+            root.classList.add('icon-toggle--open');
+            panel.classList.add('show');
+            button.setAttribute('aria-expanded', 'true');
+          }
         },
       );
     },

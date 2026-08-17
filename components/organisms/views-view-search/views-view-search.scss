@@ -38,3 +38,31 @@
     }
   }
 }
+
+// The results filter bar is one row: the keyword field takes the free width and
+// the submit sits beside it.
+//
+// Two Drupal defaults fight that. `.form-actions` ships `flex: 1 0 100%`, so it
+// claims a whole row of the flex form and drops the button under the field; and
+// the text item is `flex: 0 1 auto`, so it never grows past its 293px intrinsic
+// width and left ~900px of a 1296px form unused. Restate both here rather than
+// unset `flex-wrap`, so the bar still wraps on a narrow viewport instead of
+// squeezing the field to nothing.
+.view-search-results {
+  .views-exposed-form {
+    align-items: flex-end;
+
+    // The keyword field takes whatever is left beside the submit.
+    > .js-form-type-textfield,
+    > .js-form-item-keywords {
+      flex: 1 1 auto;
+      min-width: 0; // let it shrink below its intrinsic width before wrapping
+    }
+
+    // The submit keeps its own width and stays on the field's line.
+    > .form-actions {
+      flex: 0 0 auto;
+      width: auto;
+    }
+  }
+}
