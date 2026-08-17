@@ -1,0 +1,40 @@
+// @file
+// Vartheme BS5 Horizonaid — Views view search component styles.
+
+@import '../../defaults'; // Global component defaults.
+
+.view-search-results {
+  --views-view-search-heading-margin-block-end: #{$spacer * 1.5};
+  --views-view-search-summary-margin-block-end: #{$spacer * 1.5};
+  --views-view-search-empty-padding: #{$spacer * 1.5};
+  --views-view-search-empty-radius: #{$spacer * 1.25};
+
+  // `--bs-tertiary-bg` is a dark token in this theme, so the light
+  // `--bs-secondary-bg-subtle` is what keeps the body colour readable.
+  --views-view-search-empty-bg: var(--bs-secondary-bg-subtle);
+
+  > h1 {
+    margin-bottom: var(--views-view-search-heading-margin-block-end);
+  }
+
+  > .view-filters {
+    margin-bottom: var(--views-view-search-summary-margin-block-end);
+  }
+
+  > .view-header {
+    margin-bottom: var(--views-view-search-summary-margin-block-end);
+    color: $subtle-text;
+  }
+
+  > .view-empty--notice {
+    padding: var(--views-view-search-empty-padding);
+    color: var(--bs-body-color);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--views-view-search-empty-radius);
+    background-color: var(--views-view-search-empty-bg);
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}

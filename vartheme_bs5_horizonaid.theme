@@ -212,6 +212,15 @@ function vartheme_bs5_horizonaid_form_alter(&$form, $form_state, $form_id) {
     $form['#attached']['library'][] = 'core/components.vartheme_bs5_horizonaid--views-exposed-filters';
   }
 
+  // Search exposed filter row. Matched on the form-ID prefix so the header
+  // block and the results page share one modifier: the search form carries a
+  // single keyword field and no reset, so it lays out as one line rather than
+  // as the listing filter card.
+  if ($form_id === 'views_exposed_form'
+    && str_starts_with($form['#id'] ?? '', 'views-exposed-form-search-')) {
+    $form['#attributes']['class'][] = 'views-exposed-form--search';
+  }
+
   // Events exposed filter row. Matched on the form-ID prefix so every events
   // display (block_1, all) gets the same treatment. Views exposes no config for
   // the "- Any -" option text, nor a placeholder on a core string filter, so

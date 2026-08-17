@@ -47,6 +47,7 @@ module.exports = {
     'organisms/card-icon-text/card-icon-text': ['./components/organisms/card-icon-text/card-icon-text.scss'],
     'organisms/card-events/card-events': ['./components/organisms/card-events/card-events.scss'],
     'organisms/views-exposed-filters/views-exposed-filters': ['./components/organisms/views-exposed-filters/views-exposed-filters.scss'],
+    'organisms/views-view-search/views-view-search': ['./components/organisms/views-view-search/views-view-search.scss'],
     'organisms/media-banner/media-banner': ['./components/organisms/media-banner/media-banner.scss'],
     'organisms/hero-banner/hero-banner': ['./components/organisms/hero-banner/hero-banner.scss'],
     'organisms/heroslider/heroslider': ['./components/organisms/heroslider/heroslider.scss'],

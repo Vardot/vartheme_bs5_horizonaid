@@ -16,6 +16,16 @@
 
 @import '../../defaults'; // Global component defaults.
 
+// The magnifier sits in the field's background because an inline SVG cannot
+// take a CSS custom property for its stroke.
+@mixin views-exposed-filters-search-icon {
+  padding-left: #{$spacer * 2.25}; // room for the search icon
+  background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M6.125 11.375a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5ZM13.125 13.125 9.84 9.84%27 stroke=%27%230D2C54%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: #{$spacer} center;
+  background-size: #{$spacer * 0.875};
+}
+
 .views-exposed-filters .views-exposed-form,
 .views-exposed-form {
   // ── Tokens (all derived from this theme's Bootstrap tokens) ──
@@ -63,11 +73,7 @@
   }
 
   > [class*='form-item-search'] input[type='text'] {
-    padding-left: #{$spacer * 2.25}; // room for the search icon
-    background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M6.125 11.375a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5ZM13.125 13.125 9.84 9.84%27 stroke=%27%230D2C54%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E');
-    background-repeat: no-repeat;
-    background-position: #{$spacer} center;
-    background-size: #{$spacer * 0.875};
+    @include views-exposed-filters-search-icon;
   }
 
   // Each listing names its filters after its own fields (Type is
@@ -180,6 +186,47 @@
     > [class*='form-item-search'],
     > .js-form-type-select {
       flex: 1 1 100%;
+    }
+  }
+}
+
+// Search modifier: one keyword field and a Search button, on one line. The
+// listing card's own-line action row would push the button under a field that
+// has no siblings to sit beside.
+.views-exposed-form--search {
+  align-items: center;
+  margin-bottom: 0;
+  gap: #{$spacer * 0.75};
+
+  // Basis 0, not auto: the field's own `width: 100%` would otherwise be its
+  // flex basis and push the button onto a second line in a narrow panel.
+  > .js-form-item {
+    flex: 1 1 0;
+    min-width: #{$spacer * 6};
+  }
+
+  > .js-form-item input[type='text'] {
+    @include views-exposed-filters-search-icon;
+  }
+
+  .form-actions {
+    flex: 0 0 auto;
+    height: auto;
+  }
+
+  .form-submit {
+    white-space: nowrap;
+  }
+
+  // A field and a button still fit side by side on a phone, so opt out of the
+  // listing card's full-width stacking.
+  @include media-breakpoint-down(md) {
+    > .js-form-item {
+      flex: 1 1 0;
+    }
+
+    .form-actions {
+      flex: 0 0 auto;
     }
   }
 }
