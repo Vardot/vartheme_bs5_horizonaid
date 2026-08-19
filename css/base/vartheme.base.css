@@ -127,8 +127,30 @@ a{
   }
 }
 
+.page > header[role=banner] .navbar-toggler-icon{
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4 9h16M4 15h16' stroke='%230D2C54' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 1.5rem;
+}
+
+.page > header[role=banner] .navbar-toggler[aria-expanded=true] .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5 5 19 19M19 5 5 19' stroke='%230D2C54' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
 .page > header[role=banner] .navbar-nav{
   gap:0.25rem;
+}
+
+@media (max-width: 991.98px){
+  .page > header[role=banner] .navbar-collapse{
+    padding-block:2.5rem;
+    padding-inline:2rem;
+  }
+
+  .page > header[role=banner] .navbar-nav{
+    gap:1.5rem;
+  }
 }
 
 @media (min-width: 992px){

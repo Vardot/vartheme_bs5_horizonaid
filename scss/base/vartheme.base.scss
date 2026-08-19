@@ -181,9 +181,41 @@ a {
 // collapse panel and the hamburger toggles visibility — all handled by
 // stock Bootstrap classes rather than custom media queries.
 
+// The design draws the mobile menu control as a two-bar mark that swaps to a
+// close (X) mark while the panel is open (`9640-555`, Showing open=Menu).
+// Bootstrap's stock icon is a three-bar hamburger with no open state, so both
+// marks are drawn here, in the brand navy, at the design's 24px box.
+.page > header[role='banner'] .navbar-toggler-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4 9h16M4 15h16' stroke='%230D2C54' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 1.5rem;
+}
+
+.page
+  > header[role='banner']
+  .navbar-toggler[aria-expanded='true']
+  .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5 5 19 19M19 5 5 19' stroke='%230D2C54' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
 // Default stacked gap inside the collapsed navbar (< lg).
 .page > header[role='banner'] .navbar-nav {
   gap: 0.25rem;
+}
+
+// Below lg the design lays the menu out as its own panel under the header:
+// 2rem of side padding, 2.5rem top and bottom, and 1.5rem between links
+// (`9640-555`, Showing open=Menu). Bootstrap's collapse carries none of that.
+@include media-breakpoint-down(lg) {
+  .page > header[role='banner'] .navbar-collapse {
+    padding-inline: 2rem;
+    padding-block: 2.5rem;
+  }
+
+  .page > header[role='banner'] .navbar-nav {
+    gap: 1.5rem;
+  }
 }
 
 // At lg+ inline items get a wider 1.875rem gap.
