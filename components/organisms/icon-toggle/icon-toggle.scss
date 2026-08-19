@@ -47,6 +47,10 @@
   --icon-toggle-bar-padding-inline: #{$spacer};
   --icon-toggle-bar-gap: #{$spacer * 0.5};
   --icon-toggle-bar-page-padding: #{$spacer};
+
+  // The band overlays a header row whose tallest item (the CTA button) is
+  // taller than the 42px line, so it is padded above and below to cover it.
+  --icon-toggle-bar-cover-padding: #{$spacer * 0.5};
   --icon-toggle-bar-font-size: #{$spacer * 0.875};
   --icon-toggle-bar-subtle-color: var(--bs-secondary-color);
 
@@ -171,9 +175,12 @@
     box-shadow: none;
   }
 
-  // A header row is the only line the bar may sit on.
+  // A header row is the only line the bar may sit on. The opaque band is padded
+  // above and below the 42px line so a taller sibling on that row (the CTA
+  // button) cannot show through above or below it.
   &.is-bar-inline .icon-toggle__panel {
     top: 50%;
+    padding-block: var(--icon-toggle-bar-cover-padding);
     transform: translateY(-50%);
   }
 
@@ -299,7 +306,7 @@
     > header[role='banner']
     .icon-toggle--panel-bar.is-bar-inline
     .icon-toggle__panel {
-    padding: 0;
+    padding: var(--icon-toggle-bar-cover-padding) 0;
     border-radius: 0;
     box-shadow: none;
   }
@@ -426,6 +433,15 @@ $icon-toggle-subtle-text: rgba(#001d38, 0.7);
     border-radius: 0;
     background: none;
     box-shadow: none;
+  }
+
+  // The same skin paints a magnifier into the search field's own background and
+  // pads the field to clear it. The bar already draws that mark as its leading
+  // icon, so inside it the field would show the design's single mark twice.
+  // Strip the background mark and the inset it reserved.
+  .icon-toggle__panel-inner .views-exposed-form input[type='text'] {
+    padding-inline-start: 0;
+    background-image: none;
   }
 
   // Width and colour only — the component above owns the border's side and style.

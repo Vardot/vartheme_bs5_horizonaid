@@ -21,6 +21,7 @@
   --icon-toggle-bar-padding-inline: 1rem;
   --icon-toggle-bar-gap: 0.5rem;
   --icon-toggle-bar-page-padding: 1rem;
+  --icon-toggle-bar-cover-padding: 0.5rem;
   --icon-toggle-bar-font-size: 0.875rem;
   --icon-toggle-bar-subtle-color: var(--bs-secondary-color);
   --icon-toggle-header-toggler-size: 1.6875rem;
@@ -114,6 +115,7 @@
 
 .icon-toggle--panel-bar.is-bar-inline .icon-toggle__panel {
   top: 50%;
+  padding-block: var(--icon-toggle-bar-cover-padding);
   transform: translateY(-50%);
 }
 
@@ -217,7 +219,7 @@
 
 @media (min-width: 992px) {
   .page > header[role="banner"] .icon-toggle--panel-bar.is-bar-inline .icon-toggle__panel {
-    padding: 0;
+    padding: var(--icon-toggle-bar-cover-padding) 0;
     border-radius: 0;
     box-shadow: none;
   }
@@ -280,6 +282,11 @@
   border-radius: 0;
   background: none;
   box-shadow: none;
+}
+
+.icon-toggle--panel-bar .icon-toggle__panel-inner .views-exposed-form input[type=text] {
+  padding-inline-start: 0;
+  background-image: none;
 }
 
 .icon-toggle--panel-bar .icon-toggle__panel-inner {
