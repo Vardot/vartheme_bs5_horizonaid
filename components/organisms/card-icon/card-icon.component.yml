@@ -37,6 +37,8 @@ props:
       type: string
       title: Icon (optional)
       description: 'Optional Bootstrap Icon name (without the "bi-" prefix). Use "none" to disable.'
+      x-canvas-icon:
+        - bootstrap_icons
       enum:
         - "none"
         - "facebook"

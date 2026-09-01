@@ -11,6 +11,8 @@ props:
       default: "award"
       examples:
         - "award"
+      x-canvas-icon:
+        - bootstrap_icons
       enum:
         - 0-circle
         - 0-circle-fill

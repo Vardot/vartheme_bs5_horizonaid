@@ -48,6 +48,8 @@ props:
       title: Icon
       description: "Bootstrap icon shown before the date. Defaults to none."
       default: "none"
+      x-canvas-icon:
+        - bootstrap_icons
       enum:
         - "none"
         - "calendar"

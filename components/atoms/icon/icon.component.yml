@@ -8,6 +8,8 @@ props:
       type: string
       title: Icon
       description: Bootstrap Icon name (without the "bi-" prefix).
+      x-canvas-icon:
+        - bootstrap_icons
       enum:
         - facebook
         - twitter-x

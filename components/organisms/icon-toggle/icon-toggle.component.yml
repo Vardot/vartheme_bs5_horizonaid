@@ -10,6 +10,8 @@ props:
       type: string
       title: Icon
       description: Bootstrap Icon name shown in the closed state (without the "bi-" prefix). Swaps to a close (X) icon while the panel is open.
+      x-canvas-icon:
+        - bootstrap_icons
       enum:
         - search
         - facebook
