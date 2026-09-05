@@ -1,9 +1,8 @@
 [![Varbase](https://raw.githubusercontent.com/Vardot/varbase/11.0.x/images/varbase-logo.png)](https://www.drupal.org/project/varbase)
 
-# Vartheme BS5 Horizonaid
-[![pipeline status](https://git.drupalcode.org/project/vartheme_bs5_horizonaid/badges/5.0.x/pipeline.svg)](https://git.drupalcode.org/project/vartheme_bs5_horizonaid/-/pipelines)
-[![Vartheme BS5 Horizonaid](https://img.shields.io/badge/Vartheme%20BS5-5.0.0--beta1-0d6efc?labelColor=001d38&style=flat-square)](https://git.drupalcode.org/project/vartheme_bs5_horizonaid/-/pipelines?ref=5.0.0-beta1)
-[![Automated Functional Testing](https://git.drupalcode.org/project/varbase_project/badges/11.0.x/pipeline.svg)](https://git.drupalcode.org/project/varbase_project/-/pipelines)
+# Vartheme BS5 Horizon Aid
+[![pipeline status](https://git.drupalcode.org/project/vartheme_bs5_horizonaid/badges/1.0.x/pipeline.svg)](https://git.drupalcode.org/project/vartheme_bs5_horizonaid/-/pipelines)
+[![Vartheme BS5 Horizon Aid](https://img.shields.io/badge/Vartheme%20BS5%20Horizon%20Aid-1.0.0--alpha4-0d6efc?labelColor=001d38&style=flat-square)](https://www.drupal.org/project/vartheme_bs5_horizonaid/releases/1.0.0-alpha4)
 
 A Starterkit theme for Varbase websites.
 
@@ -13,7 +12,7 @@ A new generation of theming based on **Bootstrap 5**, **Single Directory Compone
 # Installation
 Require the theme in a Drupal
 ```
-composer require 'drupal/vartheme_bs5_horizonaid:~4.0.0'
+composer require 'drupal/vartheme_bs5_horizonaid:~1.0.0-alpha4'
 ```
 
 ## Compile custom styling
