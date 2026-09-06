@@ -2,7 +2,7 @@
 
 # Vartheme BS5 Horizon Aid
 [![pipeline status](https://git.drupalcode.org/project/vartheme_bs5_horizonaid/badges/1.0.x/pipeline.svg)](https://git.drupalcode.org/project/vartheme_bs5_horizonaid/-/pipelines)
-[![Vartheme BS5 Horizon Aid](https://img.shields.io/badge/Vartheme%20BS5%20Horizon%20Aid-1.0.0--alpha4-0d6efc?labelColor=001d38&style=flat-square)](https://www.drupal.org/project/vartheme_bs5_horizonaid/releases/1.0.0-alpha4)
+[![Vartheme BS5 Horizon Aid](https://img.shields.io/badge/Vartheme%20BS5%20Horizon%20Aid-1.0.0--rc1-0d6efc?labelColor=001d38&style=flat-square)](https://www.drupal.org/project/vartheme_bs5_horizonaid)
 
 A Starterkit theme for Varbase websites.
 
@@ -12,7 +12,7 @@ A new generation of theming based on **Bootstrap 5**, **Single Directory Compone
 # Installation
 Require the theme in a Drupal
 ```
-composer require 'drupal/vartheme_bs5_horizonaid:~1.0.0-alpha4'
+composer require 'drupal/vartheme_bs5_horizonaid:~1.0.0-rc1'
 ```
 
 ## Compile custom styling
