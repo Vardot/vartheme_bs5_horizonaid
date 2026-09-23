@@ -627,3 +627,16 @@ footer.footer {
     padding-block: 2.5rem 2rem;
   }
 }
+
+// WCAG 1.4.3: brand gold on a light surface uses its text tone, at large-text size.
+:is(.bg-body, .bg-body-secondary, .bg-body-tertiary, .bg-light, .bg-white) {
+  @each $size, $value in $display-font-sizes {
+    .display-#{$size}.text-primary {
+      color: var(--#{$prefix}primary-text-emphasis) !important;
+
+      @if $value > 1.5rem {
+        font-size: clamp(1.5rem, #{rfs-fluid-value($value)}, #{$value});
+      }
+    }
+  }
+}

@@ -105,10 +105,15 @@
 {% if not map_attributes %}
   {% set map_attributes = create_attribute() %}
 {% endif %}
+{# map.js populates this canvas with one focusable role="button" path per
+   country. role="img" would declare the whole map a single indivisible image,
+   hiding every one of those buttons from assistive technology and failing
+   WCAG 4.1.2 (axe: nested-interactive). A group may legitimately contain
+   interactive descendants and still carries the accessible name. #}
 {% set map_attributes = map_attributes.addClass(['map__canvas'])
   .setAttribute('data-map-canvas', true)
   .setAttribute('viewBox', '0 0 960 500')
-  .setAttribute('role', 'img')
+  .setAttribute('role', 'group')
   .setAttribute('aria-label', 'World map'|t)
 %}
 

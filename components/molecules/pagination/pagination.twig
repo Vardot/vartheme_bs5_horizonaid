@@ -93,6 +93,12 @@
 {# Print the HTML. #}
 {% if items %}
   <nav{{ attributes }}>
+    {# The disabled items are real list items and must stay that way: a
+       role="presentation" on a direct child of the <ul> strips its listitem
+       role, which leaves the list with children that are not allowed and
+       breaks the pager's structure for screen readers (WCAG 1.3.1; axe:
+       list). Disabled state is already conveyed by aria-disabled on the
+       span inside. #}
     <ul{{ pagination_attributes }}>
       {# First. Core omits it on page one; kept as a disabled step so the page
        # numbers do not shift between pages. #}
@@ -104,7 +110,7 @@
           </a>
         </li>
       {% elseif items.pages %}
-        <li class="page-item pager__item pager__item--first disabled" role="presentation">
+        <li class="page-item pager__item pager__item--first disabled">
           <span class="page-link" aria-disabled="true">
             {{ _self.pager_icon(true, false) }}
             <span class="visually-hidden">{{ 'First page'|t }}</span>
@@ -120,7 +126,7 @@
           </a>
         </li>
       {% elseif items.pages %}
-        <li class="page-item pager__item pager__item--previous disabled" role="presentation">
+        <li class="page-item pager__item pager__item--previous disabled">
           <span class="page-link" aria-disabled="true">
             {{ _self.pager_icon(false, false) }}
             <span class="visually-hidden">{{ 'Previous page'|t }}</span>
@@ -129,7 +135,7 @@
       {% endif %}
       {# Add an ellipsis if there are further previous pages. #}
       {% if ellipses.previous %}
-        <li class="page-item pager__item pager__item--ellipsis disabled" role="presentation"><span class="page-link">&hellip;</span></li>
+        <li class="page-item pager__item pager__item--ellipsis disabled"><span class="page-link">&hellip;</span></li>
       {% endif %}
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
@@ -158,7 +164,7 @@
 
       {# Add an ellipsis if there are further next pages. #}
       {% if ellipses.next %}
-        <li class="page-item pager__item pager__item--ellipsis disabled" role="presentation"><span class="page-link">&hellip;</span></li>
+        <li class="page-item pager__item pager__item--ellipsis disabled"><span class="page-link">&hellip;</span></li>
       {% endif %}
       {# Next, disabled on the last page. #}
       {% if items.next %}
@@ -169,7 +175,7 @@
           </a>
         </li>
       {% elseif items.pages %}
-        <li class="page-item pager__item pager__item--next disabled" role="presentation">
+        <li class="page-item pager__item pager__item--next disabled">
           <span class="page-link" aria-disabled="true">
             {{ _self.pager_icon(false, true) }}
             <span class="visually-hidden">{{ 'Next page'|t }}</span>
@@ -185,7 +191,7 @@
           </a>
         </li>
       {% elseif items.pages %}
-        <li class="page-item pager__item pager__item--last disabled" role="presentation">
+        <li class="page-item pager__item pager__item--last disabled">
           <span class="page-link" aria-disabled="true">
             {{ _self.pager_icon(true, true) }}
             <span class="visually-hidden">{{ 'Last page'|t }}</span>
