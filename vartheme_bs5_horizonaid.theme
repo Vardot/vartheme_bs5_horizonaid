@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 
 /**
@@ -157,6 +158,36 @@ function vartheme_bs5_horizonaid_preprocess_page(&$variables) {
     }
   }
 
+  // Canvas page regions drop the page title block, so give 4xx pages their h1.
+  $route_match = \Drupal::routeMatch();
+  if (in_array($route_match->getRouteName(), ['system.401', 'system.403', 'system.404'], TRUE)
+    && isset($variables['page']['content'])
+    && !vartheme_bs5_horizonaid_region_has_page_title($variables['page']['content'])) {
+    $variables['page']['content']['vartheme_bs5_horizonaid_page_title'] = [
+      '#type' => 'page_title',
+      '#title' => \Drupal::service('title_resolver')->getTitle(\Drupal::request(), $route_match->getRouteObject()),
+      '#weight' => -100,
+    ];
+  }
+
+}
+
+/**
+ * Checks whether a region already renders a page title block.
+ *
+ * @param array $region
+ *   The region render array.
+ *
+ * @return bool
+ *   TRUE when the region holds a page title block.
+ */
+function vartheme_bs5_horizonaid_region_has_page_title(array $region) {
+  foreach (Element::children($region) as $key) {
+    if (($region[$key]['#base_plugin_id'] ?? NULL) === 'page_title_block') {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 /**

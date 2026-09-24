@@ -46,15 +46,16 @@
 
 {% set _title_attributes = (title_attributes is defined and title_attributes is iterable) ? title_attributes : (title_attributes is defined and title_attributes is not iterable and title_attributes is not empty ? create_attribute({class: [title_attributes]}) : create_attribute()) %}
 
+{# Logic: pass text_size only when set, the heading enum has no empty value. #}
+{% set heading_props = {
+  level: 1,
+  heading_text: title,
+  attributes: _title_attributes,
+}|merge(display ? { text_size: display } : {}) %}
+
 {# Print the HTML. #}
 {{ title_prefix }}
 {% if title|render|striptags|trim %}
-  {{ include('vartheme_bs5_horizonaid:heading', {
-      level: 1,
-      heading_text: title,
-      text_size: display,
-      attributes: _title_attributes,
-    }
-  , false) }}
+  {{ include('vartheme_bs5_horizonaid:heading', heading_props, false) }}
 {% endif %}
 {{ title_suffix }}
