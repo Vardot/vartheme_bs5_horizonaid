@@ -34,6 +34,7 @@
  *
  * Available attributes:
  * - attributes: HTML attributes for the root `.tab-pane` element.
+ * - link_context_attributes: HTML attributes for the hidden card title in the link.
  */
 #}
 
@@ -93,6 +94,13 @@
   .setAttribute('aria-selected', active ? 'true' : 'false')
 %}
 
+{# Logic: the card title follows a generic link label for screen readers. #}
+{% if not link_context_attributes %}
+  {% set link_context_attributes = create_attribute() %}
+{% endif %}
+{% set link_context_attributes = link_context_attributes.addClass(['visually-hidden']) %}
+{% set link_content %}{{ link_label }}<span{{ link_context_attributes }}> {{ card_title }}</span>{% endset %}
+
 {# Print the HTML. #}
 <div{{ attributes }}>
   <button{{ nav_button_attributes }}>{{ title }}</button>
@@ -123,7 +131,7 @@
           color: 'dark',
           link_utility_classes: ['fw-bold'],
           attributes: create_attribute().setAttribute('target', link_target),
-          content: link_label,
+          content: link_content,
         }, with_context = false) }}
       {% endif %}
     </div>

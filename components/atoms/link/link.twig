@@ -27,6 +27,7 @@
  *
  * Available attributes:
  * - attributes: Drupal attributes for link.
+ * - new_tab_attributes: HTML attributes for the screen-reader new-tab notice.
  *
  * Available slots:
  * - content: Link content.
@@ -56,10 +57,30 @@
   {% set attributes = attributes.setAttribute('href', url) %}
 {% endif %}
 
+{# Logic: a new-tab link announces it; an aria-label replaces the content, so it carries the notice. #}
+{% set new_tab_text = '(opens in a new tab)'|t ~ '' %}
+{% set opens_new_tab = (attributes.target ~ '') == '_blank' %}
+{% set link_aria_label = attributes['aria-label'] ~ '' %}
+{% if opens_new_tab %}
+  {% set attributes = attributes.setAttribute('rel', 'noopener noreferrer') %}
+{% endif %}
+{% if opens_new_tab and link_aria_label is not empty and new_tab_text not in link_aria_label %}
+  {% set attributes = attributes.setAttribute('aria-label', link_aria_label ~ ' ' ~ new_tab_text) %}
+{% endif %}
+{% set show_new_tab_hint = opens_new_tab and link_aria_label is empty %}
+{% if not new_tab_attributes %}
+  {% set new_tab_attributes = create_attribute() %}
+{% endif %}
+{% set new_tab_attributes = new_tab_attributes
+  .addClass(['visually-hidden'])
+  .setAttribute('data-new-tab-hint', true)
+%}
+
 {# Print the HTML. #}
 {% set attributes = attributes.addClass(link_classes) %}
 <a{{ attributes }}>{% apply spaceless %}
   {% block content %}
     {{ content }}
   {% endblock %}
+  {% if show_new_tab_hint %}<span{{ new_tab_attributes }}> {{ new_tab_text }}</span>{% endif %}
 {% endapply %}</a>

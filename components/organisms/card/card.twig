@@ -161,6 +161,7 @@
             {{ include('vartheme_bs5_horizonaid:button', {
               href: url,
               label: button_label_value,
+              label_context: heading_text|default(''),
               variant: button_variant_value,
               size: 'btn-sm',
             }, with_context: false) }}

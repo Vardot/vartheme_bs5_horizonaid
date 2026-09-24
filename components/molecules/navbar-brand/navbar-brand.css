@@ -1,3 +1,9 @@
 .brand-logo-image{
-  height:1.88rem;
+  height:2rem;
+}
+
+@media (max-width: 991.98px){
+  .brand-logo-image{
+    height:1.5rem;
+  }
 }

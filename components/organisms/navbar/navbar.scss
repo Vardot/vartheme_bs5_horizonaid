@@ -10,45 +10,8 @@
     }
   }
 
-  .navbar-nav {
-    .nav-item {
-      a.nav-link {
-        position: relative;
-        color: var(--bs-gray-900);
-        font-weight: bold;
-
-        &:hover,
-        &:focus,
-        &:active {
-          color: var(--bs-primary) !important;
-
-          &:after {
-            position: absolute;
-            right: 15% !important;
-            bottom: 0;
-            left: 15% !important;
-            height: 1px;
-            content: '';
-            transition: left 0.3s;
-            transition: right 0.3s;
-            background-color: var(--bs-primary);
-          }
-        }
-
-        &.is-active {
-          &:after {
-            position: absolute;
-            right: 30%;
-            bottom: 0;
-            left: 30%;
-            height: 1px;
-            content: '';
-            background-color: var(--bs-primary);
-          }
-        }
-      }
-    }
-  }
+  // Link colour, weight and underline live with the header rules in the base
+  // stylesheet, so the design's single underline is not drawn twice.
 }
 
 [data-bs-theme='dark'] {

@@ -43,12 +43,16 @@
 {% set link_classes = ['navbar-brand', 'd-flex', 'align-items-center']|merge(navbar_brand_utility_classes) %}
 {% set span_classes = ['navbar-brand', 'h1', 'mb-0']|merge(navbar_brand_utility_classes) %}
 
+{# Logic: an empty aria-label names nothing, so set it only with text. #}
+{% if text is not empty %}
+  {% set attributes = attributes.setAttribute('aria-label', text) %}
+{% endif %}
+
 {# Print the HTML. #}
 {% if path %}
   {% set attributes = attributes
     .setAttribute('href', path)
     .addClass(link_classes)
-    .setAttribute('aria-label', text)
   %}
   <a{{ attributes }}>
     {% if image_path %}
@@ -58,10 +62,7 @@
     {{ text }}
   </a>
 {% else %}
-  {% set attributes = attributes
-    .setAttribute('aria-label', text)
-    .addClass(span_classes)
-  %}
+  {% set attributes = attributes.addClass(span_classes) %}
   <span{{ attributes }}>
     {% if image_path %}
       {# Call image function that declared above. #}

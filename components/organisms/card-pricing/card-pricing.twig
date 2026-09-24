@@ -155,6 +155,7 @@
         {{ include('vartheme_bs5_horizonaid:button', {
           href: button_href_value,
           label: button_label_value,
+          label_context: heading_text|default(''),
           variant: button_variant_class,
           size: 'btn-sm',
           target: btn_target,

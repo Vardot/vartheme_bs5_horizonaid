@@ -49,13 +49,12 @@
   {% set image = image|merge({ src: component_metadata.path ~ '/' ~ image.src }) %}
 {% endif %}
 
-{# Logic: social links — fixed platform set (matches the icon component's
- # social icons); only platforms with a URL are rendered. #}
+{# Logic: social links in the design's order; only platforms with a URL are rendered. #}
 {% set socials = [
-  { key: 'linkedin', icon: 'linkedin', url: linkedin_url, label: 'LinkedIn' },
-  { key: 'twitter', icon: 'twitter-x', url: twitter_url, label: 'X (Twitter)' },
-  { key: 'facebook', icon: 'facebook', url: facebook_url, label: 'Facebook' },
-  { key: 'instagram', icon: 'instagram', url: instagram_url, label: 'Instagram' },
+  { key: 'facebook', icon: 'facebook', url: facebook_url, label: 'Facebook'|t },
+  { key: 'instagram', icon: 'instagram', url: instagram_url, label: 'Instagram'|t },
+  { key: 'linkedin', icon: 'linkedin', url: linkedin_url, label: 'LinkedIn'|t },
+  { key: 'twitter', icon: 'twitter-x', url: twitter_url, label: 'X'|t },
 ]|filter(s => s.url is not empty) %}
 {% set has_social = socials|length > 0 %}
 
@@ -133,7 +132,7 @@
         {% if has_content_slot %}
           {{ content_slot }}
         {% else %}
-          <div{{ content_placeholder_attributes }}>Drop heading & text here</div>
+          <div{{ content_placeholder_attributes }}>{{ 'Drop heading & text here'|t }}</div>
         {% endif %}
       </div>
 

@@ -71,3 +71,8 @@ Link with Bootstrap Link helpers and utility classes
     </li>
   {% else %}
 ```
+
+## Notes
+
+- A link with `target="_blank"` gets `rel="noopener noreferrer"` and tells screen readers "(opens in a new tab)": a visually hidden span, or appended to its `aria-label` when it has one.
+- The theme script does the same for external links no component renders (menus, rich text, blocks), and opens them in a new tab.

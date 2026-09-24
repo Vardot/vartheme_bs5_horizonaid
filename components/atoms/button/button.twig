@@ -17,6 +17,8 @@
  * - size: Bootstrap button size class. (btn-md | btn-sm | btn-lg)
  *         Defaults to `btn-md`.
  * - label: Button text. Defaults to `Button label`.
+ * - label_context: Hidden text read after the label by screen readers, such
+ *                  as the card title. Defaults to empty.
  * - href: If provided, renders as a link (<a>) instead of a <button>.
  * - target: Where to open the link (used only when Link URL is provided).
  *           (self | blank) Defaults to `self`.
@@ -37,6 +39,7 @@
  * - attributes: Attributes array.
  * - wrapper_attributes: HTML attributes for the alignment wrapper element.
  * - label_attributes: HTML attributes for the button label span.
+ * - context_attributes: HTML attributes for the screen-reader context span.
  */
 #}
 
@@ -57,6 +60,7 @@
 {% set icon = icon|default('none') %}
 {% set alignment = alignment|default('inline') %}
 {% set radius = radius|default('rounded-1') %}
+{% set label_context = label_context|default('')|trim %}
 
 {# Variables: boolean props.
  # SDC validates `type: boolean` props and applies their schema defaults,
@@ -148,6 +152,20 @@
 
 {% set label_attributes = label_attributes|default(create_attribute()) %}
 
+{# Logic: screen-reader context after the label, plus the new-tab notice. #}
+{% set opens_new_tab = href_value and target == 'blank' %}
+{% set context_parts = [
+  label_context,
+  opens_new_tab ? '(opens in a new tab)'|t : '',
+]|filter(v => v is not empty) %}
+{% if not context_attributes %}
+  {% set context_attributes = create_attribute() %}
+{% endif %}
+{% set context_attributes = context_attributes.addClass(['visually-hidden']) %}
+{% if opens_new_tab %}
+  {% set context_attributes = context_attributes.setAttribute('data-new-tab-hint', true) %}
+{% endif %}
+
 {# Print the HTML. #}
 {% if wrapper_class %}<div{{ wrapper_attributes }}>{% endif %}
 
@@ -163,7 +181,7 @@
   }, with_context = false) }}
 {% endif %}
 
-<span{{ label_attributes }}>{{ label }}</span>
+<span{{ label_attributes }}>{{ label }}{% if context_parts is not empty %}<span{{ context_attributes }}> {{ context_parts|join(' ') }}</span>{% endif %}</span>
 
 {% if href_value %}</a>{% else %}</button>{% endif %}
 

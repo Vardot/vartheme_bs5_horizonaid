@@ -22,6 +22,7 @@
  *
  * Available attributes:
  * - attributes: HTML attributes for the root element.
+ * - link_context_attributes: HTML attributes for the hidden heading in the link.
  */
 #}
 
@@ -63,6 +64,13 @@
   {% set attributes = attributes.setAttribute('data-country-code', country_code) %}
 {% endif %}
 
+{# Logic: the heading follows a generic link label for screen readers. #}
+{% if not link_context_attributes %}
+  {% set link_context_attributes = create_attribute() %}
+{% endif %}
+{% set link_context_attributes = link_context_attributes.addClass(['visually-hidden']) %}
+{% set link_content %}{{ link_text }}{% if heading is not empty %}<span{{ link_context_attributes }}> {{ heading }}</span>{% endif %}{% endset %}
+
 {# Print the HTML. #}
 <div{{ attributes }}>
   <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
@@ -96,7 +104,7 @@
     {{ include('vartheme_bs5_horizonaid:link', {
       url: link_url,
       link_utility_classes: ['map-info-card__link', 'fw-bold', 'text-decoration-none'],
-      content: link_text,
+      content: link_content,
     }, with_context = false) }}
   {% endif %}
 </div>

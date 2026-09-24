@@ -42,6 +42,7 @@ Use this component when you need a reusable button that can:
 ### Content
 
 - `label`: button text; defaults to `Button label`
+- `label_context`: hidden text read after the label by screen readers, such as the card title, so a generic label like Learn More names its destination; empty by default
 
 ### Appearance
 
@@ -142,7 +143,7 @@ The template exposes named attribute objects you can pass in to add classes or a
 ## Notes
 
 - When `href` is provided (and the button is not disabled) the root element is an `<a>`; otherwise it is a `<button type="button">`.
-- For links opening in a new tab (`target: blank`), `rel="noopener noreferrer"` is added automatically.
+- For links opening in a new tab (`target: blank`), `rel="noopener noreferrer"` is added automatically, and screen readers hear "(opens in a new tab)" after the label.
 - Disabling a link removes its `href` and adds `aria-disabled="true"` and `tabindex="-1"`; disabling a button adds the native `disabled` attribute.
 - The `btn-link` variant gets `p-0` automatically; the outline style is never applied to `btn-link`.
 - The `btn-lg` size also adds the `fs-5` text class.

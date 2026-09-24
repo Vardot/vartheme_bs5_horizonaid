@@ -114,7 +114,7 @@
     {% if has_content_slot %}
       {{ content_slot }}
     {% else %}
-      <div{{ content_placeholder_attributes }}>Drop content here</div>
+      <div{{ content_placeholder_attributes }}>{{ 'Drop content here'|t }}</div>
     {% endif %}
 
   </div>

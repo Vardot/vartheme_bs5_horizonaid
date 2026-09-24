@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Theme override for the footer sitemap menu (secondary).
+ *
+ * The design shows only the links, so a group's title is a visually hidden
+ * heading for screen readers, not a link to nowhere.
+ *
+ * Available variables:
+ * - items: A nested list of menu items; a parent groups its children.
+ *
+ * Available attributes:
+ * - group_heading_attributes: HTML attributes for a group heading.
+ * - group_list_attributes: HTML attributes for a group's link list.
+ * - item_attributes: HTML attributes for a list item.
+ */
+#}
+
+{# Logic: class lists for the heading, list, item and link. #}
+{% set group_heading_classes = ['visually-hidden'] %}
+{% set group_list_classes = ['nav', 'flex-column', 'footer-sitemap'] %}
+{% set item_classes = ['nav-item'] %}
+{% set link_classes = ['nav-link', 'footer-sitemap__link'] %}
+
+{# Print the HTML. #}
+{% for item in items %}
+  {% set group_heading_attributes = create_attribute().addClass(group_heading_classes) %}
+  {% set group_list_attributes = create_attribute().addClass(group_list_classes) %}
+  {% set links = item.below ?: [item] %}
+  {% if item.below %}
+    <h2{{ group_heading_attributes }}>{{ item.title }}</h2>
+  {% endif %}
+  <ul{{ group_list_attributes }}>
+    {% for link_item in links %}
+      {% set item_attributes = create_attribute().addClass(item_classes) %}
+      <li{{ item_attributes }}>{{ link(link_item.title, link_item.url, { class: link_classes }) }}</li>
+    {% endfor %}
+  </ul>
+{% endfor %}
