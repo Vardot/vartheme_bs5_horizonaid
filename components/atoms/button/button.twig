@@ -17,8 +17,6 @@
  * - size: Bootstrap button size class. (btn-md | btn-sm | btn-lg)
  *         Defaults to `btn-md`.
  * - label: Button text. Defaults to `Button label`.
- * - label_context: Hidden text read after the label by screen readers, such
- *                  as the card title. Defaults to empty.
  * - href: If provided, renders as a link (<a>) instead of a <button>.
  * - target: Where to open the link (used only when Link URL is provided).
  *           (self | blank) Defaults to `self`.
@@ -34,6 +32,10 @@
  * - radius: Bootstrap border-radius utility class. (rounded | rounded-0
  *           | rounded-1 | rounded-2 | rounded-3 | rounded-4 | rounded-pill)
  *           Defaults to `rounded-1`.
+ *
+ * Available variables (Twig includes only, not a prop):
+ * - label_context: Hidden text read after the label by screen readers, such
+ *                  as the card title a parent component passes in.
  *
  * Available attributes:
  * - attributes: Attributes array.

@@ -66,11 +66,6 @@ props:
       examples:
         - Read more
       description: Button text.
-    label_context:
-      type: string
-      title: Screen reader context (optional)
-      default: ''
-      description: Hidden text read after the label by screen readers, such as the card title, so a generic label like Learn More names its destination.
     href:
       type: string
       title: Link URL (optional)
