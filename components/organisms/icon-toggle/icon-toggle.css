@@ -313,6 +313,35 @@
   overflow: hidden !important;
 }
 
+.icon-toggle--panel-bar .icon-toggle__panel-inner form > [type="submit"]:not(:focus, :focus-within) {
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.icon-toggle--panel-bar .icon-toggle__panel-inner form > [type="submit"]:not(:focus, :focus-within, caption) {
+  position: absolute !important;
+}
+
+.icon-toggle--panel-bar .icon-toggle__panel-inner form > [type="submit"]:not(:focus, :focus-within) * {
+  overflow: hidden !important;
+}
+
+.icon-toggle--panel-bar .icon-toggle__panel-inner form > [type="submit"] {
+  flex-shrink: 0;
+  isolation: isolate;
+}
+
+.icon-toggle--panel-bar .icon-toggle__panel-inner form > [type="submit"]::before,
+.icon-toggle--panel-bar .icon-toggle__panel-inner form > [type="submit"]::after {
+  z-index: -1;
+}
+
 @media (max-width: 991.98px) {
   .icon-toggle--panel-bar.is-bar-inline .icon-toggle__panel,
   .page > header[role="banner"] .icon-toggle--panel-bar.is-bar-inline .icon-toggle__panel {

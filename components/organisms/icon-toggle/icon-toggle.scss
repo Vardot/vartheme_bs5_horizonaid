@@ -457,6 +457,21 @@ $icon-toggle-subtle-text: rgba(#001d38, 0.7);
   .icon-toggle__panel-inner label {
     @include visually-hidden;
   }
+
+  // A bare submit (no `.form-actions`) leaves the line too; Enter submits, and focus shows it.
+  .icon-toggle__panel-inner form > [type='submit'] {
+    @include visually-hidden-focusable;
+
+    flex-shrink: 0;
+
+    // Its label is bare text, so keep the button's focus fill under it.
+    isolation: isolate;
+
+    &::before,
+    &::after {
+      z-index: -1;
+    }
+  }
 }
 
 // Below lg the design draws the bar as a full-width band directly under the
