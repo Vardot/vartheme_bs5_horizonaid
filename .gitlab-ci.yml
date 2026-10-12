@@ -35,7 +35,7 @@ variables:
   PROJECT_TYPE: theme
   # This branch targets Drupal core 11.4, matching the sibling vartheme_bs5
   # starter kit's pin; the static jobs (phpcs/phpunit) validate against it.
-  DRUPAL_CORE: "11.4.0"
+  DRUPAL_CORE: "11.4.9"
   IGNORE_PROJECT_DRUPAL_CORE_VERSION: "1"
   # Yarn 4 defaults to immutable installs in CI and would refuse to touch the
   # lockfile; allow it so `yarn install` works in every job below.
