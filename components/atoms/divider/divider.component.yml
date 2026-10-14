@@ -30,6 +30,7 @@ props:
       title: Border color
       description: Bootstrap border color utility class.
       enum:
+        - border-tertiary
         - border-secondary
         - border-light
         - border-dark
@@ -41,6 +42,7 @@ props:
         - border-white
         - border-black
       meta:enum:
+        border-tertiary: Tertiary
         border-secondary: Secondary
         border-light: Light
         border-dark: Dark
@@ -51,9 +53,9 @@ props:
         border-info: Info
         border-white: White
         border-black: Black
-      default: border-secondary
+      default: border-tertiary
       examples:
-        - border-secondary
+        - border-tertiary
 
     opacity:
       type: string

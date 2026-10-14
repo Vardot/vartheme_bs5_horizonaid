@@ -9,10 +9,10 @@
  * - border_width: Bootstrap border width utility class.
  *                 (border-1 | border-2 | border-3 | border-4 | border-5)
  *                 Defaults to `border-1`.
- * - border_color: Bootstrap border color utility class.
- *                 (border-secondary | border-light | border-dark | border-primary
+ * - border_color: Bootstrap border color utility class, or `border-tertiary` (Tertiary, the design's divider colour).
+ *                 (border-tertiary | border-secondary | border-light | border-dark | border-primary
  *                  | border-success | border-danger | border-warning | border-info
- *                  | border-white | border-black) Defaults to `border-secondary`.
+ *                  | border-white | border-black) Defaults to `border-tertiary`.
  * - opacity: Bootstrap opacity utility class.
  *            (opacity-25 | opacity-50 | opacity-75 | opacity-100)
  *            Defaults to `opacity-100`.
@@ -40,7 +40,7 @@
 
 {# Variables: scalar props with schema defaults. #}
 {% set border_width = border_width|default('border-1') %}
-{% set border_color = border_color|default('border-secondary') %}
+{% set border_color = border_color|default('border-tertiary') %}
 {% set opacity = opacity|default('opacity-100') %}
 {% set margin_top = margin_top|default('mt-3') %}
 {% set margin_bottom = margin_bottom|default('mb-3') %}
