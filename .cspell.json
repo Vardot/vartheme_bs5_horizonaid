@@ -27,6 +27,7 @@
     "components/**/assets/*.geojson"
   ],
   "words": [
+    "htmx",
     "varbase",
     "Varbase",
     "Vardot",
