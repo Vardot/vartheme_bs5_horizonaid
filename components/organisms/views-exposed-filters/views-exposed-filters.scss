@@ -218,11 +218,10 @@
     white-space: nowrap;
   }
 
-  // A field and a button still fit side by side on a phone, so opt out of the
-  // listing card's full-width stacking.
+  // On a phone the field takes the full row and the button goes under it, like the listing filters.
   @include media-breakpoint-down(md) {
-    > .js-form-item {
-      flex: 1 1 0;
+    &:not(.header-search-form) > .js-form-item {
+      flex: 1 1 100%;
     }
 
     .form-actions {
@@ -242,6 +241,39 @@
   margin-bottom: 0;
   padding: 0;
   background-color: transparent;
+}
+
+// The Date Published radios read like the facet checkbox lists above them.
+.block-views[class*='search-date-block'] {
+  .fieldgroup.card {
+    margin-bottom: 0;
+    border: 0;
+    background-color: transparent;
+  }
+
+  .fieldgroup.card > .card-header {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+  }
+
+  .fieldgroup.card > .card-body {
+    padding: 0;
+  }
+
+  .js-form-type-radio {
+    display: flex;
+    gap: 0.5em;
+    align-items: flex-start;
+    margin-bottom: $spacer * 0.125;
+  }
+
+  .js-form-type-radio label {
+    margin-bottom: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
 }
 
 // SDC layout modifier: force the row into a stacked column.

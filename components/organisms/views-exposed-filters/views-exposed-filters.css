@@ -223,8 +223,8 @@
 }
 
 @media (max-width: 767.98px){
-  .views-exposed-form--search > .js-form-item{
-    flex:1 1 0;
+  .views-exposed-form--search:not(.header-search-form) > .js-form-item{
+    flex:1 1 100%;
   }
 
   .views-exposed-form--search .form-actions{
@@ -241,6 +241,31 @@
   margin-bottom:0;
   padding:0;
   background-color:transparent;
+}
+.block-views[class*=search-date-block] .fieldgroup.card{
+  margin-bottom:0;
+  border:0;
+  background-color:transparent;
+}
+.block-views[class*=search-date-block] .fieldgroup.card > .card-header{
+  padding:0;
+  border:0;
+  background-color:transparent;
+}
+.block-views[class*=search-date-block] .fieldgroup.card > .card-body{
+  padding:0;
+}
+.block-views[class*=search-date-block] .js-form-type-radio{
+  display:flex;
+  gap:0.5em;
+  align-items:flex-start;
+  margin-bottom:0.125rem;
+}
+.block-views[class*=search-date-block] .js-form-type-radio label{
+  margin-bottom:0;
+  color:inherit;
+  font-size:inherit;
+  line-height:inherit;
 }
 
 .views-exposed-filters--stacked .views-exposed-form{
