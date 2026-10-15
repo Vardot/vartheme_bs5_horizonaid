@@ -137,6 +137,8 @@
 
 .icon-toggle--panel-bar .icon-toggle__panel-icon {
   flex: 0 0 auto;
+  inline-size: 1.5rem;
+  text-align: center;
   color: var(--icon-toggle-button-color);
   line-height: 1;
 }
@@ -208,6 +210,18 @@
   box-shadow: none;
 }
 
+.icon-toggle--panel-bar .icon-toggle__panel-inner .form-control::-webkit-search-cancel-button,
+.icon-toggle--panel-bar .icon-toggle__panel-inner .form-control::-webkit-search-decoration {
+  display: none;
+  appearance: none;
+}
+
+.icon-toggle--panel-bar .icon-toggle__panel-inner .form-control:autofill,
+.icon-toggle--panel-bar .icon-toggle__panel-inner .form-control:-webkit-autofill {
+  box-shadow: inset 0 0 0 100rem var(--icon-toggle-panel-bg);
+  -webkit-text-fill-color: var(--bs-body-color);
+}
+
 .icon-toggle--panel-bar .icon-toggle__panel-inner .form-actions {
   position: absolute;
   overflow: hidden;
@@ -270,9 +284,9 @@
 
 .icon-toggle {
   --icon-toggle-button-color: #0d2c54;
-  --icon-toggle-panel-border: #0d2c54;
+  --icon-toggle-panel-border: rgba(13, 44, 84, 0.5);
   --icon-toggle-bar-subtle-color: rgba(0, 29, 56, 0.7);
-  --icon-toggle-bar-border-width: 0.5px;
+  --icon-toggle-bar-border-width: 1px;
 }
 
 .icon-toggle--panel-bar .icon-toggle__panel-inner .views-exposed-form {

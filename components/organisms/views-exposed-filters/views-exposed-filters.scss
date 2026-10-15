@@ -231,6 +231,19 @@
   }
 }
 
+// Facet lists in the search filter rail align with their headings.
+.facets-widget-checkbox > ul {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+// The rail's Date Published form sits inside the rail panel, so it drops its own.
+.block-views[class*='search-date-block'] .views-exposed-form {
+  margin-bottom: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
 // SDC layout modifier: force the row into a stacked column.
 .views-exposed-filters--stacked .views-exposed-form {
   flex-direction: column;

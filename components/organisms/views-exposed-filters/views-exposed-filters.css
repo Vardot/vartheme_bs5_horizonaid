@@ -232,6 +232,17 @@
   }
 }
 
+.facets-widget-checkbox > ul{
+  padding-inline-start:0;
+  list-style:none;
+}
+
+.block-views[class*=search-date-block] .views-exposed-form{
+  margin-bottom:0;
+  padding:0;
+  background-color:transparent;
+}
+
 .views-exposed-filters--stacked .views-exposed-form{
   flex-direction:column;
   align-items:stretch;

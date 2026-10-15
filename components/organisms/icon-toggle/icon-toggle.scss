@@ -204,8 +204,11 @@
     gap: var(--icon-toggle-bar-gap);
   }
 
+  // The design's 24px icon box, so the text starts where it does.
   .icon-toggle__panel-icon {
     flex: 0 0 auto;
+    inline-size: $spacer * 1.5;
+    text-align: center;
     color: var(--icon-toggle-button-color);
     line-height: 1;
   }
@@ -277,6 +280,20 @@
       &:focus {
         outline: 0;
         box-shadow: none;
+      }
+
+      // The bar has its own close button, so drop the browser's search clear button.
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-decoration {
+        display: none;
+        appearance: none;
+      }
+
+      // Keep the bar's background when the browser fills the field from its saved entries.
+      &:autofill,
+      &:-webkit-autofill {
+        box-shadow: inset 0 0 0 ($spacer * 100) var(--icon-toggle-panel-bg);
+        -webkit-text-fill-color: var(--bs-body-color);
       }
     }
 
@@ -403,11 +420,11 @@ $icon-toggle-subtle-text: rgba(#001d38, 0.7);
 
 .icon-toggle {
   --icon-toggle-button-color: #{$secondary};
-  --icon-toggle-panel-border: #{$secondary};
+  --icon-toggle-panel-border: #{rgba($secondary, 0.5)};
   --icon-toggle-bar-subtle-color: #{$icon-toggle-subtle-text};
 
-  // A hairline, not a border: half Bootstrap's $border-width.
-  --icon-toggle-bar-border-width: #{$border-width * 0.5};
+  // The design's underline: 1px of the navy at 50%.
+  --icon-toggle-bar-border-width: #{$border-width};
 }
 
 // Glyph sizes are NOT set here. The Twig sizes them with Bootstrap's `fs-*`
