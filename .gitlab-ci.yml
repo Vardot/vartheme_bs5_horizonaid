@@ -49,6 +49,7 @@ variables:
   SKIP_ESLINT: 1
   SKIP_STYLELINT: 1
   SKIP_CSPELL: 1
+  DRUPAL_CMS_TELEMETRY: "0"
 
 # Blocking quality gates the template ships as allow_failure: true by default.
 phpcs:
