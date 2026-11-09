@@ -73,7 +73,7 @@ phpunit:
 # = Build stage: prove the theme still compiles (SCSS -> CSS, SDC styles) =
 "🏗️ Theme build":
   stage: build
-  image: node:20
+  image: node:24
   needs: []
   before_script: *yarn_setup
   script:
@@ -87,7 +87,7 @@ phpunit:
 # the runner's 30-minute cap instead of reporting real findings.
 "🟨 ESLint":
   stage: validate
-  image: node:20
+  image: node:24
   needs: []
   before_script: *yarn_setup
   script:
@@ -104,7 +104,7 @@ phpunit:
 # output is intentionally NOT linted here; the source layer is what gates.
 "🎨 Stylelint":
   stage: validate
-  image: node:20
+  image: node:24
   needs: []
   before_script: *yarn_setup
   script:
@@ -113,7 +113,7 @@ phpunit:
 
 "🔤 Cspell":
   stage: validate
-  image: node:20
+  image: node:24
   needs: []
   before_script: *yarn_setup
   script:
@@ -264,3 +264,16 @@ phpunit:
         --format all
         --pdf-out "tests/reports/${REPORT}.pdf" || true
   allow_failure: false
+
+stylelint:
+  variables:
+    # Drupal core's own Yarn 4.9.1 would read the project .yarnrc.yml (Yarn >= 4.14 keys) too.
+    YARN_RC_FILENAME: .yarnrc.core.yml
+    YARN_NODE_LINKER: node-modules
+
+.composer-base:
+  variables:
+    # Every composer job, variants included: Drupal core's own Yarn 4.9.1 would
+    # read the project .yarnrc.yml (Yarn >= 4.14 keys) too.
+    YARN_RC_FILENAME: .yarnrc.core.yml
+    YARN_NODE_LINKER: node-modules

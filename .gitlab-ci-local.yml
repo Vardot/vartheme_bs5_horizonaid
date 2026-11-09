@@ -29,7 +29,7 @@ variables:
 
 "🏗️ Theme build":
   stage: build
-  image: node:20
+  image: node:24
   before_script: *yarn_setup
   script:
     - node --version
@@ -37,7 +37,7 @@ variables:
 
 "🟨 ESLint":
   stage: validate
-  image: node:20
+  image: node:24
   before_script: *yarn_setup
   script:
     - node --version
@@ -49,7 +49,7 @@ variables:
 # webpack-compiled css/**/*.css output (see .gitlab-ci.yml).
 "🎨 Stylelint":
   stage: validate
-  image: node:20
+  image: node:24
   before_script: *yarn_setup
   script:
     - yarn lint:css
@@ -57,7 +57,7 @@ variables:
 
 "🔤 Cspell":
   stage: validate
-  image: node:20
+  image: node:24
   before_script: *yarn_setup
   script:
     - yarn spellcheck

@@ -27,7 +27,7 @@ convention; `CLAUDE.md` imports it.
 | Theme-switch & component migration | `varbase_components` 4.0.x — `src/EventSubscriber/ActiveThemeChangeSubscriber.php`, `src/Commands/VarbaseComponentsCommands.php` (<https://git.drupalcode.org/project/varbase_components/-/tree/4.0.x>) + [troubleshooting-theme-switch-issues](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/troubleshooting-theme-switch-issues) | Component IDs, version hashes, `auto_switch_components`, migration. |
 | Storybook | [integration-of-varbase-with-storybook](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/integration-of-varbase-with-storybook) + live demo <https://storybook.demo.varbase.vardot.com/> | Stories, `ddev init-storybook`, running on :6006. |
 | Preloaded fonts | [add-preloaded-fonts-in-vartheme](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/add-preloaded-fonts-in-vartheme) | Adding `@font-face` + preload. |
-| Theming tools install | [manually-install-needed-theming-tools](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/manually-install-needed-theming-tools) | Node 20.x / Yarn / build deps setup. |
+| Theming tools install | [manually-install-needed-theming-tools](https://docs.varbase.vardot.com/developers/theme-development-with-varbase/manually-install-needed-theming-tools) | Node.js 24 or 26 / Yarn 4.18.1 / build deps setup. |
 | Drupal SDC | <https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components> | `attributes`, slots, props, library auto-attach behaviour. |
 | Drupal Canvas | the installed `drupal/canvas` module + its REST API under `/canvas/api/v0/` | Component versions, content templates, page authoring. |
 | Bootstrap 5.3 | <https://getbootstrap.com/docs/5.3/> | Utilities, components, SCSS variables, breakpoints. |
@@ -489,7 +489,7 @@ Live design system / Storybook: <https://storybook.demo.varbase.vardot.com/>.
 
 ## 16. Tooling
 
-- **Node.js 20.x**, **Yarn** (use Yarn — *not* npm; npm causes install issues).
+- **Node.js 24 or 26**, **Yarn 4.18.1** (use Yarn — *not* npm; npm causes install issues).
   Also `sed` + `gawk` (used by the generate-theme rename step).
 - `node_modules/` is git-ignored — after any clone, reinstall before building.
 
