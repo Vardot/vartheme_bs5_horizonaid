@@ -68,7 +68,7 @@ variables:
 # job cannot be used instead.
 "🔬 PHPStan":
   stage: validate
-  image: php:8.4-cli
+  image: php:8.5-cli
   before_script:
     - apt-get update -y > /dev/null && apt-get install -y -qq git unzip zip > /dev/null
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

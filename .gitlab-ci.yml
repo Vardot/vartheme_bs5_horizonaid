@@ -50,6 +50,8 @@ variables:
   SKIP_STYLELINT: 1
   SKIP_CSPELL: 1
   DRUPAL_CMS_TELEMETRY: "0"
+  # PHP 8.5 for the drupalci job images (the template default is PHP 8.3).
+  _TARGET_PHP: "8.5"
 
 # Blocking quality gates the template ships as allow_failure: true by default.
 phpcs:
@@ -152,7 +154,7 @@ phpunit:
 # recur, and it still gates the merge like every other job here.
 "🔬 PHPStan":
   stage: validate
-  image: php:8.4-cli
+  image: php:8.5-cli
   needs: []
   before_script:
     - apt-get update -y > /dev/null && apt-get install -y -qq git unzip zip > /dev/null
@@ -227,7 +229,7 @@ phpunit:
     - apt-get install -y --no-install-recommends software-properties-common ca-certificates curl gnupg lsb-release
     - add-apt-repository -y ppa:ondrej/php
     - apt-get update -y
-    - apt-get install -y --no-install-recommends php8.4-cli php8.4-mysql php8.4-gd php8.4-curl php8.4-xml php8.4-mbstring php8.4-zip php8.4-intl unzip git default-mysql-client webp imagemagick libmagickcore-6.q16-6-extra
+    - apt-get install -y --no-install-recommends php8.5-cli php8.5-mysql php8.5-gd php8.5-curl php8.5-xml php8.5-mbstring php8.5-zip php8.5-intl unzip git default-mysql-client webp imagemagick libmagickcore-6.q16-6-extra
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - corepack enable || true
     - sed -i 's/rights="none"\s*pattern="WEBP"/rights="read|write" pattern="WEBP"/I' /etc/ImageMagick-*/policy.xml 2>/dev/null || true
