@@ -193,7 +193,7 @@ phpunit:
 # functional testing suite (varbase-e2e / Playwright + Cucumber-js).
 "🧪 Automated Functional Testing":
   stage: test
-  image: mcr.microsoft.com/playwright:v1.56.0-noble
+  image: mcr.microsoft.com/playwright:v1.63.0-noble
   needs: []
   timeout: 2h
   retry:
@@ -254,7 +254,9 @@ phpunit:
     - ./bin/drush runserver 127.0.0.1:8888 > $CI_PROJECT_DIR/runserver.log 2>&1 &
     - sleep 8
     - cd "$CI_PROJECT_DIR"
-    - npm install --no-save --no-audit --no-fund @vardot/varbase-e2e@~2.0.1 @cucumber/cucumber@10.0.1
+    # varbase-e2e 2.0.8 brings Cucumber 12 itself, so nothing installs
+    # @cucumber/cucumber beside it (two copies stop the suite before a step runs).
+    - npm install --no-save --no-audit --no-fund "@vardot/varbase-e2e@^2.0.8"
     - ./node_modules/.bin/playwright install chromium
     - VARBASE_E2E_REPORT_DISABLE=1 ./node_modules/.bin/cucumber-js --config cucumber.js --tags "not @wip"
   after_script:
