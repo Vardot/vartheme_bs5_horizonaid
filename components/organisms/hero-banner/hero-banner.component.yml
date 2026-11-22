@@ -89,6 +89,6 @@ props:
 slots:
   content:
     title: Content box (slot)
-    description: >
+    description: >-
       Content rendered inside the floating content box — drop in a heading,
       text, button, or any other component.
