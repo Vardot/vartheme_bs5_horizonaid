@@ -39,13 +39,20 @@
  * @see template_preprocess_table()
  */
 #}
+{# Header cells and rows can arrive keyed; the table component wants lists. #}
+{% set table_lists = {header: [], rows: [], footer: [], colgroups: []} %}
+{% for name, list in {header: header, rows: rows, footer: footer, colgroups: colgroups} %}
+  {% for entry in list|default([]) %}
+    {% set table_lists = table_lists|merge({(name): table_lists[name]|merge([entry])}) %}
+  {% endfor %}
+{% endfor %}
 {% include 'vartheme_bs5_horizonaid:table' with {   
     caption: caption|default(''),
-    colgroups: colgroups|default([]),
-    header: header|default([]),
-    sticky: sticky|default([]),
-    rows: rows|default([]),
-    footer: footer|default([]),
+    colgroups: table_lists.colgroups,
+    header: table_lists.header,
+    sticky: sticky|default(false),
+    rows: table_lists.rows,
+    footer: table_lists.footer,
     empty: empty|default(''),
     no_striping: no_striping|default(false)
   }

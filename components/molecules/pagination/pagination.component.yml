@@ -27,7 +27,9 @@ props:
       title: Pagination heading ID.
       default: ''
     items:
-      type: array
+      type:
+        - object
+        - array
       title: List of pager items.
       description: The list is keyed by the following elements (first, previous, next, last, pages) which they have href, attributes, text)
       default: []
@@ -36,7 +38,9 @@ props:
       title: Current page
       description: The page number of the current page.
     ellipses:
-      type: array
+      type:
+        - object
+        - array
       title: Ellipses
       description: If there are more pages than the quantity allows, then an ellipsis before or after the listed pages may be present. (previous, next)
     pagination_utility_classes:

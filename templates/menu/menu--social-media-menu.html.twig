@@ -5,8 +5,8 @@
 #}
 {# Core strips hx-* from menu link content, so the copy-link handler is added here. #}
 {% set copied = 'Link copied'|t|e('js') %}
-{% set menu_items = {} %}
-{% for key, item in items %}
+{% set menu_items = [] %}
+{% for item in items %}
   {% if 'copy-link' in (item.url.options.attributes.class ?? []) %}
     {{ attach_library('core/drupal.htmx') }}
     {{ attach_library('core/drupal.announce') }}
@@ -15,6 +15,6 @@
       'hx-on:keydown': "if (event.key === ' ') { event.preventDefault(); this.click(); }",
     }}) %}
   {% endif %}
-  {% set menu_items = menu_items|merge({(key): item}) %}
+  {% set menu_items = menu_items|merge([item]) %}
 {% endfor %}
 {% include 'vartheme_bs5_horizonaid:nav-menu' with {items: menu_items} %}
