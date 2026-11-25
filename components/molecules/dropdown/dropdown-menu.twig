@@ -49,14 +49,14 @@
     <li{{ list_item_attributes }}>
       {% if item.is_expanded and item.below %}
         {% set toggle_attributes = create_attribute()
-          .setAttribute('href', item.url)
+          .setAttribute('href', item.url|render)
           .addClass(nav_link_classes|merge(['dropdown-toggle']))
           .setAttribute('data-bs-toggle', 'dropdown')
         %}
         <a{{ toggle_attributes }}>{{ item.title }}</a>
         {% if item.below %}
           {{ include('vartheme_bs5_horizonaid:dropdown-menu', {
-            items: item.below,
+            items: item.below|reduce((list, child) => list|merge([child]), []),
             menu_level: (item.below|first).menu_link_level,
             attributes: create_attribute(),
           }) }}

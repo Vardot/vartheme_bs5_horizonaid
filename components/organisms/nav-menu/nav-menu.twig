@@ -63,6 +63,7 @@
       {% set nav_item_classes = [
         'nav-item',
         item.is_expanded and item.below ? 'dropdown' : '',
+        item.is_expanded and item.below ? 'menu-item--expanded' : '',
         item.in_active_trail ? 'active',
         is_cta_item ? 'nav-item--cta',
       ] %}
@@ -72,13 +73,13 @@
       {% elseif item.url.options.attributes.class %}
         {% set nav_link_classes = nav_link_classes|merge([item.url.options.attributes.class]) %}
       {% endif %}
-      <li class="{{ nav_item_classes|merge(['menu-item--expanded'])|join(' ') }}">
+      <li class="{{ nav_item_classes|join(' ') }}">
         {% if item.is_expanded and item.below %}
           <a href="{{ item.url }}" class="{{ nav_link_classes|merge(['dropdown-toggle'])|join(' ') }}" data-bs-toggle="dropdown">{{ item.title }}</a>
           {% if item.below %}
           {% set second_level = 2 %}
             {{ include('vartheme_bs5_horizonaid:dropdown-menu', {
-              items: item.below,
+              items: item.below|reduce((list, child) => list|merge([child]), []),
               menu_level: (item.below|first).menu_link_level,
               parent_item: item,
               attributes: create_attribute(),
